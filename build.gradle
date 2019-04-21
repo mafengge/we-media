@@ -1,0 +1,36 @@
+plugins {
+	id 'org.springframework.boot' version '2.1.4.RELEASE'
+	id 'java'
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+group = 'com.media'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	compile fileTree(dir: 'libs', include: '*.jar')
+	compile 'org.projectlombok:lombok:1.18.6'
+	compile group: 'org.jsoup', name: 'jsoup', version: '1.11.3'
+	compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.141.59'
+	compile group: 'com.google.guava', name: 'guava', version: '27.0.1-jre'
+	// https://mvnrepository.com/artifact/com.google.code.google-collections/google-collect
+	//compile group: 'com.google.code.google-collections', name: 'google-collect', version: 'snapshot-20080530'
+// https://mvnrepository.com/artifact/net.sf.json-lib/json-lib
+	//compile group: 'net.sf.json-lib', name: 'json-lib', version: '2.4'
+	compile(
+			'net.sf.json-lib:json-lib:2.4:jdk15'
+	)
+
+	compile group: 'commons-io', name: 'commons-io', version: '2.6'
+	compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.6'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+
