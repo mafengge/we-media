@@ -26,6 +26,7 @@ import com.google.api.services.youtube.model.VideoSnippet;
 import com.google.api.services.youtube.model.VideoStatus;
 
 import com.media.bean.VideoUploadBean;
+import com.media.utils.FileUtils;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -48,10 +49,11 @@ public class UploadVideo {
 
     public static void videoUpload(VideoUploadBean uploadvideoBean) {
 
-        proxySwitch();
+        proxySwitch("true");
 
         try {
-            Credential credential = Auth.authorize(uploadvideoBean.getCredentialDatastore(), uploadvideoBean.getUserId());
+            Credential credential = Auth
+                .authorize(uploadvideoBean.getCredentialDatastore(), uploadvideoBean.getUserId());
 
             youtube = new YouTube.Builder(Auth.HTTP_TRANSPORT, Auth.JSON_FACTORY, credential).setApplicationName(
                 "youtube-uploadvideo-feng").build();
@@ -94,6 +96,7 @@ public class UploadVideo {
                             break;
                         case MEDIA_COMPLETE:
                             System.out.println("Upload Completed!");
+                            FileUtils.delFile(uploadvideoBean.getVideoPath());
                             break;
                         case NOT_STARTED:
                             System.out.println("Upload Not Started!");
@@ -101,6 +104,7 @@ public class UploadVideo {
                     }
                 }
             };
+
             uploader.setProgressListener(progressListener);
 
             Video returnedVideo = videoInsert.execute();
@@ -111,7 +115,6 @@ public class UploadVideo {
             System.out.println("  - Tags: " + returnedVideo.getSnippet().getTags());
             System.out.println("  - Privacy Status: " + returnedVideo.getStatus().getPrivacyStatus());
             System.out.println("  - Video Count: " + returnedVideo.getStatistics().getViewCount());
-
         } catch (GoogleJsonResponseException e) {
             System.err.println("GoogleJsonResponseException code: " + e.getDetails().getCode() + " : "
                 + e.getDetails().getMessage());
@@ -129,19 +132,12 @@ public class UploadVideo {
         VideoSnippet snippet = new VideoSnippet();
 
         Calendar cal = Calendar.getInstance();
-        snippet.setTitle("YouTube首发今日头条" + cal.getTime());
-        snippet.setDescription(
-            "Video uploaded via YouTube Data API V3 using the Java library " + " on " + cal.getTime());
+        snippet.setTitle(videoUploadBean.getTitle() + cal.getTime());
+        snippet.setDescription(videoUploadBean.getTitle());
         List<String> tags = new ArrayList<>();
         tags.add(videoUploadBean.getTags1());
         tags.add(videoUploadBean.getTags2());
         tags.add(videoUploadBean.getTags3());
-        /*List<String> tags = new ArrayList<String>();
-        tags.add("test");
-        tags.add("example");
-        tags.add("java");
-        tags.add("YouTube Data API V3");
-        tags.add("erase me");*/
         snippet.setTags(tags);
 
         //设置视频分类
@@ -149,20 +145,20 @@ public class UploadVideo {
         return snippet;
     }
 
-    public static void proxySwitch() {
-        if (System.getProperty("os.name").toLowerCase().startsWith("win")) {
-            System.out.println(System.getProperty("os.name"));
-            String proxyHost = "127.0.0.1";
-            String proxyHttpPort = "1082";
-            String proxySocksPort = "1080";
-            System.setProperty("http.proxyHost", proxyHost);
-            System.setProperty("http.proxyPort", proxyHttpPort);
-            System.setProperty("https.proxyHost", proxyHost);
-            System.setProperty("https.proxyPort", proxyHttpPort);
+    public static void proxySwitch(String flag) {
+        //if (System.getProperty("os.name").toLowerCase().startsWith("win") ) {
+        String proxyHost = "127.0.0.1";
+        String proxyHttpPort = "1082";
+        String proxySocksPort = "1080";
+        System.setProperty("http.proxyHost", proxyHost);
+        System.setProperty("http.proxyPort", proxyHttpPort);
+        System.setProperty("https.proxyHost", proxyHost);
+        System.setProperty("https.proxyPort", proxyHttpPort);
 
-            System.setProperty("socksProxySet", "true");
-            System.setProperty("socksProxyHost", proxyHost);
-            System.setProperty("socksProxyPort", proxySocksPort);
-        }
+        System.setProperty("socksProxyHost", proxyHost);
+        System.setProperty("socksProxyPort", proxySocksPort);
+
+        System.setProperty("http.proxySet", flag);
+        System.setProperty("socksProxySet", flag);
     }
 }

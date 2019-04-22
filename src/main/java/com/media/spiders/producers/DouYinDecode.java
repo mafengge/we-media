@@ -19,6 +19,7 @@ import org.springframework.util.StringUtils;
 
 /**
  * tips:导入jsoup依赖
+ *
  * @author hedong
  * @time 2019年2月8日 02:14:39
  */
@@ -31,11 +32,11 @@ public class DouYinDecode {
      */
     /**
      * jsoup依赖，自取
-     <dependency>
-     <groupId>org.jsoup</groupId>
-     <artifactId>jsoup</artifactId>
-     <version>1.11.3</version>
-     </dependency>
+     * <dependency>
+     * <groupId>org.jsoup</groupId>
+     * <artifactId>jsoup</artifactId>
+     * <version>1.11.3</version>
+     * </dependency>
      */
 
 

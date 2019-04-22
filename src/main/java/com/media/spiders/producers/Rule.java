@@ -1,109 +1,111 @@
 package com.media.spiders.producers;
+
 /**
  * @desc规则类
  */
 public class Rule {
-	/**
-	 * 链接
-	 */
-	private String url;
 
-	/**
-	 * 参数集合
-	 */
-	private String[] params;
-	/**
-	 * 参数对应的值
-	 */
-	private String[] values;
+    /**
+     * 链接
+     */
+    private String url;
 
-	/**
-	 * 对返回的HTML，第一次过滤所用的标签，请先设置type
-	 */
-	private String resultTagName;
+    /**
+     * 参数集合
+     */
+    private String[] params;
+    /**
+     * 参数对应的值
+     */
+    private String[] values;
 
-	/**
-	 * CLASS / ID / SELECTION 设置resultTagName的类型，默认为ID
-	 */
-	private int type = ID;
+    /**
+     * 对返回的HTML，第一次过滤所用的标签，请先设置type
+     */
+    private String resultTagName;
 
-	/**
-	 * GET / POST 请求的类型，默认GET
-	 */
-	private int requestMoethod = GET;
+    /**
+     * CLASS / ID / SELECTION 设置resultTagName的类型，默认为ID
+     */
+    private int type = ID;
 
-	public final static int GET = 0;
-	public final static int POST = 1;
+    /**
+     * GET / POST 请求的类型，默认GET
+     */
+    private int requestMoethod = GET;
 
-	public final static int CLASS = 0;
-	public final static int ID = 1;
-	public final static int SELECTION = 2;
+    public final static int GET = 0;
+    public final static int POST = 1;
 
-	public Rule() {
-	}
+    public final static int CLASS = 0;
+    public final static int ID = 1;
+    public final static int SELECTION = 2;
 
-	public Rule(String url) {
-		super();
-		this.url = url;
-		this.type = 2;
-		this.requestMoethod = 0;
-	}
+    public Rule() {
+    }
 
-	public Rule(String url, String[] params, String[] values, String resultTagName, int type, int requestMoethod) {
-		super();
-		this.url = url;
-		this.params = params;
-		this.values = values;
-		this.resultTagName = resultTagName;
-		this.type = type;
-		this.requestMoethod = requestMoethod;
-	}
+    public Rule(String url) {
+        super();
+        this.url = url;
+        this.type = 2;
+        this.requestMoethod = 0;
+    }
 
-	public String getUrl() {
-		return url;
-	}
+    public Rule(String url, String[] params, String[] values, String resultTagName, int type, int requestMoethod) {
+        super();
+        this.url = url;
+        this.params = params;
+        this.values = values;
+        this.resultTagName = resultTagName;
+        this.type = type;
+        this.requestMoethod = requestMoethod;
+    }
 
-	public void setUrl(String url) {
-		this.url = url;
-	}
+    public String getUrl() {
+        return url;
+    }
 
-	public String[] getParams() {
-		return params;
-	}
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
-	public void setParams(String[] params) {
-		this.params = params;
-	}
+    public String[] getParams() {
+        return params;
+    }
 
-	public String[] getValues() {
-		return values;
-	}
+    public void setParams(String[] params) {
+        this.params = params;
+    }
 
-	public void setValues(String[] values) {
-		this.values = values;
-	}
+    public String[] getValues() {
+        return values;
+    }
 
-	public String getResultTagName() {
-		return resultTagName;
-	}
+    public void setValues(String[] values) {
+        this.values = values;
+    }
 
-	public void setResultTagName(String resultTagName) {
-		this.resultTagName = resultTagName;
-	}
+    public String getResultTagName() {
+        return resultTagName;
+    }
 
-	public int getType() {
-		return type;
-	}
+    public void setResultTagName(String resultTagName) {
+        this.resultTagName = resultTagName;
+    }
 
-	public void setType(int type) {
-		this.type = type;
-	}
+    public int getType() {
+        return type;
+    }
 
-	public int getRequestMoethod() {
-		return requestMoethod;
-	}
+    public void setType(int type) {
+        this.type = type;
+    }
 
-	public void setRequestMoethod(int requestMoethod) {
-		this.requestMoethod = requestMoethod;
-	}
+    public int getRequestMoethod() {
+        return requestMoethod;
+    }
+
+    public void setRequestMoethod(int requestMoethod) {
+        this.requestMoethod = requestMoethod;
+    }
 }

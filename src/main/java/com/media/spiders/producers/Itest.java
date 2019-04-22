@@ -35,11 +35,11 @@ public class Itest {
     public static String test(String videoId) throws Exception {
         String link = "/video/urls/v/1/toutiao/mp4/";
         String uriAPI = "https://www.365yg.com/a6681773825517945358/#mid=95420576271";// Post方式没有参数在这里
-        link = link+videoId;
+        link = link + videoId;
         Map<String, String> map = excuteJs(link);
-        uriAPI = uriAPI+videoId+"?r="+map.get("r") + "&s="+map.get("s");
+        uriAPI = uriAPI + videoId + "?r=" + map.get("r") + "&s=" + map.get("s");
         HttpGet httpGet = new HttpGet(uriAPI);
-System.out.println(uriAPI);
+        System.out.println(uriAPI);
         HttpResponse httpResponse = HttpClients.createDefault().execute(httpGet);
         String result = "";
         if (httpResponse.getStatusLine().getStatusCode() == 200) {
@@ -47,8 +47,9 @@ System.out.println(uriAPI);
             result = EntityUtils.toString(httpEntity);// 取出应答字符串
             JSONObject jsonobject = JSONObject.fromObject(result);
             //String posterUrl = jsonobject.getJSONObject("data").getString("poster_url");
-            String mainUrl  = jsonobject.getJSONObject("data").getJSONObject("video_list").getJSONObject("video_1").getString("main_url");
-            String video =new String(Base64.getDecoder().decode(mainUrl.getBytes()));
+            String mainUrl = jsonobject.getJSONObject("data").getJSONObject("video_list").getJSONObject("video_1")
+                .getString("main_url");
+            String video = new String(Base64.getDecoder().decode(mainUrl.getBytes()));
             return video;
         }
         return null;
@@ -60,39 +61,40 @@ System.out.println(uriAPI);
         FileNotFoundException, NoSuchMethodException {
         ScriptEngineManager engineManager = new ScriptEngineManager();
         ScriptEngine engine = engineManager.getEngineByName("JavaScript"); // 得到脚本引擎
-        String script = "function test(a) {"+
-            "var c = function() {"+
-            "for(var d = 0,f = new Array(256), g = 0; 256 != g; ++g) {"+
-            "d = g,"+
-            "d = 1 & d ? -306674912 ^ d >>> 1 : d >>> 1,"+
-            "d = 1 & d ? -306674912 ^ d >>> 1 : d >>> 1,"+
-            "d = 1 & d ? -306674912 ^ d >>> 1 : d >>> 1,"+
-            "d = 1 & d ? -306674912 ^ d >>> 1 : d >>> 1,"+
-            "d = 1 & d ? -306674912 ^ d >>> 1 : d >>> 1,"+
-            "d = 1 & d ? -306674912 ^ d >>> 1 : d >>> 1,"+
-            "d = 1 & d ? -306674912 ^ d >>> 1 : d >>> 1,"+
-            "d = 1 & d ? -306674912 ^ d >>> 1 : d >>> 1,"+
-            "f[g] = d"+
-            "}"+
-            "return \"undefined\" != typeof Int32Array ? new Int32Array(f) : f"+
-            "} (),"+
-            "b = function(g) {"+
-            "for (var j, k, h = -1,f = 0,d = g.length; f < d;) {"+
-            "j = g.charCodeAt(f++),"+
-            "j < 128 ? h = h >>> 8 ^ c[255 & (h ^ j)] : j < 2048 ? (h = h >>> 8 ^ c[255 & (h ^ (192 | j >> 6 & 31))], h = h >>> 8 ^ c[255 & (h ^ (128 | 63 & j))]) : j >= 55296 && j < 57344 ? (j = (1023 & j) + 64, k = 1023 & g.charCodeAt(f++), h = h >>> 8 ^ c[255 & (h ^ (240 | j >> 8 & 7))], h = h >>> 8 ^ c[255 & (h ^ (128 | j >> 2 & 63))], h = h >>> 8 ^ c[255 & (h ^ (128 | k >> 6 & 15 | (3 & j) << 4))], h = h >>> 8 ^ c[255 & (h ^ (128 | 63 & k))]) : (h = h >>> 8 ^ c[255 & (h ^ (224 | j >> 12 & 15))], h = h >>> 8 ^ c[255 & (h ^ (128 | j >> 6 & 63))], h = h >>> 8 ^ c[255 & (h ^ (128 | 63 & j))])"+
-            "}"+
-            "return h ^ -1"+
-            "};"+
-            "var f = b(a) >>> 0;"+
-            "return f.toString();"+
-            "}"+
-            "function test2(){"+
-            "return Math.random().toString(10).substring(2);"+
+        String script = "function test(a) {" +
+            "var c = function() {" +
+            "for(var d = 0,f = new Array(256), g = 0; 256 != g; ++g) {" +
+            "d = g," +
+            "d = 1 & d ? -306674912 ^ d >>> 1 : d >>> 1," +
+            "d = 1 & d ? -306674912 ^ d >>> 1 : d >>> 1," +
+            "d = 1 & d ? -306674912 ^ d >>> 1 : d >>> 1," +
+            "d = 1 & d ? -306674912 ^ d >>> 1 : d >>> 1," +
+            "d = 1 & d ? -306674912 ^ d >>> 1 : d >>> 1," +
+            "d = 1 & d ? -306674912 ^ d >>> 1 : d >>> 1," +
+            "d = 1 & d ? -306674912 ^ d >>> 1 : d >>> 1," +
+            "d = 1 & d ? -306674912 ^ d >>> 1 : d >>> 1," +
+            "f[g] = d" +
+            "}" +
+            "return \"undefined\" != typeof Int32Array ? new Int32Array(f) : f" +
+            "} ()," +
+            "b = function(g) {" +
+            "for (var j, k, h = -1,f = 0,d = g.length; f < d;) {" +
+            "j = g.charCodeAt(f++)," +
+            "j < 128 ? h = h >>> 8 ^ c[255 & (h ^ j)] : j < 2048 ? (h = h >>> 8 ^ c[255 & (h ^ (192 | j >> 6 & 31))], h = h >>> 8 ^ c[255 & (h ^ (128 | 63 & j))]) : j >= 55296 && j < 57344 ? (j = (1023 & j) + 64, k = 1023 & g.charCodeAt(f++), h = h >>> 8 ^ c[255 & (h ^ (240 | j >> 8 & 7))], h = h >>> 8 ^ c[255 & (h ^ (128 | j >> 2 & 63))], h = h >>> 8 ^ c[255 & (h ^ (128 | k >> 6 & 15 | (3 & j) << 4))], h = h >>> 8 ^ c[255 & (h ^ (128 | 63 & k))]) : (h = h >>> 8 ^ c[255 & (h ^ (224 | j >> 12 & 15))], h = h >>> 8 ^ c[255 & (h ^ (128 | j >> 6 & 63))], h = h >>> 8 ^ c[255 & (h ^ (128 | 63 & j))])"
+            +
+            "}" +
+            "return h ^ -1" +
+            "};" +
+            "var f = b(a) >>> 0;" +
+            "return f.toString();" +
+            "}" +
+            "function test2(){" +
+            "return Math.random().toString(10).substring(2);" +
             "}";
         engine.eval(script);
         Invocable inv = (Invocable) engine;
         Object test2 = inv.invokeFunction("test2");
-        String param = link+"?r="+test2;
+        String param = link + "?r=" + test2;
         Object a = inv.invokeFunction("test", param);
         Map<String, String> hashMap = new HashMap<String, String>();
         hashMap.put("r", test2.toString());
@@ -100,14 +102,14 @@ System.out.println(uriAPI);
         return hashMap;
     }
 
-    public static String Intercept(String str){
-        if("".equals(str) || null == str) {
+    public static String Intercept(String str) {
+        if ("".equals(str) || null == str) {
             return "";
         }
         int start = str.indexOf("\"");
         int last = str.lastIndexOf("\"");
-        if(start >= 0 && last > start){
-            str = str.substring(start+1, last);
+        if (start >= 0 && last > start) {
+            str = str.substring(start + 1, last);
         }
         return str;
     }

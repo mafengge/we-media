@@ -1,9 +1,9 @@
 package com.media.youtube.consumer;
 
 /**
- * Created by guozhaohui628@gmail.com on 2019/1/24
- * Description:
+ * Created by guozhaohui628@gmail.com on 2019/1/24 Description:
  */
+
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.googleapis.media.MediaHttpUploader;
@@ -52,11 +52,11 @@ public class UploadThumbnail {
 
         try {
             // Authorize the request.
-            Credential credential = Auth.authorize("uploadthumbnail","userId");
+            Credential credential = Auth.authorize("uploadthumbnail", "userId");
 
             // This object is used to make YouTube Data API requests.
             youtube = new YouTube.Builder(Auth.HTTP_TRANSPORT, Auth.JSON_FACTORY, credential).setApplicationName(
-                    "youtube-cmdline-uploadthumbnail-sample").build();
+                "youtube-cmdline-uploadthumbnail-sample").build();
 
             // Prompt the user to enter the video ID of the video being updated.
             String videoId = getVideoIdFromUser();
@@ -69,7 +69,7 @@ public class UploadThumbnail {
             // Create an object that contains the thumbnail image file's
             // contents.
             InputStreamContent mediaContent = new InputStreamContent(
-                    IMAGE_FILE_FORMAT, new BufferedInputStream(new FileInputStream(imageFile)));
+                IMAGE_FILE_FORMAT, new BufferedInputStream(new FileInputStream(imageFile)));
             mediaContent.setLength(imageFile.length());
 
             // Create an API request that specifies that the mediaContent
@@ -134,7 +134,7 @@ public class UploadThumbnail {
 
         } catch (GoogleJsonResponseException e) {
             System.err.println("GoogleJsonResponseException code: " + e.getDetails().getCode() + " : "
-                    + e.getDetails().getMessage());
+                + e.getDetails().getMessage());
             e.printStackTrace();
 
         } catch (IOException e) {
