@@ -4,8 +4,6 @@ package com.media.utils;/*
  * Use is subject to license terms.
  */
 
-import static com.media.youtube.consumer.UploadVideo.proxySwitch;
-
 import com.media.bean.ZimeikaBean;
 import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.DownloadHandler;
@@ -17,13 +15,10 @@ import com.teamdev.jxbrowser.chromium.events.DownloadEvent;
 import com.teamdev.jxbrowser.chromium.events.DownloadListener;
 import com.teamdev.jxbrowser.chromium.events.FinishLoadingEvent;
 import com.teamdev.jxbrowser.chromium.events.LoadAdapter;
-import com.teamdev.jxbrowser.chromium.swing.BrowserView;
 import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * The sample demonstrates how to handle file download. To cancel download you must return {@code false} from the {@link
@@ -65,6 +60,7 @@ public class DownloadZimeika {
                         FileUtils.writeFile(MediaUtils.zimekaInfoPath, JsonUtil.toJson(zimeikaBean, true) + ",");
                         browser.dispose();
                     }
+
                 }
             });
             browser.loadURL(url);

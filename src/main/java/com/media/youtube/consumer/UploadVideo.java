@@ -138,6 +138,7 @@ public class UploadVideo {
         tags.add(videoUploadBean.getTags1());
         tags.add(videoUploadBean.getTags2());
         tags.add(videoUploadBean.getTags3());
+        tags.add(videoUploadBean.getTags4());
         snippet.setTags(tags);
 
         //设置视频分类

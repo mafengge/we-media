@@ -4,9 +4,6 @@ import com.media.bean.ZimeikaBean;
 import com.media.spiders.producers.ExtractService;
 import com.media.spiders.producers.LinkTypeData;
 import com.media.spiders.producers.Rule;
-import com.media.utils.DownloadZimeika;
-import com.media.utils.GetImage;
-import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.ba;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -17,7 +14,6 @@ import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-
 import java.util.Map;
 import java.util.Set;
 import javax.script.Invocable;
@@ -29,10 +25,13 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 
 public class JsoupUtil {
 
@@ -196,7 +195,51 @@ public class JsoupUtil {
         }
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws InterruptedException {
+       // WebDriver driver =new ChromeDriver(); //新建一个WebDriver 的对象，但是new 的是FirefoxDriver的驱动
+        WebDriver driver = new EventFiringWebDriver(new ChromeDriver()).register(new DriverListener());
+        driver.get("https://www.youlikehits.com/login.php");//打开指定的网站
+        WebElement username = driver.findElement(By.id("username"));
+        WebElement password = driver.findElement(By.id("password"));
+        username.sendKeys("mafengge");
+        password.sendKeys("maniqiu5");
+        driver.findElement(By.id("loginform")).submit();
+        driver.get("https://www.youlikehits.com/youtubenew2.php");
+        Thread.sleep(6000);
+        for(int i=0;i<10;i++) {
+            driver.findElement(By.className("followbutton")).click();
+            Thread.sleep(140000);
+        }
+
+        /*driver.findElement(By.className("likebutton")).click();
+        Thread.sleep(15000);
+        driver.findElement(By.className("ytd-button-renderer")).click();*/
+
+        /*d_parser_video.click();
+        WebElement thumbnail = driver.findElement(By.className("thumbnail"));
+        System.out.println(thumbnail.getAttribute("a"));
+        String windowHandle = driver.getWindowHandle();
+        System.out.println(windowHandle);
+
+        String currentWindow = driver.getWindowHandle(); //获取当前窗口的句柄
+        Set<String> handles = driver.getWindowHandles(); //获取所有窗口的句柄
+        Iterator<String> it = handles.iterator();
+        while (it.hasNext()) {
+            String handle = it.next();
+            if (!handle.equals(currentWindow)) {
+                driver = driver.switchTo().window(handle); //切换到新的句柄所指向的窗口
+                System.out.println(driver.getCurrentUrl());
+                //System.out.println(driver.getPageSource());
+                String pageSource = driver.getPageSource();
+                String substring = pageSource.substring(pageSource.indexOf("vjs-tech"), pageSource.indexOf("%3D"));
+                String http = substring.substring(substring.indexOf("http"), substring.length());
+                System.out.println(http);
+                break;
+            }
+        }*/
+    }
+
+    public static void main(String args) throws Exception {
         /*String uriAPI = "http://zimeika.com/index/video/parser.html";// Post方式没有参数在这里
         HttpPost httpRequst = new HttpPost(uriAPI);// 创建HttpPost对象
 
@@ -242,7 +285,7 @@ public class JsoupUtil {
         while (it.hasNext()) {
             String handle = it.next();
             if (!handle.equals(currentWindow)) {
-                driver = (FirefoxDriver) driver.switchTo().window(handle); //切换到新的句柄所指向的窗口
+                //driver = driver.switchTo().window(handle); //切换到新的句柄所指向的窗口
                 System.out.println(driver.getCurrentUrl());
                 //System.out.println(driver.getPageSource());
                 String pageSource = driver.getPageSource();

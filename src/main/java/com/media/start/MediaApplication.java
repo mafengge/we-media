@@ -1,30 +1,37 @@
 package com.media.start;
 
-import com.media.bean.VideoUploadBean;
-import com.media.utils.DownloadZimeika;
-import com.media.utils.FileUtils;
-import com.media.utils.MediaUtils;
-import com.media.youtube.consumer.UploadVideo;
-import java.io.File;
-import java.util.List;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+    import com.media.bean.VideoUploadBean;
+    import com.media.utils.DownloadZimeika;
+    import com.media.utils.DriverListener;
+    import com.media.utils.FileUtils;
+    import com.media.utils.JsoupUtil;
+    import com.media.utils.MediaUtils;
+    import com.media.youtube.consumer.UploadVideo;
+    import java.io.File;
+    import java.util.List;
+    import org.json.JSONArray;
+    import org.json.JSONObject;
+    import org.openqa.selenium.By;
+    import org.openqa.selenium.WebDriver;
+    import org.openqa.selenium.WebElement;
+    import org.openqa.selenium.chrome.ChromeDriver;
+    import org.openqa.selenium.support.events.EventFiringWebDriver;
+    import org.springframework.boot.SpringApplication;
+    import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class MediaApplication {
 
     public static void main(String[] args) throws Exception {
         SpringApplication.run(MediaApplication.class, args);
-        //获取自媒咖视频信息，下载地址、标题、作者等，放入TXT
-        //JsoupUtil.getZimeikaInfo(1,5);
-
+        //获取视频信息，下载地址、标题、作者等，放入TXT
+        //JsoupUtil.getZimeikaInfo(2,10);
+        getPoints();
         //读取txt中视频下载地址，下载视频
-        downLoadZimeikaVideo();
+        //downLoadZimeikaVideo();
 
         //将视频上传youtube
-        //uploadYoutube("mafengge", "mafengge", 1);
+        //uploadYoutube("mafengge", "mafengge", 8);
     }
 
     public static void uploadYoutube(String proName, String userId, int uploadCount) {
@@ -62,6 +69,22 @@ public class MediaApplication {
             DownloadZimeika.downloadVideo(MediaUtils.zimeikaVideoPath, videoTitle, videoUrl);
 
             System.out.println(jsonObject.getString("publishTime"));
+        }
+    }
+
+    public static void getPoints() throws Exception{
+        WebDriver driver = new EventFiringWebDriver(new ChromeDriver()).register(new DriverListener());
+        driver.get("https://www.youlikehits.com/login.php");//打开指定的网站
+        WebElement username = driver.findElement(By.id("username"));
+        WebElement password = driver.findElement(By.id("password"));
+        username.sendKeys("mafengge");
+        password.sendKeys("maniqiu5");
+        driver.findElement(By.id("loginform")).submit();
+        driver.get("https://www.youlikehits.com/youtubenew2.php");
+        Thread.sleep(6000);
+        for(int i=0;i<100;i++) {
+            driver.findElement(By.className("followbutton")).click();
+            Thread.sleep(140000);
         }
     }
 
