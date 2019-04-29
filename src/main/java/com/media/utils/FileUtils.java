@@ -12,8 +12,12 @@ import java.util.List;
 public class FileUtils {
 
     public static void main(String args[]) {
-        writeFile(MediaUtils.zimekaInfoPath + "aa.txt", "aaa");
-        readFile(MediaUtils.zimekaInfoPath + "aa.txt");
+        //writeFile(MediaUtils.zimekaInfoPath + "aa.txt", "aaa");
+        //readFile(MediaUtils.zimekaInfoPath + "aa.txt");
+        List<String> allFile = getAllFile(MediaUtils.zimeikaVideoPath, true);
+        for(String str : allFile) {
+            System.out.println(str);
+        }
     }
 
     /**
@@ -85,7 +89,8 @@ public class FileUtils {
                 }
                 list.addAll(getAllFile(file.getAbsolutePath(), isAddDirectory));
             } else {
-                list.add(file.getAbsolutePath());
+                String absolutePath = file.getAbsolutePath();
+                list.add(absolutePath);
             }
         }
         return list;
@@ -94,7 +99,6 @@ public class FileUtils {
     /**
      * 删除文件
      *
-     * @param filePathAndName String  文件路径及名称  如c:/fqf.txt
      * @return boolean
      */
     public static void delFile(String filePath) {
@@ -106,6 +110,47 @@ public class FileUtils {
             System.out.println("删除文件操作出错");
             e.printStackTrace();
         }
+    }
+
+    public static void rename(String file1, String file2) {
+        try {
+            File file = new File(file1);
+            file.renameTo(new File(file2));
+        } catch (Exception e) {
+            System.out.println("修改文件名报错");
+            e.printStackTrace();
+        }
+    }
+    /**
+     * 通过文件路径直接修改文件名
+     *
+     * @param filePath    需要修改的文件的完整路径
+     * @param newFileName 需要修改的文件的名称
+     * @return
+     */
+    public static String FixFileName(String filePath, String newFileName) {
+        File f = new File(filePath);
+        if (!f.exists()) { // 判断原文件是否存在（防止文件名冲突）
+            return null;
+        }
+        newFileName = newFileName.trim();
+        if ("".equals(newFileName) || newFileName == null) // 文件名不能为空
+            return null;
+        String newFilePath = null;
+        if (f.isDirectory()) { // 判断是否为文件夹
+            newFilePath = filePath.substring(0, filePath.lastIndexOf("/")) + "/" + newFileName;
+        } else {
+            newFilePath = filePath.substring(0, filePath.lastIndexOf("/")) + "/" + newFileName
+                + filePath.substring(filePath.lastIndexOf("."));
+        }
+        File nf = new File(newFilePath);
+        try {
+            f.renameTo(nf); // 修改文件名
+        } catch (Exception err) {
+            err.printStackTrace();
+            return null;
+        }
+        return newFilePath;
     }
 }
 

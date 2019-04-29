@@ -67,7 +67,7 @@ public class DriverListener implements WebDriverEventListener {
         //Exception occured
         System.out.println("发生异常: " + error);
         try {
-            MediaApplication.getPoints();
+            driver.get("https://www.youlikehits.com/youtubenew2.php");
         } catch (Exception e) {
             e.printStackTrace();
         }

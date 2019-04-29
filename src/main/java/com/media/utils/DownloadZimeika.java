@@ -9,16 +9,16 @@ import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.DownloadHandler;
 import com.teamdev.jxbrowser.chromium.DownloadItem;
 import com.teamdev.jxbrowser.chromium.ba;
-import com.teamdev.jxbrowser.chromium.dom.By;
-import com.teamdev.jxbrowser.chromium.dom.DOMElement;
 import com.teamdev.jxbrowser.chromium.events.DownloadEvent;
 import com.teamdev.jxbrowser.chromium.events.DownloadListener;
-import com.teamdev.jxbrowser.chromium.events.FinishLoadingEvent;
-import com.teamdev.jxbrowser.chromium.events.LoadAdapter;
 import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.math.BigInteger;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 
 /**
  * The sample demonstrates how to handle file download. To cancel download you must return {@code false} from the {@link
@@ -45,26 +45,18 @@ public class DownloadZimeika {
         }
     }
 
-    public static void getDownloadUrl(ZimeikaBean zimeikaBean, String url) {
-        try {
-            Browser browser = new Browser();
-            browser.addLoadListener(new LoadAdapter() {
-                @Override
-                public void onFinishLoadingFrame(FinishLoadingEvent event) {
-                    DOMElement element = event.getBrowser().getDocument()
-                        .findElement(By.tagName("source"));
-                    if (null != element) {
-                        String src = element.getAttribute("src");
-                        zimeikaBean.setVideoUrl(src);
-                        System.out.println(src);
-                        FileUtils.writeFile(MediaUtils.zimekaInfoPath, JsonUtil.toJson(zimeikaBean, true) + ",");
-                        browser.dispose();
-                    }
 
-                }
-            });
-            browser.loadURL(url);
-            Thread.sleep(3000);
+
+    public static void getDownloadUrl(ZimeikaBean zimeikaBean,WebDriver driver, String url) {
+        try {
+            driver.get(url);
+            driver.findElement(org.openqa.selenium.By.id("d_parser_video")).click();
+            String href = driver.findElement(By.className("btn-primary")).getAttribute("href");
+            System.out.println(href);
+            zimeikaBean.setVideoUrl(href);
+            FileUtils.writeFile(MediaUtils.zimekaInfoPath, JsonUtil.toJson(zimeikaBean, true) + ",");
+            // + "--" + zimeikaBean.getAuthor()
+            DownloadZimeika.downloadVideo(MediaUtils.zimeikaVideoPath, zimeikaBean.getVideoTitle(), href);
         } catch (Exception e) {
             System.out.println("获取自媒咖视频下载地址报错：" + e.getMessage());
         }
@@ -83,6 +75,13 @@ public class DownloadZimeika {
                             DownloadItem download = event.getDownloadItem();
                             if (download.isCompleted()) {
                                 System.out.println("Download is completed!");
+                                /*new Thread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        VideoUtils.shearVideo(videopath + videoName + ".mp4");
+                                    }
+                                }).start();*/
+                                browser.dispose();
                             }
                         }
                     });
@@ -96,5 +95,15 @@ public class DownloadZimeika {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+    public static void main(String[] args) throws Exception{
+        downloadVideo("D:\\","kkk","http://www.itono.cn/vip/xlyy.php?url=https://v.youku.com/v_show/id_XMzg0MzM2NDM2NA==.html?spm=a2h0k.11417342.soresults.dposter");
+        /*WebDriver driver = new EventFiringWebDriver(new ChromeDriver()).register(new DriverListener());
+        driver.get("http://zimeika.com/video/detail/xigua.html?id=6860278");//打开指定的网站
+        driver.findElement(org.openqa.selenium.By.id("d_parser_video")).click();
+        Thread.sleep(4000);
+        String href = driver.findElement(org.openqa.selenium.By.className("btn-primary")).getAttribute("href");
+        System.out.println(driver.findElement(org.openqa.selenium.By.className("btn-primary")).getText());
+        System.out.println(driver.findElement(org.openqa.selenium.By.className("btn-primary")).getAttribute("href"));*/
     }
 }

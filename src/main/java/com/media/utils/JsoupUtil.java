@@ -16,6 +16,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import javax.script.Invocable;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
@@ -28,6 +29,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
@@ -143,22 +145,31 @@ public class JsoupUtil {
     }
 
     public static void getZimeikaInfo(int startPageNo, int pageNo) throws Exception {
+        ChromeOptions option = new ChromeOptions();
+        //后台运行
+        option.addArguments("headless");
+        //取消"Chrome正在受到自动软件的控制"提示
+        option.addArguments("disable-infobars");
+        WebDriver driver = new ChromeDriver(option);
+        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        driver.manage().timeouts().setScriptTimeout(30,TimeUnit.SECONDS);
+        driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
         for (int i = 0; i < pageNo; i++) {
             int a = startPageNo + i;
+            //自媒咖 西瓜视频 五万以上播放量 美食
+            //Rule rule = new Rule("http://zimeika.com/video/lists/xigua.html?cate_id=12&time_type=&read_order=&type=6&author_id=&author_name=&title=&p=" + a + "#comments");
             //自媒咖 西瓜视频 五万以上播放量 内容
-            Rule rule = new Rule(
-                "http://zimeika.com/video/lists/xigua.html?cate_id=12&time_type=&read_order=&type=6&author_id=&author_name=&title=&p="
-                    + a + "#comments");
-
+            /*Rule rule = new Rule(
+                "http://zimeika.com/video/lists/xigua.html?cate_id=&time_type=&read_order=&type=6&author_id=&author_name=&title=&p=1"
+                    + a + "#comments");*/
+            Rule rule = new Rule("http://zimeika.com/video/lists/xigua.html?cate_id=&time_type=&read_order=&type=6&author=1&author_id=&author_name=%E5%B0%8F%E4%B9%90%E5%BD%B1%E8%A7%86%E6%B1%87&title=&p=" + a);
             Document doc = ExtractService.getDoc(rule);
-            //System.out.println(doc);
             Elements commlist = doc.getElementsByClass("video-list");
             Elements lis = commlist.get(0).getElementsByTag("li");
             for (int j = 0; j < lis.size(); j++) {
                 Element element = lis.get(j);
                 Elements ahref = element.getElementsByTag("a");
                 String zimeikaUrl = ahref.attr("href");
-                //System.out.println(zimeikaUrl);
                 String videoTitle = element.getElementsByClass("video-title").text();
                 String publishTime = element.getElementsByClass("publish-time").text();
                 String watchCount = element.getElementsByClass("watch-count").text();
@@ -176,27 +187,16 @@ public class JsoupUtil {
                 zimeikaBean.setVideoDuring(videoDuring);
                 zimeikaBean.setImgUrl(imgUrl);
                 System.out.println(element.getElementsByClass("video-title").text());
-                if (null != zimeikaUrl && zimeikaUrl.trim().length() != 0) {
-                    zimeikaUrl = "http://zimeika.com/" + zimeikaUrl;
-                    //System.out.println(zimeikaUrl);
-                    Rule rule2 = new Rule(zimeikaUrl);
-                    Document doc2 = ExtractService.getDoc(rule2);
-                    String source_url = doc2.getElementById("source_url").text();
-                    Rule rule3 = new Rule(source_url);
-                    Document doc3 = ExtractService.getDoc(rule3);
-                    Elements source = doc3.getElementsByTag("video");
-                    Elements src = source.tagName("src");
-                    System.out.println(source_url);
-                    DownloadZimeika.getDownloadUrl(zimeikaBean, source_url);
-                }
-                System.out.println("读取：" + j);
+                zimeikaUrl = "http://zimeika.com/" + zimeikaUrl;
+                DownloadZimeika.getDownloadUrl(zimeikaBean, driver, zimeikaUrl);
             }
-            Thread.sleep(2000);
+            Thread.sleep(1000);
+            System.out.println("读取第：" + i + "页");
         }
+        driver.close();
     }
 
     public static void main(String[] args) throws InterruptedException {
-       // WebDriver driver =new ChromeDriver(); //新建一个WebDriver 的对象，但是new 的是FirefoxDriver的驱动
         WebDriver driver = new EventFiringWebDriver(new ChromeDriver()).register(new DriverListener());
         driver.get("https://www.youlikehits.com/login.php");//打开指定的网站
         WebElement username = driver.findElement(By.id("username"));
@@ -206,7 +206,7 @@ public class JsoupUtil {
         driver.findElement(By.id("loginform")).submit();
         driver.get("https://www.youlikehits.com/youtubenew2.php");
         Thread.sleep(6000);
-        for(int i=0;i<10;i++) {
+        for (int i = 0; i < 10; i++) {
             driver.findElement(By.className("followbutton")).click();
             Thread.sleep(140000);
         }
@@ -240,29 +240,6 @@ public class JsoupUtil {
     }
 
     public static void main(String args) throws Exception {
-        /*String uriAPI = "http://zimeika.com/index/video/parser.html";// Post方式没有参数在这里
-        HttpPost httpRequst = new HttpPost(uriAPI);// 创建HttpPost对象
-
-        String link = "https://www.ixigua.com/group/6681773825517945358/";
-        //Map<String, String> map = excuteJs(link);
-
-        httpRequst.setHeader("Origin", "http://zimeika.com");
-        httpRequst.setHeader("Content-Type","application/json");
-        httpRequst.setHeader("User-Agent","Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.81 Safari/537.36");
-        httpRequst.setHeader("Cookie","s007df62c=8ppq55v4amd2sp3mdasjq6uhf5; Hm_lvt_c501e68ec4f8d48b652a9d50c8401586=1555695242,1555733501,1555743304,1555749401; menu-style=full; Hm_lpvt_c501e68ec4f8d48b652a9d50c8401586=1555768990");
-        List<NameValuePair> params = new ArrayList<NameValuePair>();
-        params.add(new BasicNameValuePair("source", link));
-        params.add(new BasicNameValuePair("site", "xigua"));
-        //params.add(new BasicNameValuePair("s", map.get("s")));
-
-        httpRequst.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
-        HttpResponse httpResponse = new DefaultHttpClient().execute(httpRequst);
-        String result = "";
-        if (httpResponse.getStatusLine().getStatusCode() == 200) {
-            HttpEntity httpEntity = httpResponse.getEntity();
-            result = EntityUtils.toString(httpEntity);// 取出应答字符串
-        }
-        System.out.println(result);*/
         FirefoxBinary firefoxBinary = new FirefoxBinary();
         firefoxBinary.addCommandLineOptions("--headless");
         // System.setProperty("webdriver.gecko.driver", "C:\\ChromedDriver\\geckodriver.exe");
@@ -297,37 +274,6 @@ public class JsoupUtil {
                 break;
             }
         }
-
-        //driver.close();
-        //SpringApplication.run(MediaApplication.class, args);
-		/*VideoUploadBean videoUploadBean = new VideoUploadBean();
-		videoUploadBean.setCredentialDatastore("mafengge");
-		videoUploadBean.setUserId("mafengge");
-		videoUploadBean.setTitle("视频标题");
-		videoUploadBean.setDescription("视频描述");
-		videoUploadBean.setVideoPath("D:\\video\\zimeika\\20190419\\1.mp4");
-		videoUploadBean.setTags1("标签1");
-		videoUploadBean.setTags2("标签2");
-		videoUploadBean.setTags3("标签3");
-		UploadVideo.videoUpload(videoUploadBean);*/
-        //String videoUrl = "http://v1-default.ixigua.com/6eb7a8b227778c7ef87f6f0ae9a1abef/5cbae999/video/m/220a094517280fc4538a49c5318ecfdb59a1161d7f7000005395f7745815/?rc=Mzw4ZnRlbWx1bDMzODczM0ApQHRAbzM3NTk2MzUzMzM2NDUzNDVvQGgzdSlAZjN1KWRzcmd5a3VyZ3lybHh3ZjUzQDBfYG1sL25mcF8tLTMtL3NzLW8jbyMuLzUtMzAtLjI0My0xNi06I28jOmEtcSM6YHZpXGJmK2BeYmYrXnFsOiMuL14%3D";
-        //DownloadZimeika.downloadVideo("D:\\video\\zimeika\\" + MediaUtils.getCurrDate() +"\\1", "自媒体" , videoUrl);
-    }
-
-    private static Map<String, String> excuteJs(String link) throws ScriptException,
-        FileNotFoundException, NoSuchMethodException {
-        ScriptEngineManager engineManager = new ScriptEngineManager();
-        ScriptEngine engine = engineManager.getEngineByName("JavaScript"); // 得到脚本引擎
-        engine.eval(new FileReader(
-            "E:\\application\\workspace\\test\\test\\src\\test\\test.js"));
-        Invocable inv = (Invocable) engine;
-        Object test2 = inv.invokeFunction("test2");
-        String param = link + "@" + test2.toString();
-        Object a = inv.invokeFunction("test", param);
-        Map<String, String> hashMap = new HashMap<String, String>();
-        hashMap.put("r", test2.toString());
-        hashMap.put("s", a.toString());
-        return hashMap;
     }
 
     public static void getMusic() throws Exception {
