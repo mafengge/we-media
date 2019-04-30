@@ -1,25 +1,14 @@
 package com.media.utils;
 
 import com.baidu.aip.ocr.AipOcr;
-import com.media.bean.Words;
-import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
-import javax.imageio.ImageReadParam;
-import javax.imageio.ImageReader;
-import javax.imageio.stream.ImageInputStream;
 import lombok.extern.slf4j.Slf4j;
-import lombok.val;
 import org.apache.commons.io.FileUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -41,18 +30,6 @@ public class AipOcrUtil {
     public static final String SECRET_KEY = "Dtd0dL5tvjUgHA3XEykHsDL22MVVrAkg";
 
     public static void main(String[] args) throws Exception {
-        /*ChromeOptions options = new ChromeOptions();
-        options.addArguments("start-maximized");
-        options.addArguments("start-fullscreen");
-        options.addArguments("disable-infobars");
-        WebDriver driver = new EventFiringWebDriver(new ChromeDriver()).register(new DriverListener());
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        driver.manage().timeouts().setScriptTimeout(30,TimeUnit.SECONDS);
-        driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
-        driver.get("D:\\Get Twitter Followers, YouTube Views, Likes, Subscribers - YouLikeHits.html");
-        driver.findElement(By.name("answer")).sendKeys(String.valueOf(7));
-        driver.findElement(By.xpath("//*[@id=\"captcha\"]/table[2]/tbody/tr/td/input[2]")).submit();
-        Thread.sleep(2000);*/
         getPoints();
     }
 
