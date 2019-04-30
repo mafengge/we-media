@@ -30,7 +30,26 @@ public class AipOcrUtil {
     public static final String SECRET_KEY = "Dtd0dL5tvjUgHA3XEykHsDL22MVVrAkg";
 
     public static void main(String[] args) throws Exception {
-        getPoints();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                getPoints("mafengge", "maniqiu5",1);
+            }
+        }).start();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                getPoints("505877502", "lp123456",1);
+            }
+        }).start();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                getPoints("xingyu", "123456",1);
+            }
+        }).start();
+
+        //getPoints("maniqiu", "maniqiu5");
     }
 
     public static Integer getAipOcr() throws Exception {
@@ -62,25 +81,27 @@ public class AipOcrUtil {
     /**
      * 刷积分
      */
-    public static void getPoints() {
+    public static void getPoints(String userName, String passWord,int err) {
         try {
             ChromeOptions options = new ChromeOptions();
             options.addArguments("start-maximized");
             options.addArguments("start-fullscreen");
             options.addArguments("disable-infobars");
-            WebDriver driver = new EventFiringWebDriver(new ChromeDriver()).register(new DriverListener());
+            WebDriver driver = new EventFiringWebDriver(new ChromeDriver()).register(new DriverListener(userName, passWord, err));
             driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
             driver.manage().timeouts().setScriptTimeout(30,TimeUnit.SECONDS);
             driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
             driver.get("https://www.youlikehits.com/login.php");
             WebElement username = driver.findElement(By.id("username"));
             WebElement password = driver.findElement(By.id("password"));
-            username.sendKeys("mafengge");
-            password.sendKeys("maniqiu5");
+            username.sendKeys(userName);
+            password.sendKeys(passWord);
             driver.findElement(By.id("loginform")).submit();
             driver.get("https://www.youlikehits.com/youtubenew2.php");
-
-            for(int i=0;i<5000;i++) {
+            /*if (err==10) {
+                driver.quit();
+            }*/
+            for(int i=0;i<50000000;i++) {
                 if (doesWebElementExist(driver)) {
                     //截图
                     screenShots(driver);

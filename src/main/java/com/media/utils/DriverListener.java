@@ -1,12 +1,23 @@
 package com.media.utils;
 
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.WebDriverEventListener;
 @Slf4j
+@Data
 public class DriverListener implements WebDriverEventListener {
+    private String userName;
+    private String passWord;
+    private Integer err;
+    public DriverListener(String userName, String passWord, Integer err) {
+        this.userName = userName;
+        this.passWord = passWord;
+        this.err = err;
+    }
 
     @Override
     public void beforeNavigateTo(String url, WebDriver driver) {
@@ -67,11 +78,16 @@ public class DriverListener implements WebDriverEventListener {
         //Exception occured
         log.info("发生异常: " + error);
         try {
-            if (error instanceof NoSuchMethodException) {
+            if (error instanceof NoSuchElementException) {
 
             } else {
                 driver.close();
-                AipOcrUtil.getPoints();
+                err ++;
+                if (err == 10) {
+                    driver.quit();
+                } else {
+                    AipOcrUtil.getPoints(userName, passWord,err);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -21,6 +21,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
@@ -30,7 +31,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 public class MediaApplication {
 
     public static void main(String[] args) throws Exception {
-        //SpringApplication.run(MediaApplication.class, args);
+        SpringApplication.run(MediaApplication.class, args);
      /*   ScheduledService scheduledService = new ScheduledService();
         scheduledService.scheduled();
         scheduledService.scheduled1();
@@ -61,26 +62,4 @@ public class MediaApplication {
         }
     }
 
-    public static void getPoints() throws Exception{
-        ChromeOptions option = new ChromeOptions();
-        //后台运行
-        //option.addArguments("headless");
-        //取消"Chrome正在受到自动软件的控制"提示
-        option.addArguments("disable-infobars");
-        WebDriver driver = new EventFiringWebDriver(new ChromeDriver()).register(new DriverListener());
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        driver.manage().timeouts().setScriptTimeout(30,TimeUnit.SECONDS);
-        driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
-        driver.get("https://www.youlikehits.com/login.php");//打开指定的网站
-        WebElement username = driver.findElement(By.id("username"));
-        WebElement password = driver.findElement(By.id("password"));
-        username.sendKeys("mafengge");
-        password.sendKeys("maniqiu5");
-        driver.findElement(By.id("loginform")).submit();
-        driver.get("https://www.youlikehits.com/youtubenew2.php");
-        for(int i=0;i<100;i++) {
-            driver.findElement(By.className("followbutton")).click();
-            Thread.sleep(140000);
-        }
-    }
 }

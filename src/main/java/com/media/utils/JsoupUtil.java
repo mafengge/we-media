@@ -26,7 +26,6 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
-import org.openqa.selenium.support.events.EventFiringWebDriver;
 @Slf4j
 public class JsoupUtil {
 
@@ -187,48 +186,6 @@ public class JsoupUtil {
         driver.close();
     }
 
-    public static void main(String[] args) throws InterruptedException {
-        WebDriver driver = new EventFiringWebDriver(new ChromeDriver()).register(new DriverListener());
-        driver.get("https://www.youlikehits.com/login.php");//打开指定的网站
-        WebElement username = driver.findElement(By.id("username"));
-        WebElement password = driver.findElement(By.id("password"));
-        username.sendKeys("mafengge");
-        password.sendKeys("maniqiu5");
-        driver.findElement(By.id("loginform")).submit();
-        driver.get("https://www.youlikehits.com/youtubenew2.php");
-        Thread.sleep(6000);
-        for (int i = 0; i < 10; i++) {
-            driver.findElement(By.className("followbutton")).click();
-            Thread.sleep(140000);
-        }
-
-        /*driver.findElement(By.className("likebutton")).click();
-        Thread.sleep(15000);
-        driver.findElement(By.className("ytd-button-renderer")).click();*/
-
-        /*d_parser_video.click();
-        WebElement thumbnail = driver.findElement(By.className("thumbnail"));
-        log.info(thumbnail.getAttribute("a"));
-        String windowHandle = driver.getWindowHandle();
-        log.info(windowHandle);
-
-        String currentWindow = driver.getWindowHandle(); //获取当前窗口的句柄
-        Set<String> handles = driver.getWindowHandles(); //获取所有窗口的句柄
-        Iterator<String> it = handles.iterator();
-        while (it.hasNext()) {
-            String handle = it.next();
-            if (!handle.equals(currentWindow)) {
-                driver = driver.switchTo().window(handle); //切换到新的句柄所指向的窗口
-                log.info(driver.getCurrentUrl());
-                //log.info(driver.getPageSource());
-                String pageSource = driver.getPageSource();
-                String substring = pageSource.substring(pageSource.indexOf("vjs-tech"), pageSource.indexOf("%3D"));
-                String http = substring.substring(substring.indexOf("http"), substring.length());
-                log.info(http);
-                break;
-            }
-        }*/
-    }
 
     public static void main(String args) throws Exception {
         FirefoxBinary firefoxBinary = new FirefoxBinary();
