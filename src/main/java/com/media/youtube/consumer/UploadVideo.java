@@ -24,7 +24,7 @@ import com.google.api.services.youtube.model.Video;
 import com.google.api.services.youtube.model.VideoSnippet;
 import com.google.api.services.youtube.model.VideoStatus;
 import com.media.bean.VideoUploadBean;
-import com.media.utils.FileUtils;
+import com.media.utils.MediaFileUtils;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -95,7 +95,7 @@ public class UploadVideo {
                             break;
                         case MEDIA_COMPLETE:
                             log.info("Upload Completed!");
-                            FileUtils.delFile(uploadvideoBean.getVideoPath());
+                            MediaFileUtils.delFile(uploadvideoBean.getVideoPath());
                             break;
                         case NOT_STARTED:
                             log.info("Upload Not Started!");

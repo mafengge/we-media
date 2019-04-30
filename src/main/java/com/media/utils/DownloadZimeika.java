@@ -54,7 +54,7 @@ public class DownloadZimeika {
             String href = driver.findElement(By.className("btn-primary")).getAttribute("href");
             log.info(href);
             zimeikaBean.setVideoUrl(href);
-            FileUtils.writeFile(MediaUtils.zimekaInfoPath, JsonUtil.toJson(zimeikaBean, true) + ",");
+            MediaFileUtils.writeFile(MediaUtils.zimekaInfoPath, JsonUtil.toJson(zimeikaBean, true) + ",");
             // + "--" + zimeikaBean.getAuthor()
             DownloadZimeika.downloadVideo(MediaUtils.zimeikaVideoPath, zimeikaBean.getVideoTitle(), href);
         } catch (Exception e) {

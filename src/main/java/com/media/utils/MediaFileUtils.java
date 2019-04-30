@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
  * @date: 21:18 2019/4/21
  */
 @Slf4j
-public class FileUtils {
+public class MediaFileUtils {
 
     public static void main(String args[]) {
         //writeFile(MediaUtils.zimekaInfoPath + "aa.txt", "aaa");

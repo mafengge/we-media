@@ -28,6 +28,9 @@ dependencies {
     compile 'org.seleniumhq.selenium:selenium-support:3.0.0'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    // https://mvnrepository.com/artifact/com.baidu.aip/java-sdk
+    compile group: 'com.baidu.aip', name: 'java-sdk', version: '4.11.0'
+
 }
 
 

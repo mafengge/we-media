@@ -103,7 +103,7 @@ public class VideoUtils {
     }
 
     public static void main(String[] args) throws Exception {
-        List<String> allFile = FileUtils.getAllFile(MediaUtils.zimeikaVideoPath, true);
+        List<String> allFile = MediaFileUtils.getAllFile(MediaUtils.zimeikaVideoPath, true);
         for(int p=0;p<allFile.size();p++) {
             shearVideo(allFile.get(p));
             log.info(allFile.get(p));
@@ -162,7 +162,7 @@ public class VideoUtils {
     public static void shearVideo(String outPath){
         try {
             long a = System.currentTimeMillis();
-            FileUtils.rename(outPath, MediaUtils.zimeikaVideoPath + a + ".mp4");
+            MediaFileUtils.rename(outPath, MediaUtils.zimeikaVideoPath + a + ".mp4");
             Thread.sleep(1000);
             Runtime runtime = Runtime.getRuntime();
             //ffmpeg  -i aaa.mp4 -vcodec copy -acodec copy -ss 00:00:03 cc.mp4 -y
@@ -174,8 +174,8 @@ public class VideoUtils {
                 + " -y";
             runtime.exec(cut);
             Thread.sleep(3000);
-            FileUtils.rename(MediaUtils.zimeikaVideoPath + a + ".mp4",outPath);
-            FileUtils.delFile(MediaUtils.zimeikaVideoPath + a + ".mp4");
+            MediaFileUtils.rename(MediaUtils.zimeikaVideoPath + a + ".mp4",outPath);
+            MediaFileUtils.delFile(MediaUtils.zimeikaVideoPath + a + ".mp4");
             log.info("剪辑成功：" + outPath);
             /*final Thread t1 = new Thread(new Runnable() {
 

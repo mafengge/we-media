@@ -1,7 +1,7 @@
 package com.media.start;
 
 import com.media.bean.VideoUploadBean;
-import com.media.utils.FileUtils;
+import com.media.utils.MediaFileUtils;
 import com.media.utils.MediaUtils;
 import com.media.youtube.consumer.UploadVideo;
 import java.io.File;
@@ -22,7 +22,7 @@ public class ScheduledService {
     }
 
     public static void uploadYoutube(String proName, String userId, int uploadCount) {
-        List<String> allFile = FileUtils.getAllFile(MediaUtils.zimeikaVideoPath, true);
+        List<String> allFile = MediaFileUtils.getAllFile(MediaUtils.zimeikaVideoPath, true);
         for (int i = 0; i < uploadCount; i++) {
             String filePath = allFile.get(i);
             String title = filePath.substring(filePath.lastIndexOf(File.separator) + 1, filePath.indexOf(".mp4"));
