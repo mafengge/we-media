@@ -15,16 +15,16 @@ import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.math.BigInteger;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.events.EventFiringWebDriver;
 
 /**
  * The sample demonstrates how to handle file download. To cancel download you must return {@code false} from the {@link
  * DownloadHandler#allowDownload(com.teamdev.jxbrowser.chromium.DownloadItem)} method. To listed for download update
  * events you can register your own {@link com.teamdev.jxbrowser.chromium.events.DownloadListener}.
  */
+@Slf4j
 public class DownloadZimeika {
 
     static {
@@ -52,13 +52,13 @@ public class DownloadZimeika {
             driver.get(url);
             driver.findElement(org.openqa.selenium.By.id("d_parser_video")).click();
             String href = driver.findElement(By.className("btn-primary")).getAttribute("href");
-            System.out.println(href);
+            log.info(href);
             zimeikaBean.setVideoUrl(href);
             FileUtils.writeFile(MediaUtils.zimekaInfoPath, JsonUtil.toJson(zimeikaBean, true) + ",");
             // + "--" + zimeikaBean.getAuthor()
             DownloadZimeika.downloadVideo(MediaUtils.zimeikaVideoPath, zimeikaBean.getVideoTitle(), href);
         } catch (Exception e) {
-            System.out.println("获取自媒咖视频下载地址报错：" + e.getMessage());
+            log.info("获取自媒咖视频下载地址报错：" + e.getMessage());
         }
     }
 
@@ -74,7 +74,7 @@ public class DownloadZimeika {
                         public void onDownloadUpdated(DownloadEvent event) {
                             DownloadItem download = event.getDownloadItem();
                             if (download.isCompleted()) {
-                                System.out.println("Download is completed!");
+                                log.info("Download is completed!");
                                 /*new Thread(new Runnable() {
                                     @Override
                                     public void run() {
@@ -85,7 +85,7 @@ public class DownloadZimeika {
                             }
                         }
                     });
-                    System.out.println("Destination file: " +
+                    log.info("Destination file: " +
                         download.getDestinationFile().getAbsolutePath());
                     return true;
                 }
@@ -93,7 +93,7 @@ public class DownloadZimeika {
 
             browser.loadURL(videoUrl);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            log.info(e.getMessage());
         }
     }
     public static void main(String[] args) throws Exception{
@@ -103,7 +103,7 @@ public class DownloadZimeika {
         driver.findElement(org.openqa.selenium.By.id("d_parser_video")).click();
         Thread.sleep(4000);
         String href = driver.findElement(org.openqa.selenium.By.className("btn-primary")).getAttribute("href");
-        System.out.println(driver.findElement(org.openqa.selenium.By.className("btn-primary")).getText());
-        System.out.println(driver.findElement(org.openqa.selenium.By.className("btn-primary")).getAttribute("href"));*/
+        log.info(driver.findElement(org.openqa.selenium.By.className("btn-primary")).getText());
+        log.info(driver.findElement(org.openqa.selenium.By.className("btn-primary")).getAttribute("href"));*/
     }
 }

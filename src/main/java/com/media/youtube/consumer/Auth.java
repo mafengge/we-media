@@ -18,12 +18,16 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Shared class used by every sample. Contains methods for authorizing a user and caching credentials.
  */
+@Slf4j
 public class Auth {
-
+public static void main(String[] args){
+ System.out.println(Auth.class.getResourceAsStream("/mafengge.json"));
+}
     /**
      * Define a global instance of the HTTP transport.
      */
@@ -54,7 +58,7 @@ public class Auth {
         // Checks that the defaults have been replaced (Default = "Enter X here").
         if (clientSecrets.getDetails().getClientId().startsWith("Enter")
             || clientSecrets.getDetails().getClientSecret().startsWith("Enter ")) {
-            System.out.println(
+            log.info(
                 "Enter Client ID and Secret from https://console.developers.google.com/project/_/apiui/credential "
                     + "into src/main/resources/client_secrets.json");
             System.exit(1);
@@ -62,7 +66,7 @@ public class Auth {
 
         // This creates the credentials datastore at ~/.oauth-credentials/${credentialDatastore}
         //FileDataStoreFactory fileDataStoreFactory = new FileDataStoreFactory(new File(System.getProperty("user.home") + "/" + CREDENTIALS_DIRECTORY));
-        FileDataStoreFactory fileDataStoreFactory = new FileDataStoreFactory(new File(".oauth-credentials"));
+        FileDataStoreFactory fileDataStoreFactory = new FileDataStoreFactory(new File("D://.oauth-credentials"));
         DataStore<StoredCredential> datastore = fileDataStoreFactory.getDataStore(credentialDatastore);
 
         GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
@@ -71,7 +75,6 @@ public class Auth {
 
         // Build the local server and bind it to port 8080
         LocalServerReceiver localReceiver = new LocalServerReceiver.Builder().setPort(8080).build();
-
         // Authorize.
         return new AuthorizationCodeInstalledApp(flow, localReceiver).authorize(userId);
     }

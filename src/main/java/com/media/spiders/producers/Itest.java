@@ -9,16 +9,14 @@ import javax.script.Invocable;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
+import lombok.extern.slf4j.Slf4j;
+import net.sf.json.JSONObject;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import net.sf.json.JSONObject;
-import org.openqa.selenium.firefox.FirefoxDriver;
-
+@Slf4j
 public class Itest {
 
     public static void main(String[] args) throws Exception {
@@ -39,7 +37,7 @@ public class Itest {
         Map<String, String> map = excuteJs(link);
         uriAPI = uriAPI + videoId + "?r=" + map.get("r") + "&s=" + map.get("s");
         HttpGet httpGet = new HttpGet(uriAPI);
-        System.out.println(uriAPI);
+        log.info(uriAPI);
         HttpResponse httpResponse = HttpClients.createDefault().execute(httpGet);
         String result = "";
         if (httpResponse.getStatusLine().getStatusCode() == 200) {

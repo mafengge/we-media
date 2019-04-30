@@ -6,21 +6,14 @@ import com.media.spiders.producers.LinkTypeData;
 import com.media.spiders.producers.Rule;
 import com.teamdev.jxbrowser.chromium.ba;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.math.BigInteger;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
-import javax.script.Invocable;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -34,7 +27,7 @@ import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
-
+@Slf4j
 public class JsoupUtil {
 
     public static String filePathBase = "D:/home/work/pics";
@@ -64,7 +57,7 @@ public class JsoupUtil {
     public static void getHtml() {
         Rule rule = new Rule("http://www.zain800.com/nhgx/623.htm", null, null, "img[src]", Rule.SELECTION, Rule.GET);
         String html = ExtractService.getHtml(rule);
-        System.out.println(html);
+        log.info(html);
     }
 
     public static void getPic() throws Exception {
@@ -72,7 +65,6 @@ public class JsoupUtil {
             Rule rule = new Rule("http://shuabao.net/wuliaotu/page/" + i, null, null, "img[src]", Rule.SELECTION,
                 Rule.GET);
             Document doc = ExtractService.getDoc(rule);
-            System.out.println(doc);
             Element result = doc.getElementById("posts");
             Elements divs = result.getElementsByTag("div");
             int j = 1;
@@ -82,7 +74,7 @@ public class JsoupUtil {
                     continue;
                 }
                 Element title = div.getElementsByTag("a").get(0);
-                System.out.println(title.attr("title"));
+                log.info(title.attr("title"));
                 FileUtils.writeStringToFile(new File(filePathBase + "/pic_title.txt"),
                     (i + "_" + j + "__" + title.attr("title") + "\n"), true);
                 Element pic = div.getElementsByTag("p").get(0).getElementsByTag("img").get(0);
@@ -104,7 +96,6 @@ public class JsoupUtil {
             Rule rule = new Rule("http://jandan.net/pic/page-" + a + "#comments", null, null, "img[src]",
                 Rule.SELECTION, Rule.GET);
             Document doc = ExtractService.getDoc(rule);
-            System.out.println(doc);
             Elements commlist = doc.getElementsByClass("commentlist");
             Elements lis = commlist.get(0).getElementsByTag("li");
             for (int j = 0; j < lis.size(); j++) {
@@ -112,11 +103,11 @@ public class JsoupUtil {
                 String url = img.attr("src");
                 //String suff = url.substring(url.lastIndexOf("."));
                 if (null != url && url.trim().length() != 0) {
-                    System.out.println(url);
+                    log.info(url);
                     FileUtils.writeStringToFile(new File(filePathBase + "/pic_title.txt"), (url + "\n"), true);
                     String suff = url.substring(url.lastIndexOf("."));
                     byte[] btImg = GetImage.getImageFromNetByUrl(url.replace("thumb180", "large"));
-                    System.out.println(filePathBase + "/jandan/" + i + "_" + b);
+                    log.info(filePathBase + "/jandan/" + i + "_" + b);
                     FileUtils
                         .writeByteArrayToFile(new File(filePathBase + "/jandan/" + i + "_" + b + "_" + suff), btImg);
                     b++;
@@ -186,12 +177,12 @@ public class JsoupUtil {
                 zimeikaBean.setAuthor(author);
                 zimeikaBean.setVideoDuring(videoDuring);
                 zimeikaBean.setImgUrl(imgUrl);
-                System.out.println(element.getElementsByClass("video-title").text());
+                log.info(element.getElementsByClass("video-title").text());
                 zimeikaUrl = "http://zimeika.com/" + zimeikaUrl;
                 DownloadZimeika.getDownloadUrl(zimeikaBean, driver, zimeikaUrl);
             }
             Thread.sleep(1000);
-            System.out.println("读取第：" + i + "页");
+            log.info("读取第：" + i + "页");
         }
         driver.close();
     }
@@ -217,9 +208,9 @@ public class JsoupUtil {
 
         /*d_parser_video.click();
         WebElement thumbnail = driver.findElement(By.className("thumbnail"));
-        System.out.println(thumbnail.getAttribute("a"));
+        log.info(thumbnail.getAttribute("a"));
         String windowHandle = driver.getWindowHandle();
-        System.out.println(windowHandle);
+        log.info(windowHandle);
 
         String currentWindow = driver.getWindowHandle(); //获取当前窗口的句柄
         Set<String> handles = driver.getWindowHandles(); //获取所有窗口的句柄
@@ -228,12 +219,12 @@ public class JsoupUtil {
             String handle = it.next();
             if (!handle.equals(currentWindow)) {
                 driver = driver.switchTo().window(handle); //切换到新的句柄所指向的窗口
-                System.out.println(driver.getCurrentUrl());
-                //System.out.println(driver.getPageSource());
+                log.info(driver.getCurrentUrl());
+                //log.info(driver.getPageSource());
                 String pageSource = driver.getPageSource();
                 String substring = pageSource.substring(pageSource.indexOf("vjs-tech"), pageSource.indexOf("%3D"));
                 String http = substring.substring(substring.indexOf("http"), substring.length());
-                System.out.println(http);
+                log.info(http);
                 break;
             }
         }*/
@@ -252,9 +243,9 @@ public class JsoupUtil {
         WebElement d_parser_video = driver.findElement(By.id("origin_url"));
         d_parser_video.click();
         WebElement thumbnail = driver.findElement(By.className("thumbnail"));
-        System.out.println(thumbnail.getAttribute("a"));
+        log.info(thumbnail.getAttribute("a"));
         String windowHandle = driver.getWindowHandle();
-        System.out.println(windowHandle);
+        log.info(windowHandle);
 
         String currentWindow = driver.getWindowHandle(); //获取当前窗口的句柄
         Set<String> handles = driver.getWindowHandles(); //获取所有窗口的句柄
@@ -263,14 +254,14 @@ public class JsoupUtil {
             String handle = it.next();
             if (!handle.equals(currentWindow)) {
                 //driver = driver.switchTo().window(handle); //切换到新的句柄所指向的窗口
-                System.out.println(driver.getCurrentUrl());
-                //System.out.println(driver.getPageSource());
+                log.info(driver.getCurrentUrl());
+                //log.info(driver.getPageSource());
                 String pageSource = driver.getPageSource();
                 String substring = pageSource.substring(pageSource.indexOf("vjs-tech"), pageSource.indexOf("%3D"));
                 String http = substring.substring(substring.indexOf("http"), substring.length());
-                System.out.println(http);
+                log.info(http);
                 /*WebElement tt_video_1a6fa = driver.findElement(By.id("vjs_video_3"));
-                System.out.println(tt_video_1a6fa.getText());*/
+                log.info(tt_video_1a6fa.getText());*/
                 break;
             }
         }
@@ -284,7 +275,6 @@ public class JsoupUtil {
             Rule rule = new Rule("https://page31.ctfile.com/u/1506031/17914322", null, null, "img[src]", Rule.SELECTION,
                 Rule.GET);
             Document doc = ExtractService.getDoc(rule);
-            System.out.println(doc);
 			/*Elements commlist = doc.getElementsByClass("commentlist");
 			Elements lis = commlist.get(0).getElementsByTag("li");
 			for(int j=0;j<lis.size();j++){
@@ -292,11 +282,11 @@ public class JsoupUtil {
 				String url = img.attr("src");
 				//String suff = url.substring(url.lastIndexOf("."));
 				if(null!=url&&url.trim().length()!=0){
-					System.out.println(url);
+					log.info(url);
 					FileUtils.writeStringToFile(new File(filePathBase + "/pic_title.txt"), (url + "\n"), true);
 					String suff = url.substring(url.lastIndexOf("."));
 					byte[] btImg = GetImage.getImageFromNetByUrl(url.replace("thumb180", "large"));
-					System.out.println(filePathBase + "/jandan/"+ i + "_" + b);
+					log.info(filePathBase + "/jandan/"+ i + "_" + b);
 					FileUtils.writeByteArrayToFile(new File(filePathBase + "/jandan/"+ i + "_" + b+"_"+suff), btImg);
 					b++;
 				}
@@ -319,7 +309,6 @@ public class JsoupUtil {
 
     public static void forDiv(Rule rule) throws Exception {
         Document doc = ExtractService.getDoc(rule);
-        System.out.println(doc);
         Elements options = doc.getElementsByClass("options");
         for (Element option : options) {
             Elements lis = option.getElementsByTag("li");
@@ -330,7 +319,7 @@ public class JsoupUtil {
                 if (Integer.parseInt(likeUp) > 20000) {
                     String url = lis.get(3).attr("data-pic");
                     String suff = url.substring(url.lastIndexOf("."));
-                    System.out.println(lis.get(3).attr("data-pic"));
+                    log.info(lis.get(3).attr("data-pic"));
                     FileUtils.writeStringToFile(new File(filePathBase + "/pic_title.txt"), (url + "\n"), true);
                     byte[] btImg = GetImage.getImageFromNetByUrl(url);
                     FileUtils.writeByteArrayToFile(new File(filePathBase + "/nhsq" + suff + ".gif"), btImg);
@@ -341,9 +330,9 @@ public class JsoupUtil {
 
     public static void printf(List<LinkTypeData> datas) {
         for (LinkTypeData data : datas) {
-            System.out.println(data.getLinkText());
-            System.out.println(data.getLinkHref());
-            System.out.println("***********************************");
+            log.info(data.getLinkText());
+            log.info(data.getLinkHref());
+            log.info("***********************************");
         }
     }
 }

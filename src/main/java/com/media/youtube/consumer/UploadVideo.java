@@ -21,10 +21,8 @@ import com.google.api.client.googleapis.media.MediaHttpUploaderProgressListener;
 import com.google.api.client.http.InputStreamContent;
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.Video;
-import com.google.api.services.youtube.model.VideoProcessingDetails;
 import com.google.api.services.youtube.model.VideoSnippet;
 import com.google.api.services.youtube.model.VideoStatus;
-
 import com.media.bean.VideoUploadBean;
 import com.media.utils.FileUtils;
 import java.io.File;
@@ -34,6 +32,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Upload a video to the authenticated user's channel. Use OAuth 2.0 to authorize the request. Note that you must add
@@ -41,6 +40,7 @@ import java.util.List;
  *
  * @author Jeremy Walker
  */
+@Slf4j
 public class UploadVideo {
 
     private static YouTube youtube;
@@ -58,7 +58,7 @@ public class UploadVideo {
             youtube = new YouTube.Builder(Auth.HTTP_TRANSPORT, Auth.JSON_FACTORY, credential).setApplicationName(
                 "youtube-uploadvideo-feng").build();
 
-            System.out.println("Uploading: " + uploadvideoBean.getVideoPath());
+            log.info("Uploading: " + uploadvideoBean.getVideoPath());
 
             Video videoObjectDefiningMetadata = new Video();
 
@@ -69,7 +69,6 @@ public class UploadVideo {
             videoObjectDefiningMetadata.setSnippet(setSnippet(uploadvideoBean));
             File file = new File(uploadvideoBean.getVideoPath());
             InputStream stream = new FileInputStream(file);
-            System.out.println(file.length());
             InputStreamContent mediaContent = new InputStreamContent(VIDEO_FILE_FORMAT, stream);
             mediaContent.setLength(file.length());
 
@@ -85,21 +84,21 @@ public class UploadVideo {
                 public void progressChanged(MediaHttpUploader uploader) throws IOException {
                     switch (uploader.getUploadState()) {
                         case INITIATION_STARTED:
-                            System.out.println("Initiation Started");
+                            log.info("Initiation Started");
                             break;
                         case INITIATION_COMPLETE:
-                            System.out.println("Initiation Completed");
+                            log.info("Initiation Completed");
                             break;
                         case MEDIA_IN_PROGRESS:
-                            System.out.println("Upload in progress");
-                            System.out.println("Upload percentage: " + uploader.getProgress());
+                            log.info("Upload in progress");
+                            log.info("Upload percentage: " + uploader.getProgress());
                             break;
                         case MEDIA_COMPLETE:
-                            System.out.println("Upload Completed!");
+                            log.info("Upload Completed!");
                             FileUtils.delFile(uploadvideoBean.getVideoPath());
                             break;
                         case NOT_STARTED:
-                            System.out.println("Upload Not Started!");
+                            log.info("Upload Not Started!");
                             break;
                     }
                 }
@@ -109,12 +108,12 @@ public class UploadVideo {
 
             Video returnedVideo = videoInsert.execute();
 
-            System.out.println("\n================== Returned Video ==================\n");
-            System.out.println("  - Id: " + returnedVideo.getId());
-            System.out.println("  - Title: " + returnedVideo.getSnippet().getTitle());
-            System.out.println("  - Tags: " + returnedVideo.getSnippet().getTags());
-            System.out.println("  - Privacy Status: " + returnedVideo.getStatus().getPrivacyStatus());
-            System.out.println("  - Video Count: " + returnedVideo.getStatistics().getViewCount());
+            log.info("\n================== Returned Video ==================\n");
+            log.info("  - Id: " + returnedVideo.getId());
+            log.info("  - Title: " + returnedVideo.getSnippet().getTitle());
+            log.info("  - Tags: " + returnedVideo.getSnippet().getTags());
+            log.info("  - Privacy Status: " + returnedVideo.getStatus().getPrivacyStatus());
+            log.info("  - Video Count: " + returnedVideo.getStatistics().getViewCount());
         } catch (GoogleJsonResponseException e) {
             System.err.println("GoogleJsonResponseException code: " + e.getDetails().getCode() + " : "
                 + e.getDetails().getMessage());

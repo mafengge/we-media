@@ -3,13 +3,15 @@ package com.media.utils;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class MediaUtils {
 
     public static final String zimekaInfoPath = "D:" + File.separator + "zimeika" + File.separator + "info.txt";
-
-    public static final String zimeikaVideoPath =
-        "D:" + File.separator + "zimeika" + File.separator + "video" + File.separator + MediaUtils.getCurrDate()
+    //MediaUtils.getCurrDate()
+    public static final String zimeikaVideoPath = /*"/root/youtube/zimeika/";*/
+        "D:" + File.separator + "zimeika" + File.separator + "video" + File.separator + "2019-04-28"
             + File.separator;
 
     public static final String ffmpegPath = "D:/ffmpeg-4.1.1-win64-static/bin/ffmpeg.exe";
@@ -25,7 +27,7 @@ public class MediaUtils {
 
             @Override
             public void run() {
-                System.out.println("t1");
+                log.info("t1");
                 try {
                     Thread.sleep(3000);
                 } catch (InterruptedException e) {
@@ -42,7 +44,7 @@ public class MediaUtils {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                System.out.println("t2");
+                log.info("t2");
             }
         });
         Thread t3 = new Thread(new Runnable() {
@@ -54,7 +56,7 @@ public class MediaUtils {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                System.out.println("t3");
+                log.info("t3");
             }
         });
         t3.start();

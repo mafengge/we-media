@@ -6,7 +6,9 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class GetImage {
 
     /**
@@ -16,11 +18,11 @@ public class GetImage {
         String url = "http://www.baidu.com/img/baidu_sylogo1.gif";
         byte[] btImg = getImageFromNetByUrl(url);
         if (null != btImg && btImg.length > 0) {
-            System.out.println("读取到：" + btImg.length + " 字节");
+            log.info("读取到：" + btImg.length + " 字节");
             String fileName = "百度.gif";
             writeImageToDisk(btImg, fileName);
         } else {
-            System.out.println("没有从该连接获得内容");
+            log.info("没有从该连接获得内容");
         }
     }
 
@@ -37,7 +39,7 @@ public class GetImage {
             fops.write(img);
             fops.flush();
             fops.close();
-            System.out.println("图片已经写入到C盘");
+            log.info("图片已经写入到C盘");
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -1,9 +1,8 @@
 package com.media.spiders.producers;
 
 import java.io.IOException;
-
 import java.net.URLDecoder;
-import org.apache.http.HttpHost;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
@@ -23,7 +22,7 @@ import org.springframework.util.StringUtils;
  * @author hedong
  * @time 2019年2月8日 02:14:39
  */
-
+@Slf4j
 public class DouYinDecode {
     /**
      * 特别注意，特别注意，特别注意
@@ -44,7 +43,7 @@ public class DouYinDecode {
         // 需要解析的抖音地址
         String url2 = "#在抖音，记录美好生活#男人还是不要自着si！！！ http://v.douyin.com/F3hbQx/ 复制此链接，打开【抖音短视频】，直接观看视频！";
         String url4 = "http://v9-default.ixigua.com/31d5841ea1e66c72c5a7805ad9bbafc8/5cbaaa8d/video/m/220bbb5d166135e434cbf938ad748e7ca711161de9210000014fc9021aca/?rc=anRkZnU6eDtwbDMzOjczM0ApQHRAbzY6NjgzMzUzMzg0NDUzNDVvQGgzdSlAZjN1KWRzcmd5a3VyZ3lybHh3ZjUzQGxmc2tpam1vcF8tLS8tL3NzLW8jbyMwNS4uNDItLjEuLy0xNi06I28jOmEtcSM6YHZpXGJmK2BeYmYrXnFsOiMuL14%3D";
-        System.out.println(URLDecoder.decode(url4, "GBK"));
+        log.info(URLDecoder.decode(url4, "GBK"));
         String url = decodeHttpUrl(url2);
         Document doc = null;
         try {
@@ -60,10 +59,10 @@ public class DouYinDecode {
         String replaceAll = url1.substring(11, end).replaceAll("playwm", "play");
         String uri = originalUrl(replaceAll);
         if (StringUtils.isEmpty(uri)) {
-            System.out.println("网址无效");
+            log.info("网址无效");
         } else {
             // 控制台打印解析地址
-            System.out.println("网站地址:" + uri);
+            log.info("网站地址:" + uri);
         }
     }
 

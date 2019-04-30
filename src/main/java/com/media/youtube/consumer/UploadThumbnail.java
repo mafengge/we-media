@@ -13,9 +13,14 @@ import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.YouTube.Thumbnails.Set;
 import com.google.api.services.youtube.model.ThumbnailSetResponse;
 import com.google.common.collect.Lists;
-
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * This sample uses MediaHttpUploader to upload an image and then calls the
@@ -24,6 +29,7 @@ import java.util.List;
  *
  * @author Ibrahim Ulukaya
  */
+@Slf4j
 public class UploadThumbnail {
 
     /**
@@ -60,11 +66,11 @@ public class UploadThumbnail {
 
             // Prompt the user to enter the video ID of the video being updated.
             String videoId = getVideoIdFromUser();
-            System.out.println("You chose " + videoId + " to upload a thumbnail.");
+            log.info("You chose " + videoId + " to upload a thumbnail.");
 
             // Prompt the user to specify the location of the thumbnail image.
             File imageFile = getImageFromUser();
-            System.out.println("You chose " + imageFile + " to upload.");
+            log.info("You chose " + imageFile + " to upload.");
 
             // Create an object that contains the thumbnail image file's
             // contents.
@@ -97,28 +103,28 @@ public class UploadThumbnail {
                         // This value is set before the initiation request is
                         // sent.
                         case INITIATION_STARTED:
-                            System.out.println("Initiation Started");
+                            log.info("Initiation Started");
                             break;
                         // This value is set after the initiation request
                         //  completes.
                         case INITIATION_COMPLETE:
-                            System.out.println("Initiation Completed");
+                            log.info("Initiation Completed");
                             break;
                         // This value is set after a media file chunk is
                         // uploaded.
                         case MEDIA_IN_PROGRESS:
-                            System.out.println("Upload in progress");
-                            System.out.println("Upload percentage: " + uploader.getProgress());
+                            log.info("Upload in progress");
+                            log.info("Upload percentage: " + uploader.getProgress());
                             break;
                         // This value is set after the entire media file has
                         //  been successfully uploaded.
                         case MEDIA_COMPLETE:
-                            System.out.println("Upload Completed!");
+                            log.info("Upload Completed!");
                             break;
                         // This value indicates that the upload process has
                         //  not started yet.
                         case NOT_STARTED:
-                            System.out.println("Upload Not Started!");
+                            log.info("Upload Not Started!");
                             break;
                     }
                 }
@@ -129,8 +135,8 @@ public class UploadThumbnail {
             ThumbnailSetResponse setResponse = thumbnailSet.execute();
 
             // Print the URL for the updated video's thumbnail image.
-            System.out.println("\n================== Uploaded Thumbnail ==================\n");
-            System.out.println("  - Url: " + setResponse.getItems().get(0).getDefault().getUrl());
+            log.info("\n================== Uploaded Thumbnail ==================\n");
+            log.info("  - Url: " + setResponse.getItems().get(0).getDefault().getUrl());
 
         } catch (GoogleJsonResponseException e) {
             System.err.println("GoogleJsonResponseException code: " + e.getDetails().getCode() + " : "

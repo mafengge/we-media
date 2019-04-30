@@ -1,16 +1,16 @@
 package com.media.utils;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
+@Slf4j
 public class FacebookTest {
 
     public static void main(String[] args) {
@@ -49,7 +49,7 @@ public class FacebookTest {
                     if (!ids.contains(id)) {
                         ids.add(id);
                         System.out.print("帖子内容：" + messageElement.getText());
-                        System.out.println("");
+                        log.info("");
                     }
                 }
                 ((JavascriptExecutor) webDriver).executeScript("scroll(0," + page + ")");

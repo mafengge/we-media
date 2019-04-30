@@ -2,15 +2,15 @@ package com.media.utils;
 
 import static com.media.utils.MediaUtils.ffmpegPath;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class VideoUtils {
 
     /**
@@ -22,7 +22,7 @@ public class VideoUtils {
 
     /*public static double getBitrate(String ffprobePath, String filePath) {
         String cmd = ffprobePath + "  -v quiet -show_format -print_format json " + filePath;
-        System.out.println(cmd);
+        log.info(cmd);
         try {
             Runtime run = Runtime.getRuntime();
             Process p = run.exec(cmd);
@@ -89,7 +89,7 @@ public class VideoUtils {
         BufferedReader br = new BufferedReader(isr);
         String line = "";
         while ((line = br.readLine()) != null) {
-            System.out.println(line);
+            log.info(line);
         }
         if (br != null) {
             br.close();
@@ -106,7 +106,7 @@ public class VideoUtils {
         List<String> allFile = FileUtils.getAllFile(MediaUtils.zimeikaVideoPath, true);
         for(int p=0;p<allFile.size();p++) {
             shearVideo(allFile.get(p));
-            System.out.println(allFile.get(p));
+            log.info(allFile.get(p));
         }
     }
 
@@ -145,7 +145,7 @@ public class VideoUtils {
         BufferedReader br = new BufferedReader(isr);
         String line = "";
         while ((line = br.readLine()) != null) {
-            System.out.println(line);
+            log.info(line);
         }
         if (br != null) {
             br.close();
@@ -176,12 +176,12 @@ public class VideoUtils {
             Thread.sleep(3000);
             FileUtils.rename(MediaUtils.zimeikaVideoPath + a + ".mp4",outPath);
             FileUtils.delFile(MediaUtils.zimeikaVideoPath + a + ".mp4");
-            System.out.println("剪辑成功：" + outPath);
+            log.info("剪辑成功：" + outPath);
             /*final Thread t1 = new Thread(new Runnable() {
 
                 @Override
                 public void run() {
-                    System.out.println("t1");
+                    log.info("t1");
                     try {
 
                     } catch (Exception e) {
@@ -205,11 +205,11 @@ public class VideoUtils {
                             + outPath
                             + " -y";
                             runtime.exec(cut);
-                        System.out.println(cut);
+                        log.info(cut);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    System.out.println("t2");
+                    log.info("t2");
                 }
             });
             Thread t3 = new Thread(new Runnable() {
@@ -222,7 +222,7 @@ public class VideoUtils {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    System.out.println("t3");
+                    log.info("t3");
                 }
             });
             t3.start();

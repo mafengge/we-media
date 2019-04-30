@@ -1,14 +1,22 @@
 package com.media.utils;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author: mafengge
  * @description:
  * @date: 21:18 2019/4/21
  */
+@Slf4j
 public class FileUtils {
 
     public static void main(String args[]) {
@@ -16,7 +24,7 @@ public class FileUtils {
         //readFile(MediaUtils.zimekaInfoPath + "aa.txt");
         List<String> allFile = getAllFile(MediaUtils.zimeikaVideoPath, true);
         for(String str : allFile) {
-            System.out.println(str);
+            log.info(str);
         }
     }
 
@@ -39,7 +47,7 @@ public class FileUtils {
                 }
                 return sb.toString();
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                log.info(e.getMessage());
             }
         }
         return null;
@@ -105,9 +113,9 @@ public class FileUtils {
         try {
             File myDelFile = new File(filePath);
             myDelFile.delete();
-            System.out.println("本地文件已删除：" + filePath);
+            log.info("本地文件已删除：" + filePath);
         } catch (Exception e) {
-            System.out.println("删除文件操作出错");
+            log.info("删除文件操作出错");
             e.printStackTrace();
         }
     }
@@ -117,7 +125,7 @@ public class FileUtils {
             File file = new File(file1);
             file.renameTo(new File(file2));
         } catch (Exception e) {
-            System.out.println("修改文件名报错");
+            log.info("修改文件名报错");
             e.printStackTrace();
         }
     }
