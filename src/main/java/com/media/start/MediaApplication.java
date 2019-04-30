@@ -1,5 +1,6 @@
 package com.media.start;
 
+import com.media.utils.AipOcrUtil;
 import com.media.utils.DownloadZimeika;
 import com.media.utils.DriverListener;
 import com.media.utils.MediaFileUtils;
@@ -32,6 +33,7 @@ public class MediaApplication {
 
     public static void main(String[] args) throws Exception {
         SpringApplication.run(MediaApplication.class, args);
+        AipOcrUtil.runPoints();
      /*   ScheduledService scheduledService = new ScheduledService();
         scheduledService.scheduled();
         scheduledService.scheduled1();

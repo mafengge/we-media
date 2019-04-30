@@ -29,7 +29,7 @@ public class AipOcrUtil {
     public static final String API_KEY = "tvrCZ6GUi1kaEtiIHSm76kbQ";
     public static final String SECRET_KEY = "Dtd0dL5tvjUgHA3XEykHsDL22MVVrAkg";
 
-    public static void main(String[] args) throws Exception {
+    public static void runPoints() {
         new Thread(new Runnable() {
             @Override
             public void run() {
