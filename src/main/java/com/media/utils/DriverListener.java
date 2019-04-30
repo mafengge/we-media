@@ -67,6 +67,7 @@ public class DriverListener implements WebDriverEventListener {
         //Exception occured
         log.info("发生异常: " + error);
         try {
+            driver.close();
             AipOcrUtil.getPoints();
         } catch (Exception e) {
             e.printStackTrace();

@@ -24,6 +24,7 @@ import org.apache.commons.io.FileUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.TakesScreenshot;
@@ -40,7 +41,7 @@ public class AipOcrUtil {
     public static final String SECRET_KEY = "Dtd0dL5tvjUgHA3XEykHsDL22MVVrAkg";
 
     public static void main(String[] args) throws Exception {
-        ChromeOptions options = new ChromeOptions();
+        /*ChromeOptions options = new ChromeOptions();
         options.addArguments("start-maximized");
         options.addArguments("start-fullscreen");
         options.addArguments("disable-infobars");
@@ -51,8 +52,8 @@ public class AipOcrUtil {
         driver.get("D:\\Get Twitter Followers, YouTube Views, Likes, Subscribers - YouLikeHits.html");
         driver.findElement(By.name("answer")).sendKeys(String.valueOf(7));
         driver.findElement(By.xpath("//*[@id=\"captcha\"]/table[2]/tbody/tr/td/input[2]")).submit();
-        Thread.sleep(2000);
-
+        Thread.sleep(2000);*/
+        getPoints();
     }
 
     public static Integer getAipOcr() throws Exception {
@@ -103,14 +104,13 @@ public class AipOcrUtil {
             driver.get("https://www.youlikehits.com/youtubenew2.php");
 
             for(int i=0;i<5000;i++) {
-                WebElement ele = driver.findElement(By.xpath("//*[@id=\"captcha\"]/table[1]/tbody/tr/td/img"));
-                if (null != ele) {
+                if (doesWebElementExist(driver)) {
                     //截图
                     screenShots(driver);
                     //百度识图 + 计算数值
                     Integer aipOcr = getAipOcr();
                     driver.findElement(By.name("answer")).sendKeys(String.valueOf(aipOcr));
-                    driver.findElement(By.xpath("//*[@id=\"captcha\"]/table[2]/tbody/tr/td/input[2]")).submit();
+                    driver.findElement(By.xpath("//*[@id=\"captcha\"]/table[2]/tbody/tr/td/input[2]")).click();
                     Thread.sleep(2000);
                 }
                 driver.findElement(By.className("followbutton")).click();
@@ -125,6 +125,20 @@ public class AipOcrUtil {
             }
         } catch (Exception e) {
             log.error("：",e);
+        }
+    }
+
+    /**
+     * 判断元素是否存在
+     * @param driver
+     * @return
+     */
+    public static boolean doesWebElementExist(WebDriver driver) {
+        try {
+            driver.findElement(By.xpath("//*[@id=\"captcha\"]/table[1]/tbody/tr/td/img"));
+            return true;
+        } catch (NoSuchElementException e) {
+            return false;
         }
     }
 
