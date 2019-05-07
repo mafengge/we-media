@@ -13,11 +13,14 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.store.DataStore;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.common.collect.Lists;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
+
+import java.io.*;
+import java.util.Enumeration;
 import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+
+import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -25,9 +28,28 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class Auth {
-public static void main(String[] args){
- System.out.println(Auth.class.getResourceAsStream("/mafengge.json"));
-}
+
+    private static Map<String, String> USER_ID_MAP = Maps.newHashMap();
+
+    static {
+        InputStream inStream = null;
+        try {
+            Properties prop = new Properties();
+            prop.load(Auth.class.getResourceAsStream("/userId.properties"));
+            Enumeration en = prop.propertyNames();
+            while (en.hasMoreElements()) {
+                String key = en.nextElement().toString();
+                USER_ID_MAP.put(key, "/" + prop.getProperty(key));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) {
+        System.out.println(Auth.class.getResourceAsStream("/mafengge.json"));
+    }
+
     /**
      * Define a global instance of the HTTP transport.
      */
@@ -52,15 +74,12 @@ public static void main(String[] args){
 
         List<String> scopes = Lists.newArrayList("https://www.googleapis.com/auth/youtube.upload");
         // Load client secrets.
-        Reader clientSecretReader = new InputStreamReader(Auth.class.getResourceAsStream("/mafengge.json"));
+        Reader clientSecretReader = new InputStreamReader(Auth.class.getResourceAsStream(USER_ID_MAP.get(userId)));
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, clientSecretReader);
 
         // Checks that the defaults have been replaced (Default = "Enter X here").
-        if (clientSecrets.getDetails().getClientId().startsWith("Enter")
-            || clientSecrets.getDetails().getClientSecret().startsWith("Enter ")) {
-            log.info(
-                "Enter Client ID and Secret from https://console.developers.google.com/project/_/apiui/credential "
-                    + "into src/main/resources/client_secrets.json");
+        if (clientSecrets.getDetails().getClientId().startsWith("Enter") || clientSecrets.getDetails().getClientSecret().startsWith("Enter ")) {
+            log.info("Enter Client ID and Secret from https://console.developers.google.com/project/_/apiui/credential into src/main/resources/client_secrets.json");
             System.exit(1);
         }
 
@@ -69,9 +88,7 @@ public static void main(String[] args){
         FileDataStoreFactory fileDataStoreFactory = new FileDataStoreFactory(new File("D://.oauth-credentials"));
         DataStore<StoredCredential> datastore = fileDataStoreFactory.getDataStore(credentialDatastore);
 
-        GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
-            HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, scopes).setCredentialDataStore(datastore)
-            .build();
+        GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, scopes).setCredentialDataStore(datastore).build();
 
         // Build the local server and bind it to port 8080
         LocalServerReceiver localReceiver = new LocalServerReceiver.Builder().setPort(8080).build();
