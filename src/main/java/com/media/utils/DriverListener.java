@@ -79,15 +79,18 @@ public class DriverListener implements WebDriverEventListener {
         log.info("发生异常: " + error);
         try {
             if (error instanceof NoSuchElementException) {
-
+                log.info("异常类中NoSuch用户名密码：" + userName + "  " + passWord);
             } else {
+                //driver.quit();
                 driver.close();
-                err ++;
+                /*err ++;
                 if (err == 10) {
                     driver.quit();
                 } else {
                     AipOcrUtil.getPoints(userName, passWord,err);
-                }
+                }*/
+                AipOcrUtil.getPoints(userName, passWord,err);
+                log.info("异常类中用户名密码：" + userName + "  " + passWord);
             }
         } catch (Exception e) {
             e.printStackTrace();

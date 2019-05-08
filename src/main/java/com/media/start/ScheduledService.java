@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ScheduledService {
     //每天上午10:15触发  0 */1 * * * ?
-    @Scheduled(cron = "0 15 10 * * ?")
+    @Scheduled(cron = "0 15 22 * * ?")
     public void scheduled(){
         //将视频上传youtube
         uploadYoutube("mafengge", "mafengge", 1);

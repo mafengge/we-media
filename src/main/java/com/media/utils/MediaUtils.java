@@ -10,12 +10,12 @@ public class MediaUtils {
 
     public static final String zimekaInfoPath = "D:" + File.separator + "zimeika" + File.separator + "info.txt";
     //MediaUtils.getCurrDate()
-    public static final String zimeikaVideoPath = /*"/root/youtube/zimeika/";*/
-        "D:" + File.separator + "zimeika" + File.separator + "video" + File.separator + "2019-04-28"
-            + File.separator;
+    public static final String zimeikaVideoPath = "/root/youtube/zimeika/";
+        /*"D:" + File.separator + "zimeika" + File.separator + "video" + File.separator + "2019-04-28"
+            + File.separator;*/
 
-    public static final String parseImagePath = "D:\\test.png";
-
+    //public static final String parseImagePath = "/root/youtube/";
+    public static final String parseImagePath = "D://";
     public static final String ffmpegPath = "D:/ffmpeg-4.1.1-win64-static/bin/ffmpeg.exe";
 
     public static String getCurrDate() {
