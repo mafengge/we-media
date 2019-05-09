@@ -9,7 +9,9 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
 
 /**
  * @author: mafengge
@@ -23,7 +25,7 @@ public class MediaFileUtils {
         //writeFile(MediaUtils.zimekaInfoPath + "aa.txt", "aaa");
         //readFile(MediaUtils.zimekaInfoPath + "aa.txt");
         List<String> allFile = getAllFile(MediaUtils.zimeikaVideoPath, true);
-        for(String str : allFile) {
+        for (String str : allFile) {
             log.info(str);
         }
     }
@@ -61,6 +63,8 @@ public class MediaFileUtils {
         try {
             //如果文件存在，则追加内容；如果文件不存在，则创建文件
             File f = new File(txtPath);
+            if (!f.exists())
+                FileUtils.forceMkdirParent(f);
             fw = new FileWriter(f, true);
         } catch (IOException e) {
             e.printStackTrace();
@@ -80,7 +84,7 @@ public class MediaFileUtils {
     /**
      * 获取路径下的所有文件/文件夹
      *
-     * @param directoryPath 需要遍历的文件夹路径
+     * @param directoryPath  需要遍历的文件夹路径
      * @param isAddDirectory 是否将子文件夹的路径也添加到list集合中
      */
     public static List<String> getAllFile(String directoryPath, boolean isAddDirectory) {
@@ -129,6 +133,7 @@ public class MediaFileUtils {
             e.printStackTrace();
         }
     }
+
     /**
      * 通过文件路径直接修改文件名
      *
@@ -149,7 +154,7 @@ public class MediaFileUtils {
             newFilePath = filePath.substring(0, filePath.lastIndexOf("/")) + "/" + newFileName;
         } else {
             newFilePath = filePath.substring(0, filePath.lastIndexOf("/")) + "/" + newFileName
-                + filePath.substring(filePath.lastIndexOf("."));
+                    + filePath.substring(filePath.lastIndexOf("."));
         }
         File nf = new File(newFilePath);
         try {
