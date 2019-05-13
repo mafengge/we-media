@@ -137,9 +137,8 @@ public class MediaFileUtils {
     /**
      * 通过文件路径直接修改文件名
      *
-     * @param filePath    需要修改的文件的完整路径
+     * @param filePath 需要修改的文件的完整路径
      * @param newFileName 需要修改的文件的名称
-     * @return
      */
     public static String FixFileName(String filePath, String newFileName) {
         File f = new File(filePath);
@@ -148,7 +147,9 @@ public class MediaFileUtils {
         }
         newFileName = newFileName.trim();
         if ("".equals(newFileName) || newFileName == null) // 文件名不能为空
+        {
             return null;
+        }
         String newFilePath = null;
         if (f.isDirectory()) { // 判断是否为文件夹
             newFilePath = filePath.substring(0, filePath.lastIndexOf("/")) + "/" + newFileName;

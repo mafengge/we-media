@@ -46,8 +46,7 @@ public class DownloadZimeika {
     }
 
 
-
-    public static void getDownloadUrl(ZimeikaBean zimeikaBean,WebDriver driver, String url) {
+    public static void getDownloadUrl(ZimeikaBean zimeikaBean, WebDriver driver, String url) {
         try {
             driver.get(url);
             driver.findElement(org.openqa.selenium.By.id("d_parser_video")).click();
@@ -96,8 +95,10 @@ public class DownloadZimeika {
             log.info(e.getMessage());
         }
     }
-    public static void main(String[] args) throws Exception{
-        downloadVideo("D:\\","kkk","http://www.itono.cn/vip/xlyy.php?url=https://v.youku.com/v_show/id_XMzg0MzM2NDM2NA==.html?spm=a2h0k.11417342.soresults.dposter");
+
+    public static void main(String[] args) throws Exception {
+        downloadVideo("D:\\", "kkk",
+            "http://www.itono.cn/vip/xlyy.php?url=https://v.youku.com/v_show/id_XMzg0MzM2NDM2NA==.html?spm=a2h0k.11417342.soresults.dposter");
         /*WebDriver driver = new EventFiringWebDriver(new ChromeDriver()).register(new DriverListener());
         driver.get("http://zimeika.com/video/detail/xigua.html?id=6860278");//打开指定的网站
         driver.findElement(org.openqa.selenium.By.id("d_parser_video")).click();

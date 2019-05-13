@@ -71,14 +71,11 @@ public class UploadVideo {
             InputStream stream = new FileInputStream(file);
             InputStreamContent mediaContent = new InputStreamContent(VIDEO_FILE_FORMAT, stream);
             mediaContent.setLength(file.length());
-
             YouTube.Videos.Insert videoInsert = youtube.videos()
                 .insert("snippet,statistics,status", videoObjectDefiningMetadata, mediaContent);
-
             MediaHttpUploader uploader = videoInsert.getMediaHttpUploader();
 
             uploader.setDirectUploadEnabled(false);
-
             MediaHttpUploaderProgressListener progressListener = new MediaHttpUploaderProgressListener() {
                 @Override
                 public void progressChanged(MediaHttpUploader uploader) throws IOException {
@@ -148,7 +145,7 @@ public class UploadVideo {
     public static void proxySwitch(String flag) {
         //if (System.getProperty("os.name").toLowerCase().startsWith("win") ) {
         String proxyHost = "127.0.0.1";
-        String proxyHttpPort = "1082";
+        String proxyHttpPort = "1080";
         String proxySocksPort = "1080";
         System.setProperty("http.proxyHost", proxyHost);
         System.setProperty("http.proxyPort", proxyHttpPort);

@@ -26,6 +26,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+
 @Slf4j
 public class JsoupUtil {
 
@@ -142,7 +143,7 @@ public class JsoupUtil {
         option.addArguments("disable-infobars");
         WebDriver driver = new ChromeDriver(option);
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        driver.manage().timeouts().setScriptTimeout(30,TimeUnit.SECONDS);
+        driver.manage().timeouts().setScriptTimeout(30, TimeUnit.SECONDS);
         driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
         for (int i = 0; i < pageNo; i++) {
             int a = startPageNo + i;
@@ -152,7 +153,9 @@ public class JsoupUtil {
             /*Rule rule = new Rule(
                 "http://zimeika.com/video/lists/xigua.html?cate_id=&time_type=&read_order=&type=6&author_id=&author_name=&title=&p=1"
                     + a + "#comments");*/
-            Rule rule = new Rule("http://zimeika.com/video/lists/xigua.html?cate_id=&time_type=&read_order=&type=6&author=1&author_id=&author_name=%E5%B0%8F%E4%B9%90%E5%BD%B1%E8%A7%86%E6%B1%87&title=&p=" + a);
+            Rule rule = new Rule(
+                "http://zimeika.com/video/lists/xigua.html?cate_id=6&time_type=&read_order=&type=6&author_id=8752&author_name=%E5%A5%BD%E6%AD%8C%E5%9D%8A&title=&p="
+                    + a);
             Document doc = ExtractService.getDoc(rule);
             Elements commlist = doc.getElementsByClass("video-list");
             Elements lis = commlist.get(0).getElementsByTag("li");

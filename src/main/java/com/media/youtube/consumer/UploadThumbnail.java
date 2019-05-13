@@ -23,9 +23,8 @@ import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * This sample uses MediaHttpUploader to upload an image and then calls the
- * API's youtube.thumbnails.set method to set the image as the custom thumbnail
- * for a video.
+ * This sample uses MediaHttpUploader to upload an image and then calls the API's youtube.thumbnails.set method to set
+ * the image as the custom thumbnail for a video.
  *
  * @author Ibrahim Ulukaya
  */
@@ -33,20 +32,18 @@ import lombok.extern.slf4j.Slf4j;
 public class UploadThumbnail {
 
     /**
-     * Define a global instance of a Youtube object, which will be used
-     * to make YouTube Data API requests.
+     * Define a global instance of a Youtube object, which will be used to make YouTube Data API requests.
      */
     private static YouTube youtube;
 
     /**
-     * Define a global variable that specifies the MIME type of the image
-     * being uploaded.
+     * Define a global variable that specifies the MIME type of the image being uploaded.
      */
     private static final String IMAGE_FILE_FORMAT = "image/png";
 
     /**
-     * Prompt the user to specify a video ID and the path for a thumbnail
-     * image. Then call the API to set the image as the thumbnail for the video.
+     * Prompt the user to specify a video ID and the path for a thumbnail image. Then call the API to set the image as
+     * the thumbnail for the video.
      *
      * @param args command line args (not used).
      */

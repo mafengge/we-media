@@ -7,12 +7,15 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.WebDriverEventListener;
+
 @Slf4j
 @Data
 public class DriverListener implements WebDriverEventListener {
+
     private String userName;
     private String passWord;
     private Integer err;
+
     public DriverListener(String userName, String passWord, Integer err) {
         this.userName = userName;
         this.passWord = passWord;
@@ -76,23 +79,23 @@ public class DriverListener implements WebDriverEventListener {
     @Override
     public void onException(Throwable error, WebDriver driver) {
         //Exception occured
-        log.info("发生异常: " + error);
         try {
             if (error instanceof NoSuchElementException) {
                 log.info("异常类中NoSuch用户名密码：" + userName + "  " + passWord);
             } else {
-                //driver.quit();
-                driver.close();
+                driver.quit();
+                //driver.close();
                 /*err ++;
                 if (err == 10) {
                     driver.quit();
                 } else {
                     AipOcrUtil.getPoints(userName, passWord,err);
                 }*/
-                AipOcrUtil.getPoints(userName, passWord,err);
+                AipOcrUtil.getPoints(userName, passWord);
                 log.info("异常类中用户名密码：" + userName + "  " + passWord);
             }
         } catch (Exception e) {
+            log.error("异常监听中发生异常");
             e.printStackTrace();
         }
     }

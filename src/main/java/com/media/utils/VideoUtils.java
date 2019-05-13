@@ -104,12 +104,11 @@ public class VideoUtils {
 
     public static void main(String[] args) throws Exception {
         List<String> allFile = MediaFileUtils.getAllFile(MediaUtils.zimeikaVideoPath, true);
-        for(int p=0;p<allFile.size();p++) {
+        for (int p = 0; p < allFile.size(); p++) {
             shearVideo(allFile.get(p));
             log.info(allFile.get(p));
         }
     }
-
 
 
     /**
@@ -159,7 +158,7 @@ public class VideoUtils {
 
     }
 
-    public static void shearVideo(String outPath){
+    public static void shearVideo(String outPath) {
         try {
             long a = System.currentTimeMillis();
             MediaFileUtils.rename(outPath, MediaUtils.zimeikaVideoPath + a + ".mp4");
@@ -174,7 +173,7 @@ public class VideoUtils {
                 + " -y";
             runtime.exec(cut);
             Thread.sleep(3000);
-            MediaFileUtils.rename(MediaUtils.zimeikaVideoPath + a + ".mp4",outPath);
+            MediaFileUtils.rename(MediaUtils.zimeikaVideoPath + a + ".mp4", outPath);
             MediaFileUtils.delFile(MediaUtils.zimeikaVideoPath + a + ".mp4");
             log.info("剪辑成功：" + outPath);
             /*final Thread t1 = new Thread(new Runnable() {

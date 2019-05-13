@@ -12,71 +12,65 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
 import lombok.extern.slf4j.Slf4j;
-import lombok.val;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebDriver.TargetLocator;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.support.events.EventFiringWebDriver;
 
 @Slf4j
 public class AipOcrUtil {
 
-    //设置APPID/AK/SK
+    //设置APPID/AK/SK guo
     public static final String APP_ID = "16104677";
     public static final String API_KEY = "tvrCZ6GUi1kaEtiIHSm76kbQ";
     public static final String SECRET_KEY = "Dtd0dL5tvjUgHA3XEykHsDL22MVVrAkg";
 
+    //设置APPID/AK/SK ma
+    /*public static final String APP_ID = "16237345";
+    public static final String API_KEY = "gbNsTDiYQxTQGNtRg4WPcLTt";
+    public static final String SECRET_KEY = "4DnQFRVmtEHhFtUk0cRDDsPxPldNKKoV";*/
     public static void runPoints() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                getPoints("mafengge", "maniqiu5", 1);
-            }
-        }).start();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                getPoints("505877502", "lp123456", 1);
-            }
-        }).start();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                getPoints("xingyu", "123456", 1);
-            }
-        }).start();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                getPoints("mafengge1", "123456", 1);
-            }
-        }).start();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                getPoints("guodongbin", "guodongbin1987", 1);
-            }
-        }).start();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                getPoints("mafengge2", "maniqiu5", 1);
-            }
-        }).start();
+        startThread("505877502", "lp123456");
+        startThread("xingyu", "123456");
+        startThread("guodongbin", "guodongbin1987");
+        startThread("mafengge", "maniqiu5");
+        startThread("mafengge1", "123456");
+        startThread("mafengge2", "maniqiu5");
+        startThread("mafengge3", "maniqiu5");
+        startThread("mafengge4", "maniqiu5");
+        startThread("mafengge5", "maniqiu5");
+        //startThread("mafengge6","maniqiu5");
+        startThread("mafengge7", "maniqiu5");
+        startThread("mafengge8", "maniqiu5");
+        startThread("mafengge9", "maniqiu5");
+        startThread("mafengge10", "maniqiu5");
+        startThread("mafengge11", "maniqiu5");
+        startThread("mafengge12", "maniqiu5");
     }
 
-    public static Integer getAipOcr(String userName) throws Exception {
+    public static void startThread(String userName, String passWord) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                getPoints(userName, passWord);
+            }
+        }).start();
+       /* try {
+            Thread.sleep(20000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }*/
+    }
+
+    public static Integer getAipOcr(String userName) {
         // 初始化一个AipOcr
         AipOcr client = new AipOcr(APP_ID, API_KEY, SECRET_KEY);
 
@@ -90,6 +84,7 @@ public class AipOcrUtil {
         String s = res.toString(2);
         Pattern p = Pattern.compile("[0-9]");
         JSONArray words_result = res.getJSONArray("words_result");
+
         for (int i = 0; i < words_result.length(); i++) {
             Object words = words_result.get(i);
             Matcher m = p.matcher(words.toString());
@@ -98,7 +93,7 @@ public class AipOcrUtil {
                 val = s1.split(":")[1].replace("}", "").replace(",", "").replace("\"", "");
             }
         }
-        val = val.replace("×", "*").replace("÷", "/").replace("÷", "/");
+        val = val.replace("×", "*").replace("x", "*").replace("÷", "/").replace("÷", "/");
         log.info("计算数值：" + countVal(val));
         return countVal(val);
     }
@@ -106,23 +101,62 @@ public class AipOcrUtil {
     /**
      * 刷积分
      */
-    public static void getPoints(String userName, String passWord, int err) {
+    public static void getPoints(String userName, String passWord) {
         try {
-            ChromeOptions options = new ChromeOptions();
+            WebDriver driver = driverHandler(userName, passWord);
+            while (true) {
+                try {
+                    WebElement currentPionts = driver.findElement(By.xpath("//*[@id=\"currentpoints\"]"));
+                    String oldPoints = currentPionts.getText();
+                    WebElement followbutton = driver.findElement(By.className("followbutton"));
+                    ((JavascriptExecutor) driver).executeScript("arguments[0].click();", followbutton);
+                    Set<String> winHandels = driver.getWindowHandles();
+                    List<String> it = new ArrayList<>(winHandels);
+                    if (null != it && it.size() > 2) {
+                        throw new Exception("窗口大于2");
+                    }
+                    driver.switchTo().window(it.get(1));
+                    String js1 = "window.stop(); ";
+                    ((JavascriptExecutor) driver).executeScript(js1);
+                    driver.switchTo().window(it.get(0));
+                    //根据分数sleep时长
+                    sleepTimes(driver);
+                    String newPoints = driver.findElement(By.xpath("//*[@id=\"currentpoints\"]")).getText();
+                    log.info(userName + ": 当前分数：" + newPoints);
+                    if (oldPoints.equals(newPoints)) {
+                        driver.navigate().refresh();
+                    }
+                } catch (Exception e1) {
+                    log.error(userName + "循环中发生异常", e1);
+                    driver.quit();
+                    driver = driverHandler(userName, passWord);
+                    Thread.sleep(10000);
+                }
+            }
+        } catch (Exception e) {
+            log.error("getPoints::" + userName, e);
+            getPoints(userName, passWord);
+        }
+    }
+
+    public static WebDriver driverHandler(String userName, String passWord) {
+        ChromeOptions options = new ChromeOptions();
             /*options.addArguments("start-maximized");
             options.addArguments("start-fullscreen");
-            options.addArguments("disable-infobars");*/
-            /*options.addArguments("--host-resolver-rules=\"MAP *.youtube.com 127.0.0.1\"");
-            //options.addArguments("headless");
-            options.addArguments("disable-plugins");
-            options.addArguments("disable-gpu");
-            options.addArguments("no-sandbox");
             options.addArguments("disable-dev-shm-usage");
             options.addArguments("incognito");
             options.addArguments("ignore-certificate-errors");*/
-            //System.setProperty("webdriver.chrome.driver", "/root/chromedriver");
-            WebDriver driver = new EventFiringWebDriver(new ChromeDriver(options))
-                .register(new DriverListener(userName, passWord, err));
+        options.addArguments("--disable-plugins");
+        options.addArguments("--disable-gpu");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-infobars");
+        options.addArguments("--headless");
+        //System.setProperty("webdriver.chrome.driver", "/root/chromedriver");
+        System.setProperty("webdriver.chrome.driver", "C:\\ChromedDriver\\chromedriver.exe");
+            /*WebDriver driver = new EventFiringWebDriver(new ChromeDriver(options))
+                .register(new DriverListener(userName, passWord,1));*/
+        WebDriver driver = new ChromeDriver(options);
+        try {
             driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
             driver.manage().timeouts().setScriptTimeout(30, TimeUnit.SECONDS);
             driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
@@ -133,120 +167,55 @@ public class AipOcrUtil {
             password.sendKeys(passWord);
             driver.findElement(By.id("loginform")).submit();
             driver.get("https://www.youlikehits.com/youtubenew2.php");
-            while (true) {
-                try {
-                    /*if (!AipOcrUtil.doesWebElementExist(driver, "//*[@id=\"listall\"]/center")) {
-                        String text = driver.findElement(By.xpath("//*[@id=\"listall\"]/center")).getText();
-                        if (text.contains("YouTube Limit")) {
-                            System.out.println(1);
-                            Thread.sleep(600000);
-                        }
-                    }*/
-                    String oldPoints = "";
-                    try {
-                        oldPoints = driver.findElement(By.xpath("//*[@id=\"currentpoints\"]")).getText();
-                    } catch (Exception e) {
-                        driver.navigate().refresh();
-                        driver.get("https://www.youlikehits.com/youtubenew2.php");
-                        log.error("获取总积分异常");
-                    }
-
-                    if (!doesWebElementExist(driver, "//*[@id=\"captcha\"]/table[1]/tbody/tr/td/img")) {
-                        //截图
-                        screenShots(driver, userName);
-                        //百度识图 + 计算数值
-                        Integer aipOcr = getAipOcr(userName);
-                        driver.findElement(By.name("answer")).sendKeys(String.valueOf(aipOcr));
-                        driver.findElement(By.xpath("//*[@id=\"captcha\"]/table[2]/tbody/tr/td/input[2]")).click();
-                        Thread.sleep(2000);
-                    }
-                    driver.findElement(By.className("followbutton")).click();
-                    Set<String> winHandels = driver.getWindowHandles();
-                    List<String> it = new ArrayList<>(winHandels);
-                    for (String list : it) {
-                        System.out.println(list);
-                    }
-                   /* driver.switchTo().window(it.get(1));
-                    ((EventFiringWebDriver) driver).executeScript("window.stop()");
-                    ((EventFiringWebDriver) driver).executeScript("alert(1111);");*/
-                    String addPoints = driver.findElement(By.xpath("//*[@id=\"listall\"]/center")).getText();
-                    addPoints = addPoints.substring(addPoints.indexOf("Points:") + 7,addPoints.indexOf("View")).replace(" ","").trim();
-                    System.out.println("添加分数：：" + addPoints);
-                    if (StringUtils.isNotBlank(addPoints) && StringUtils.isNumeric(addPoints)
-                        && Integer.parseInt(addPoints) >= 3 && Integer.parseInt(addPoints) <= 35) {
-                        sleepTimes(addPoints);
-                    } else {
-                        log.info("获取添加分数失败");
-                        Thread.sleep(140000);
-                    }
-                    String newPoints = driver.findElement(By.xpath("//*[@id=\"currentpoints\"]")).getText();
-                    log.info(userName + ": 当前分数：" + newPoints);
-                    if (oldPoints.equals(newPoints)) {
-                        driver.navigate().refresh();
-                    }
-                } catch (Exception e1) {
-                    log.error(userName + "循环中发生异常" + e1);
-                }
-            }
+            codeSubmit(driver, userName, passWord);
         } catch (Exception e) {
-            log.error("getPoints::", e);
+            log.error("登录页报错" + userName, e);
+            driver.quit();
+            driver = new ChromeDriver(options);
         }
+
+        return driver;
     }
 
-    public static void sleepTimes(String points) throws Exception {
-        int anInt = Integer.parseInt(points);
-        int sec = 45000;
-        for (int i = 3; i < 36; i++) {
-            sec = sec + 3000;
-            if (anInt == i) {
-                log.info("sleep : " + sec);
-                Thread.sleep(sec);
-                break;
-            }
-        }
-
-    }
-
-    /**
-     * 判断元素是否存在
-     */
-    public static boolean doesWebElementExist(WebDriver driver, String str) {
-        try {
-            driver.findElement(By.xpath(str));
-            return false;
-        } catch (NoSuchElementException e) {
-            return true;
-        }
+    public static void codeSubmit(WebDriver driver, String userName, String passWord) throws Exception {
+        Thread.sleep(2000);
+        driver.findElement(By.xpath("//*[@id=\"captcha\"]/table[1]/tbody/tr/td/img"));
+        //截图
+        screenShots(driver, userName);
+        Thread.sleep(1000);
+        //百度识图 + 计算数值
+        Integer aipOcr = getAipOcr(userName);
+        driver.findElement(By.name("answer")).sendKeys(String.valueOf(aipOcr));
+        WebElement element = driver
+            .findElement(By.xpath("//*[@id=\"captcha\"]/table[2]/tbody/tr/td/input[2]"));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
     }
 
     /**
      * 截图
      */
-    public static void screenShots(WebDriver driver, String userName) {
-        try {
-            WebElement ele = driver.findElement(By.xpath("//*[@id=\"captcha\"]/table[1]/tbody/tr/td/img"));
-            // Get entire page screenshot
-            File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-            BufferedImage fullImg = ImageIO.read(screenshot);
+    public static void screenShots(WebDriver driver, String userName) throws Exception {
+        WebElement ele = driver.findElement(By.xpath("//*[@id=\"captcha\"]/table[1]/tbody/tr/td/img"));
+        // Get entire page screenshot
+        File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        BufferedImage fullImg = ImageIO.read(screenshot);
 
-            // Get the location of element on the page
-            Point point = ele.getLocation();
+        // Get the location of element on the page
+        Point point = ele.getLocation();
 
-            // Get width and height of the element
-            int eleWidth = ele.getSize().getWidth();
-            int eleHeight = ele.getSize().getHeight();
+        // Get width and height of the element
+        int eleWidth = ele.getSize().getWidth();
+        int eleHeight = ele.getSize().getHeight();
 
-            // Crop the entire page screenshot to get only element screenshot
-            BufferedImage eleScreenshot = fullImg.getSubimage(point.getX(), point.getY(),
-                eleWidth+point.getX(), eleHeight+point.getY());
-            ImageIO.write(eleScreenshot, "png", screenshot);
+        // Crop the entire page screenshot to get only element screenshot
+        BufferedImage eleScreenshot = fullImg.getSubimage(point.getX(), point.getY(),
+            //    eleWidth + point.getX(), eleHeight + point.getY());
+            eleWidth, eleHeight);
+        ImageIO.write(eleScreenshot, "png", screenshot);
 
-            // Copy the element screenshot to disk
-            File screenshotLocation = new File(MediaUtils.parseImagePath + userName + ".png");
-            FileUtils.copyFile(screenshot, screenshotLocation);
-        } catch (Exception e) {
-            log.error("获取积分截图错误", e);
-        }
+        // Copy the element screenshot to disk
+        File screenshotLocation = new File(MediaUtils.parseImagePath + userName + ".png");
+        FileUtils.copyFile(screenshot, screenshotLocation);
     }
 
     /**
@@ -274,5 +243,37 @@ public class AipOcrUtil {
             return result;
         }
         return 1;
+    }
+
+
+    public static void sleepTimes(WebDriver driver) throws Exception {
+        WebElement listAll = driver.findElement(By.xpath("//*[@id=\"listall\"]/center"));
+        String addPoints = listAll.getText();
+        log.info("添加分数+等待时长：：" + addPoints);
+        addPoints = addPoints.substring(addPoints.indexOf("Points:") + 7, addPoints.indexOf("View"))
+            .replace(" ", "").trim();
+        log.info(addPoints);
+        if (addPoints.contains("Timer:")) {
+            addPoints = addPoints.split("/")[1];
+            int anInt = Integer.parseInt(addPoints + "000") + 4000;
+            log.info("sleep时长：：" + anInt);
+            Thread.sleep(anInt);
+        } else {
+            sleepTimes(addPoints);
+        }
+    }
+
+    public static void sleepTimes(String points) throws Exception {
+        int anInt = Integer.parseInt(points);
+        int sec = 45000;
+        for (int i = 3; i < 36; i++) {
+            sec = sec + 4000;
+            if (anInt == i) {
+                log.info("sleep : " + sec);
+                Thread.sleep(sec);
+                break;
+            }
+        }
+
     }
 }
