@@ -54,6 +54,8 @@ public class AipOcrUtil {
         startThread("mafengge10", "maniqiu5");
         startThread("mafengge11", "maniqiu5");
         startThread("mafengge12", "maniqiu5");
+        //startThread("mafengge13", "maniqiu5");
+        startThread("mafengge14", "maniqiu5");
     }
 
     public static void startThread(String userName, String passWord) {
@@ -63,11 +65,11 @@ public class AipOcrUtil {
                 getPoints(userName, passWord);
             }
         }).start();
-       /* try {
+        try {
             Thread.sleep(20000);
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }*/
+        }
     }
 
     public static Integer getAipOcr(String userName) {
@@ -151,8 +153,8 @@ public class AipOcrUtil {
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-infobars");
         options.addArguments("--headless");
-        //System.setProperty("webdriver.chrome.driver", "/root/chromedriver");
-        System.setProperty("webdriver.chrome.driver", "C:\\ChromedDriver\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "/root/chromedriver");
+        //System.setProperty("webdriver.chrome.driver", "C:\\ChromedDriver\\chromedriver.exe");
             /*WebDriver driver = new EventFiringWebDriver(new ChromeDriver(options))
                 .register(new DriverListener(userName, passWord,1));*/
         WebDriver driver = new ChromeDriver(options);

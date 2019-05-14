@@ -146,7 +146,7 @@ public class UploadVideo {
         //if (System.getProperty("os.name").toLowerCase().startsWith("win") ) {
         String proxyHost = "127.0.0.1";
         String proxyHttpPort = "1080";
-        String proxySocksPort = "1080";
+        String proxySocksPort = "1082";
         System.setProperty("http.proxyHost", proxyHost);
         System.setProperty("http.proxyPort", proxyHttpPort);
         System.setProperty("https.proxyHost", proxyHost);
