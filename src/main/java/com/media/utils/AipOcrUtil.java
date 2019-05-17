@@ -29,21 +29,23 @@ import org.openqa.selenium.chrome.ChromeOptions;
 public class AipOcrUtil {
 
     //设置APPID/AK/SK guo
-    public static final String APP_ID = "16104677";
+    /*public static final String APP_ID = "16104677";
     public static final String API_KEY = "tvrCZ6GUi1kaEtiIHSm76kbQ";
-    public static final String SECRET_KEY = "Dtd0dL5tvjUgHA3XEykHsDL22MVVrAkg";
+    public static final String SECRET_KEY = "Dtd0dL5tvjUgHA3XEykHsDL22MVVrAkg";*/
 
     //设置APPID/AK/SK ma
-    /*public static final String APP_ID = "16237345";
+    public static final String APP_ID = "16237345";
     public static final String API_KEY = "gbNsTDiYQxTQGNtRg4WPcLTt";
-    public static final String SECRET_KEY = "4DnQFRVmtEHhFtUk0cRDDsPxPldNKKoV";*/
+    public static final String SECRET_KEY = "4DnQFRVmtEHhFtUk0cRDDsPxPldNKKoV";
     public static void runPoints() {
         startThread("505877502", "lp123456");
-        startThread("xingyu", "123456");
         startThread("guodongbin", "guodongbin1987");
         startThread("mafengge", "maniqiu5");
         startThread("mafengge1", "123456");
         startThread("mafengge2", "maniqiu5");
+        startThread("mafengge10", "maniqiu5");
+
+        startThread("xingyu", "123456");
         startThread("mafengge3", "maniqiu5");
         startThread("mafengge4", "maniqiu5");
         startThread("mafengge5", "maniqiu5");
@@ -51,11 +53,11 @@ public class AipOcrUtil {
         startThread("mafengge7", "maniqiu5");
         startThread("mafengge8", "maniqiu5");
         startThread("mafengge9", "maniqiu5");
-        startThread("mafengge10", "maniqiu5");
         startThread("mafengge11", "maniqiu5");
         startThread("mafengge12", "maniqiu5");
-        //startThread("mafengge13", "maniqiu5");
+        startThread("mafengge13", "maniqiu5");
         startThread("mafengge14", "maniqiu5");
+        startThread("mafengge15", "maniqiu5");
     }
 
     public static void startThread(String userName, String passWord) {
@@ -63,13 +65,14 @@ public class AipOcrUtil {
             @Override
             public void run() {
                 getPoints(userName, passWord);
+                //getCurrPoints(userName,passWord);
             }
         }).start();
-        try {
+        /*try {
             Thread.sleep(20000);
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     public static Integer getAipOcr(String userName) {
@@ -153,8 +156,8 @@ public class AipOcrUtil {
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-infobars");
         options.addArguments("--headless");
-        System.setProperty("webdriver.chrome.driver", "/root/chromedriver");
-        //System.setProperty("webdriver.chrome.driver", "C:\\ChromedDriver\\chromedriver.exe");
+        //System.setProperty("webdriver.chrome.driver", "/root/chromedriver");
+        System.setProperty("webdriver.chrome.driver", "C:\\ChromedDriver\\chromedriver.exe");
             /*WebDriver driver = new EventFiringWebDriver(new ChromeDriver(options))
                 .register(new DriverListener(userName, passWord,1));*/
         WebDriver driver = new ChromeDriver(options);
@@ -170,6 +173,48 @@ public class AipOcrUtil {
             driver.findElement(By.id("loginform")).submit();
             driver.get("https://www.youlikehits.com/youtubenew2.php");
             codeSubmit(driver, userName, passWord);
+        } catch (Exception e) {
+            log.error("登录页报错" + userName, e);
+            driver.quit();
+            driver = new ChromeDriver(options);
+        }
+
+        return driver;
+    }
+
+    public static WebDriver getCurrPoints(String userName, String passWord) {
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--disable-plugins");
+        options.addArguments("--disable-gpu");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-infobars");
+        options.addArguments("--headless");
+        //System.setProperty("webdriver.chrome.driver", "/root/chromedriver");
+        System.setProperty("webdriver.chrome.driver", "C:\\ChromedDriver\\chromedriver.exe");
+        WebDriver driver = new ChromeDriver(options);
+        try {
+            driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+            driver.manage().timeouts().setScriptTimeout(30, TimeUnit.SECONDS);
+            driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
+            driver.get("https://www.youlikehits.com/login.php");
+            WebElement username = driver.findElement(By.id("username"));
+            WebElement password = driver.findElement(By.id("password"));
+            username.sendKeys(userName);
+            password.sendKeys(passWord);
+            driver.findElement(By.id("loginform")).submit();
+            driver.get("https://www.youlikehits.com/youtubenew2.php");
+            WebElement currentPionts = driver.findElement(By.xpath("//*[@id=\"currentpoints\"]"));
+            String oldPoints = currentPionts.getText();
+            System.out.println(userName + " : " + oldPoints);
+            for (int i=0;i<2;i++){
+                Thread.sleep(3000);
+                driver.findElement(By.xpath("//*[@id=\"bodybg\"]/table[1]/tbody/tr[1]/td/table/tbody/tr/td[2]/a[2]"))
+                    .click();
+                Thread.sleep(3000);
+                driver.findElement(By.xpath(
+                    "//*[@id=\"bodybg\"]/table[2]/tbody/tr/td/table[1]/tbody/tr/td/table[2]/tbody/tr/td/table/tbody/tr[2]/td/center/a/font"))
+                    .click();
+            }
         } catch (Exception e) {
             log.error("登录页报错" + userName, e);
             driver.quit();
