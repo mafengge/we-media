@@ -41,7 +41,7 @@ public class DouYinDecode {
 
     public static void main(String[] args) throws Exception {
         // 需要解析的抖音地址
-        String url2 = "#在抖音，记录美好生活#男人还是不要自着si！！！ http://v.douyin.com/F3hbQx/ 复制此链接，打开【抖音短视频】，直接观看视频！";
+        String url2 = "#在抖音，记录美好生活#男人还是不要自着si！！！ http://v.douyin.com/MkSLAY/ 复制此链接，打开【抖音短视频】，直接观看视频！";
         String url4 = "http://v9-default.ixigua.com/31d5841ea1e66c72c5a7805ad9bbafc8/5cbaaa8d/video/m/220bbb5d166135e434cbf938ad748e7ca711161de9210000014fc9021aca/?rc=anRkZnU6eDtwbDMzOjczM0ApQHRAbzY6NjgzMzUzMzg0NDUzNDVvQGgzdSlAZjN1KWRzcmd5a3VyZ3lybHh3ZjUzQGxmc2tpam1vcF8tLS8tL3NzLW8jbyMwNS4uNDItLjEuLy0xNi06I28jOmEtcSM6YHZpXGJmK2BeYmYrXnFsOiMuL14%3D";
         log.info(URLDecoder.decode(url4, "GBK"));
         String url = decodeHttpUrl(url2);
@@ -51,6 +51,7 @@ public class DouYinDecode {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        System.out.println(doc);
         Elements elem = doc.getElementsByTag("script");
         String url1 = elem.toString();
         int start = url1.indexOf("playAddr");

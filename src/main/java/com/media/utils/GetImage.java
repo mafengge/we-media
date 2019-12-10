@@ -3,6 +3,7 @@ package com.media.utils;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -14,8 +15,8 @@ public class GetImage {
     /**
      * 测试
      */
-    public static void main(String[] args) {
-        String url = "http://www.baidu.com/img/baidu_sylogo1.gif";
+    public static void main(String[] args) throws IOException {
+        /*String url = "http://www.baidu.com/img/baidu_sylogo1.gif";
         byte[] btImg = getImageFromNetByUrl(url);
         if (null != btImg && btImg.length > 0) {
             log.info("读取到：" + btImg.length + " 字节");
@@ -23,8 +24,30 @@ public class GetImage {
             writeImageToDisk(btImg, fileName);
         } else {
             log.info("没有从该连接获得内容");
-        }
+        }*/
+        //imageMarge();
     }
+
+    /**
+     * 图片合成
+     */
+    /*public static void imageMarge() throws IOException {
+        BufferedImage logo = ImageLoadUtil.getImageByPath("E:\\3.jpg");
+        BufferedImage qrCode = ImageLoadUtil.getImageByPath("E:\\2.jpg");
+        String name = "小灰灰Blog";
+        List<String> desc = Arrays.asList("我是一灰灰，一匹不吃羊的狼", "专注码农技术分享");
+
+        int w = QrCodeCardTemplate.w, h = QrCodeCardTemplate.h;
+        List<IMergeCell> list = QrCodeCardTemplateBuilder.build(logo, name, desc, qrCode, "微 信 公 众 号");
+
+        BufferedImage bg = ImgMergeWrapper.merge(list, w, h);
+
+        try {
+            ImageIO.write(bg, "jpg", new File("E:\\merge.jpg"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }*/
 
     /**
      * 将图片写入到磁盘

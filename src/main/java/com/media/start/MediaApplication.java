@@ -1,28 +1,29 @@
 package com.media.start;
-
-import com.media.utils.AipOcrUtil;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
-
+@Slf4j
 @SpringBootApplication
 @EnableScheduling
 public class MediaApplication {
-
     public static void main(String[] args) throws Exception {
-        //SpringApplication.run(MediaApplication.class, args);
-        AipOcrUtil.runPoints();
+        SpringApplication.run(MediaApplication.class, args);
+        log.info("项目启动成功");
+        System.out.println("项目启动成功");
+        //AipOcrUtil.runPoints();
         //ss();
         //AipOcrUtil.getPoints("mafengge", "maniqiu5");
-     /*   ScheduledService scheduledService = new ScheduledService();
-        scheduledService.scheduled();
-        scheduledService.scheduled1();
-        scheduledService.scheduled2();*/
+        /*ScheduledService scheduledService = new ScheduledService();
+        scheduledService.scheduled4();
+        scheduledService.scheduled5();
+        scheduledService.scheduled6();
+        scheduledService.scheduled7();*/
         //获取视频信息，下载地址、标题、作者等，放入TXT
         //JsoupUtil.getZimeikaInfo(1,11);
 
         //读取txt中视频下载地址，下载视频
         //downLoadZimeikaVideo();
-
         //将视频上传youtube
         //ScheduledService.uploadYoutube("mafengge", "mafengge", 1);
         //获取youlikehits积分

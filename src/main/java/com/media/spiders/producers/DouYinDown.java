@@ -12,26 +12,22 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.mobile.NetworkConnection.ConnectionType;
 
-/**
- * 根据提供的抖音的ID获取他的所有视频ID
- *
- * @author lenovo
- *
- */
-public class DownloadUrl {
+public class DouYinDown {
     String URl_Id = null;
     int count = 0;// 计数
     // 根据主页获取每个视频的id
-
-    public void DownHtml(String url) throws InterruptedException {
+    public  static void DownHtml(String url) throws InterruptedException {
         ArrayList<String> alURl = new ArrayList<>();//视频id集合
         ArrayList<String> alMP4 = new ArrayList<>();//视频下载URL集合
         System.setProperty("webdriver.chrome.driver", "C:\\ChromedDriver\\chromedriver.exe");
         // 实例化一个浏览器对象
         WebDriver driver = new ChromeDriver();
         driver.get(url);
-        Thread.sleep(8000);// 休眠等待页面加载
+        //Thread.sleep(8000);// 休眠等待页面加载
+        //driver.findElement(By.className("like-tab tab get-list")).click();
+        ConnectionType networkConnection = ((ChromeDriver) driver).getNetworkConnection();
         List<WebElement> elements = driver.findElements(By.cssSelector("li.item,goWork"));// 获取到每个视频的模块
         System.out.println(elements.size());
         //获取每个URl的ID
@@ -43,7 +39,6 @@ public class DownloadUrl {
         Thread.sleep(8000);// 休眠等待页面加载
         //获取可以下载的url
         for (int i = 0; i < alURl.size(); i++) {
-            System.out.println(alURl.get(i));
             driver.findElement(By.cssSelector("input.form-control.link-input")).clear();// 清空这个输入框
             driver.findElement(By.cssSelector("input.form-control.link-input")).sendKeys(alURl.get(i));// 将需要转换的链接放入该输入框中
             driver.findElement(By.cssSelector("button.btn.btn-default")).click();// 点击解析
@@ -58,23 +53,16 @@ public class DownloadUrl {
         }
     }
 
-
-    /**
-     * 入口
-     *
-     * @param args
-     */
     public static void main(String[] args) {
         DownloadUrl dl = new DownloadUrl();
         String ID = "80602533314";// 人物ID
         try {
-            dl.DownHtml("https://www.douyin.com/share/user/" + ID + "/?share_type=link");
+            DownHtml("https://www.douyin.com/share/user/" + ID + "/?share_type=link");
         } catch (InterruptedException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
-
 
     /**
      * 根据视频下载链接 下载视频 后缀为 .mp4 等
@@ -82,7 +70,7 @@ public class DownloadUrl {
      * @author lenovo
      *
      */
-    public class DownloadFile {
+    public static class DownloadFile {
         public  void downLoadFromUrl(String urlStr, String fileName, String savePath) throws IOException {
             URL url = new URL(urlStr);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -124,7 +112,7 @@ public class DownloadUrl {
         public void run(String urlStr) {
             long imageTitile = System.currentTimeMillis();
             String fileName = imageTitile + "." + "mp4";
-            String savePath = "D:\\douyin";
+            String savePath = "G:\\VidioVidioVidioVidioVidioVidio";
             try {
                 downLoadFromUrl(urlStr, fileName, savePath);
             } catch (IOException e) {
@@ -132,5 +120,4 @@ public class DownloadUrl {
             }
         }
     }
-
 }

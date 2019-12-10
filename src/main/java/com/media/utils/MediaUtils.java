@@ -14,8 +14,8 @@ public class MediaUtils {
         "D:" + File.separator + "zimeika" + File.separator + "video" + File.separator + "2019-04-28"
             + File.separator;
 
-    //public static final String parseImagePath = "/root/youtube/";
-    public static final String parseImagePath = "D://";
+    public static final String parseImagePath = "/root/youtube/";
+    //public static final String parseImagePath = "D://";
     public static final String ffmpegPath = "D:/ffmpeg-4.1.1-win64-static/bin/ffmpeg.exe";
 
     public static String getCurrDate() {

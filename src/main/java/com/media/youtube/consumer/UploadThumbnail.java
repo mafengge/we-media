@@ -55,7 +55,7 @@ public class UploadThumbnail {
 
         try {
             // Authorize the request.
-            Credential credential = Auth.authorize("uploadthumbnail", "userId");
+            Credential credential = Auth.authorize("uploadthumbnail", "userId","","",1);
 
             // This object is used to make YouTube Data API requests.
             youtube = new YouTube.Builder(Auth.HTTP_TRANSPORT, Auth.JSON_FACTORY, credential).setApplicationName(

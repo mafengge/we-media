@@ -1,20 +1,14 @@
 package com.media.utils;
 
-import com.baidu.aip.ocr.AipOcr;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
@@ -24,19 +18,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 
 @Slf4j
-public class AipOcrUtil {
+public class ythunder {
 
-    //设置APPID/AK/SK guo
-    /*public static final String APP_ID = "16104677";
-    public static final String API_KEY = "tvrCZ6GUi1kaEtiIHSm76kbQ";
-    public static final String SECRET_KEY = "Dtd0dL5tvjUgHA3XEykHsDL22MVVrAkg";*/
-
-    //设置APPID/AK/SK ma
-    public static final String APP_ID = "16237345";
-    public static final String API_KEY = "gbNsTDiYQxTQGNtRg4WPcLTt";
-    public static final String SECRET_KEY = "4DnQFRVmtEHhFtUk0cRDDsPxPldNKKoV";
     public static void runPoints() {
         startThread("mafengge6","maniqiu5");
         startThread("mafengge1", "maniqiu5");
@@ -75,32 +61,6 @@ public class AipOcrUtil {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }*/
-    }
-
-    public static Integer getAipOcr(String userName) {
-        // 初始化一个AipOcr
-        AipOcr client = new AipOcr(APP_ID, API_KEY, SECRET_KEY);
-
-        // 可选：设置网络连接参数
-        client.setConnectionTimeoutInMillis(2000);
-        client.setSocketTimeoutInMillis(60000);
-        String val = "";
-        JSONObject res = client
-            .basicGeneral(MediaUtils.parseImagePath + userName + ".png", new HashMap<String, String>());
-        Pattern p = Pattern.compile("[0-9]");
-        JSONArray words_result = res.getJSONArray("words_result");
-
-        for (int i = 0; i < words_result.length(); i++) {
-            Object words = words_result.get(i);
-            Matcher m = p.matcher(words.toString());
-            if (m.find()) {
-                String s1 = words.toString();
-                val = s1.split(":")[1].replace("}", "").replace(",", "").replace("\"", "");
-            }
-        }
-        val = val.replace("×", "*").replace("x", "*").replace("÷", "/").replace("÷", "/");
-        log.info(userName + "计算数值：" + countVal(val));
-        return countVal(val);
     }
 
     /**
@@ -148,7 +108,8 @@ public class AipOcrUtil {
         }
     }
 
-    public static WebDriver driverHandler(String userName, String passWord) {
+    public static void main(String[] args){
+        //driverHandler("","");
         ChromeOptions options = new ChromeOptions();
             /*options.addArguments("start-maximized");
             options.addArguments("start-fullscreen");
@@ -162,25 +123,87 @@ public class AipOcrUtil {
         options.addArguments("--headless");
         //System.setProperty("webdriver.chrome.driver", "/root/chromedriver");
         //System.setProperty("webdriver.chrome.driver", "C:\\ChromedDriver\\chromedriver.exe");
-            /*WebDriver driver = new EventFiringWebDriver(new ChromeDriver(options))
-                .register(new DriverListener(userName, passWord,1));*/
-        WebDriver driver = new ChromeDriver(options);
+        WebDriver driver = new EventFiringWebDriver(new ChromeDriver(options));
+        driver.get("http://v.douyin.com/9qE38J/");
+        System.out.println(1);
+    }
+
+    public static WebDriver driverHandler(String userName, String passWord) {
+        ChromeOptions options = new ChromeOptions();
+            /*options.addArguments("start-maximized");
+            options.addArguments("start-fullscreen");
+            options.addArguments("disable-dev-shm-usage");
+            options.addArguments("incognito");
+            options.addArguments("ignore-certificate-errors");*/
+        /*options.addArguments("--disable-plugins");
+        options.addArguments("--disable-gpu");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-infobars");
+        options.addArguments("--headless");*/
+        //System.setProperty("webdriver.chrome.driver", "/root/chromedriver");
+        //System.setProperty("webdriver.chrome.driver", "C:\\ChromedDriver\\chromedriver.exe");
+            WebDriver driver = new EventFiringWebDriver(new ChromeDriver(options))
+                .register(new DriverListener(userName, passWord,1));
+        /*WebDriver driver = new ChromeDriver(options);*/
         try {
             driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
             driver.manage().timeouts().setScriptTimeout(30, TimeUnit.SECONDS);
             driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
-            driver.get("https://www.youlikehits.com/login.php");
-            WebElement username = driver.findElement(By.id("username"));
-            WebElement password = driver.findElement(By.id("password"));
-            username.sendKeys(userName);
-            password.sendKeys(passWord);
-            driver.findElement(By.id("loginform")).submit();
-            driver.get("https://www.youlikehits.com/youtubenew2.php");
-            codeSubmit(driver, userName, passWord);
+            driver.get("https://ythunder.com/");
+            driver.findElement(By.xpath("/html/body/section/section/header/div/ul/li[2]/span")).click();
+            WebElement loginUserName = driver.findElement(By.xpath("//*[@id=\"loginUsername\"]"));
+            WebElement loginPassword = driver.findElement(By.xpath("//*[@id=\"loginPassword\"]"));
+            loginUserName.sendKeys("413942291@qq.com");
+            loginPassword.sendKeys("maniqiu5");
+            driver.findElement(By.xpath("//*[@id=\"loginBtn\"]")).click();
+            driver.findElement(By.className("play_video")).click();
+            driver.findElement(By.className("add_icon")).click();
+            Set<String> winHandels = driver.getWindowHandles();
+            List<String> it = new ArrayList<>(winHandels);
+            driver.switchTo().window(it.get(1));
+            driver.findElement(By.xpath("//*[@id=\"startBtn\"]")).click();
+            Thread.sleep(5000);
+            driver.switchTo().window(it.get(0));
+            driver.findElement(By.className("add_icon")).click();
+            Set<String> winHandels1 = driver.getWindowHandles();
+            List<String> it1 = new ArrayList<>(winHandels1);
+            driver.switchTo().window(it1.get(3));
+            Thread.sleep(3000);
+            driver.findElement(By.xpath("//*[@id=\"startBtn\"]")).click();
+            Thread.sleep(5000);
+            driver.switchTo().window(it.get(0));
+            driver.findElement(By.className("add_icon")).click();
+            Set<String> winHandels2 = driver.getWindowHandles();
+            List<String> it2 = new ArrayList<>(winHandels2);
+            driver.switchTo().window(it2.get(5));
+            Thread.sleep(3000);
+            driver.findElement(By.xpath("//*[@id=\"startBtn\"]")).click();
+            Thread.sleep(5000);
+            while (true) {
+                Set<String> winHandels4 = driver.getWindowHandles();
+                List<String> it4 = new ArrayList<>(winHandels4);
+                if (it1.size()<1) {
+                    continue;
+                }
+                for (int i=0;i<it4.size();i++) {
+                    WebDriver window = driver.switchTo().window(it4.get(i));
+                    System.out.println("111111111：： "+window.getCurrentUrl());
+                    if (window.getCurrentUrl().contains("www.youtube.com")) {
+                        try {
+                            String js1 = "var elem2 = document.getElementById('columns');"
+                                + "elem2.parentNode.removeChild(elem2);  ";
+                            ((JavascriptExecutor) window).executeScript(js1);
+                        } catch (Exception e) {
+                            //Thread.sleep(20000);
+                        }
+                    }
+                }
+                Thread.sleep(10000);
+            }
+
         } catch (Exception e) {
             log.error("登录页报错" + userName, e);
             driver.quit();
-            driver = new ChromeDriver(options);
         }
 
         return driver;
@@ -228,19 +251,6 @@ public class AipOcrUtil {
         return driver;
     }
 
-    public static void codeSubmit(WebDriver driver, String userName, String passWord) throws Exception {
-        Thread.sleep(2000);
-        driver.findElement(By.xpath("//*[@id=\"captcha\"]/table[1]/tbody/tr/td/img"));
-        //截图
-        screenShots(driver, userName);
-        Thread.sleep(1000);
-        //百度识图 + 计算数值
-        Integer aipOcr = getAipOcr(userName);
-        driver.findElement(By.name("answer")).sendKeys(String.valueOf(aipOcr));
-        WebElement element = driver
-            .findElement(By.xpath("//*[@id=\"captcha\"]/table[2]/tbody/tr/td/input[2]"));
-        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
-    }
 
     /**
      * 截图

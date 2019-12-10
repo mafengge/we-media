@@ -9,7 +9,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
-
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 
@@ -24,10 +23,10 @@ public class MediaFileUtils {
     public static void main(String args[]) {
         //writeFile(MediaUtils.zimekaInfoPath + "aa.txt", "aaa");
         //readFile(MediaUtils.zimekaInfoPath + "aa.txt");
-        List<String> allFile = getAllFile(MediaUtils.zimeikaVideoPath, true);
+        /*List<String> allFile = getAllFile(MediaUtils.zimeikaVideoPath, true);
         for (String str : allFile) {
             log.info(str);
-        }
+        }*/
     }
 
     /**
@@ -51,8 +50,34 @@ public class MediaFileUtils {
             } catch (Exception e) {
                 log.info(e.getMessage());
             }
+        } else {
+            try {
+                file.createNewFile();
+                writeFile(filePath,"1");
+            } catch (Exception e){
+                System.out.println(e);
+            }
         }
         return null;
+    }
+
+    /**
+     * 清空文件
+     * @param fileName
+     */
+    public static void clearInfoForFile(String fileName) {
+        File file =new File(fileName);
+        try {
+            if(!file.exists()) {
+                file.createNewFile();
+            }
+            FileWriter fileWriter =new FileWriter(file);
+            fileWriter.write("");
+            fileWriter.flush();
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -117,9 +142,9 @@ public class MediaFileUtils {
         try {
             File myDelFile = new File(filePath);
             myDelFile.delete();
-            log.info("本地文件已删除：" + filePath);
+            System.out.println("本地文件已删除：" + filePath);
         } catch (Exception e) {
-            log.info("删除文件操作出错");
+            System.out.println("删除文件操作出错");
             e.printStackTrace();
         }
     }
@@ -166,6 +191,8 @@ public class MediaFileUtils {
         }
         return newFilePath;
     }
+
+
 }
 
 

@@ -3,7 +3,6 @@ package com.media.spiders.producers;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

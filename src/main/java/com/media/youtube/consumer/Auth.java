@@ -50,11 +50,11 @@ public class Auth {
      *
      * @param credentialDatastore name of the credential datastore to cache OAuth tokens
      */
-    public static Credential authorize(String credentialDatastore, String userId) throws IOException {
+    public static Credential authorize(String credentialDatastore, String userId,String authName,String oauthName,Integer port) throws IOException {
 
         List<String> scopes = Lists.newArrayList("https://www.googleapis.com/auth/youtube.upload");
         // Load client secrets.
-        Reader clientSecretReader = new InputStreamReader(Auth.class.getResourceAsStream("/mafengge.json"));
+        Reader clientSecretReader = new InputStreamReader(Auth.class.getResourceAsStream("/"+authName));
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, clientSecretReader);
 
         // Checks that the defaults have been replaced (Default = "Enter X here").
@@ -65,10 +65,11 @@ public class Auth {
                     + "into src/main/resources/client_secrets.json");
             System.exit(1);
         }
-
-        // This creates the credentials datastore at ~/.oauth-credentials/${credentialDatastore}
+        System.out.println(System.getProperty("user.home"));
         FileDataStoreFactory fileDataStoreFactory = new FileDataStoreFactory(
-            new File(System.getProperty("user.home") + "/" + CREDENTIALS_DIRECTORY));
+            //new File(System.getProperty("user.home") + "/" + CREDENTIALS_DIRECTORY));
+        // This creates the credentials datastore at ~/.oauth-credentials/${credentialDatastore}
+        new File(oauthName + "/" + CREDENTIALS_DIRECTORY));
         //FileDataStoreFactory fileDataStoreFactory = new FileDataStoreFactory(new File("D://.oauth-credentials"));
         DataStore<StoredCredential> datastore = fileDataStoreFactory.getDataStore(credentialDatastore);
 
@@ -77,7 +78,7 @@ public class Auth {
             .build();
 
         // Build the local server and bind it to port 8080
-        LocalServerReceiver localReceiver = new LocalServerReceiver.Builder().setPort(8080).build();
+        LocalServerReceiver localReceiver = new LocalServerReceiver.Builder().setPort(port).build();
         // Authorize.
         return new AuthorizationCodeInstalledApp(flow, localReceiver).authorize(userId);
     }

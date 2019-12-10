@@ -34,6 +34,15 @@ dependencies {
     compile group: 'cn.hutool', name: 'hutool-all', version: '4.3.1'
     // https://mvnrepository.com/artifact/com.baidu.aip/java-sdk
     compile group: 'com.baidu.aip', name: 'java-sdk', version: '4.11.0'
+    // https://mvnrepository.com/artifact/com.alibaba/fastjson
+    compile group: 'com.alibaba', name: 'fastjson', version: '1.2.60'
+    //compile group: 'com.github.hui.media',name: 'image-plugin',version: '1.0'
+    // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.9'
+    compile group: 'org.bytedeco', name:'javacv', version: '1.4.1'
+
+    /*compile group: 'org.bytedeco', name: 'javacpp', version: '1.4.1'
+    compile group: 'org.bytedeco.javacpp-presets', name: 'opencv-platform', version: '3.4.1-1.4.1'*/
 }
 
 
