@@ -151,7 +151,7 @@ public class VideoUtils {
     }
 
     public static void main(String[] args) throws Exception {
-        List<String> allFile = MediaFileUtils.getAllFile("E:\\topic\\test\\", true);
+        List<String> allFile = MediaFileUtils.getAllFile("D:\\youtube\\中文搞笑\\", true);
         //视频批量截图，三张
         /*for (int p = 0; p < allFile.size(); p++) {
             //shearVideo(allFile.get(p));
@@ -166,6 +166,7 @@ public class VideoUtils {
                 processImg(allFile.get(p), "D:\\ffmpeg-4.1.1-win64-static\\bin\\ffmpeg.exe", "60", "ff.png");
                 processImg(allFile.get(p), "D:\\ffmpeg-4.1.1-win64-static\\bin\\ffmpeg.exe", "80", "gg.png");
                 processImg(allFile.get(p), "D:\\ffmpeg-4.1.1-win64-static\\bin\\ffmpeg.exe", "90", "hh.png");
+                Thread.sleep(20000);
                 processImg(allFile.get(p), "D:\\ffmpeg-4.1.1-win64-static\\bin\\ffmpeg.exe", "120", "yy.png");
                 processImg(allFile.get(p), "D:\\ffmpeg-4.1.1-win64-static\\bin\\ffmpeg.exe", "135", "jj.png");
                 processImg(allFile.get(p), "D:\\ffmpeg-4.1.1-win64-static\\bin\\ffmpeg.exe", "140", "kk.png");
@@ -302,8 +303,8 @@ public class VideoUtils {
             .substring(0, veido_path.lastIndexOf("."))
             .replaceFirst("vedio", "file") + suffix;
         System.out.println(cmm);
-        MediaFileUtils.writeFile("E:\\bb.bat", cmm);
-        /*List<String> commands = new java.util.ArrayList<String>();
+        //MediaFileUtils.writeFile("E:\\bb.bat", cmm);
+        List<String> commands = new java.util.ArrayList<String>();
         commands.add(ffmpeg_path);
         commands.add("-i");
         commands.add(veido_path);
@@ -328,8 +329,7 @@ public class VideoUtils {
         } catch (Exception e) {
             e.printStackTrace();
             return false;
-        }*/
-        return true;
+        }
     }
 
     public static void shearVideo(String outPath) {
