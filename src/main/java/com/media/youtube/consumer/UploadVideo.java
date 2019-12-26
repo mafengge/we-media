@@ -201,7 +201,9 @@ public class UploadVideo {
                             System.out.println("Upload Completed!");
                             Date d = new Date();
                             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                            MediaFileUtils.delFile(uploadvideoBean.getPngPath());
+                            if (!uploadvideoBean.getUserId().equals("mafengge2") || !uploadvideoBean.getUserId().equals("mafengge3")) {{
+                                MediaFileUtils.delFile(uploadvideoBean.getPngPath());
+                            }}
                             System.out.println("完成时间：" + sdf.format(d));
                             break;
                         // This value indicates that the upload process has
@@ -247,7 +249,10 @@ public class UploadVideo {
             snippet.setTags(getEngTags(tags));
             String s = MediaFileUtils.readFile(videoUploadBean.getOauthName() + "d.txt");
             snippet.setTitle("Long legs Bikini Street Fashion Tik Tok Douyin China Ep." + Integer.parseInt(s));
-            snippet.setDescription("Updated daily Tik Tok/Douyin Street Fashion, girls dancing, big boobs,beach bikini video！Thanks for subscribing to this channel！");
+            snippet.setDescription("SUSCRIBETE:\r\nhttps://bit.ly/3944T3G\r\n"
+                + "PlayList\r\n"
+                + "https://www.youtube.com/playlist?list=PLMzfv89ukTgQJgUb25J_Rp4RFbFMCdfFD \r\n" +
+                "Updated daily Tik Tok/Douyin Street Fashion, girls dancing, big boobs,beach bikini video！Thanks for subscribing to this channel！");
             MediaFileUtils.clearInfoForFile(videoUploadBean.getOauthName() + "d.txt");
             int i = Integer.parseInt(s) + 1;
             MediaFileUtils.writeFile(videoUploadBean.getOauthName() + "d.txt",i + "");
@@ -257,7 +262,10 @@ public class UploadVideo {
             snippet.setTags(getEngTags(tags));
             String s = MediaFileUtils.readFile(videoUploadBean.getOauthName() + "c.txt");
             snippet.setTitle("[Tik Tok Asia]Long legs|Bikini|Sexy Girl Dance Ep." + Integer.parseInt(s));
-            snippet.setDescription("Updated daily Tik Tok/Douyin Street Fashion, girls dancing, big boobs,beach bikini video！Thanks for subscribing to this channel！");
+            snippet.setDescription("SUSCRIBETE:\r\nhttps://bit.ly/2Sfcbf7\r\n"
+                + "PlayList\r\n"
+                + "https://www.youtube.com/playlist?list=PLP9xVl04ayFp4iOnbG3wxfi_SyrcMoy18\r\n"
+                + "Updated daily Tik Tok/Douyin Street Fashion, girls dancing, big boobs,beach bikini video！Thanks for subscribing to this channel！");
             MediaFileUtils.clearInfoForFile(videoUploadBean.getOauthName() + "c.txt");
             int i = Integer.parseInt(s) + 1;
             MediaFileUtils.writeFile(videoUploadBean.getOauthName() + "c.txt",i + "");
@@ -266,8 +274,10 @@ public class UploadVideo {
         if (videoUploadBean.getUserId().equals("mafengge2")) {
             snippet.setTags(getChineseTags(tags));
             String s = MediaFileUtils.readFile(videoUploadBean.getOauthName() + "a.txt");
-            snippet.setTitle("【抖音】各種大長腿、比基尼、小姐姐跳舞、熱門街拍合集，多的看不完.Ep." + Integer.parseInt(s));
-            snippet.setDescription("此頻道每日更新抖音熱門街拍、大長腿、沙灘比基尼等有趣視頻，想請大家幫助我達到壹千訂閱用戶，在此特別感謝您的觀看及訂閱！祝您每日開心！");
+            snippet.setTitle("[抖音 搞笑]那些點贊超百萬的精品視頻合集.Ep." + Integer.parseInt(s));
+            snippet.setDescription("订阅频道:\r\nhttps://bit.ly/2ENf52B\r\n"
+                + "\r\n抖音大长腿系列合集：\r\nhttps://www.youtube.com/playlist?list=PL422WLn7JxuQHr4faEqCPaqzhs7DdEzGd\r\n"
+                + "\r\n此頻道每日更新抖音熱門街拍、搞笑等點贊超百萬的視頻合集，特別感謝您的觀看及訂閱！祝您每日開心！");
             MediaFileUtils.clearInfoForFile(videoUploadBean.getOauthName() + "a.txt");
             int i = Integer.parseInt(s) + 1;
             MediaFileUtils.writeFile(videoUploadBean.getOauthName() + "a.txt",i + "");
@@ -276,8 +286,10 @@ public class UploadVideo {
         if (videoUploadBean.getUserId().equals("mafengge3")) {
             snippet.setTags(getChineseTags(tags));
             String s = MediaFileUtils.readFile(videoUploadBean.getOauthName() + "b.txt");
-            snippet.setTitle("【抖音】那些大长腿、比基尼、热门街拍、小姐姐跳舞合集，哇哦.Ep." + Integer.parseInt(s));
-            snippet.setDescription("此频道每日更新抖音热门街拍、大长腿、沙滩比基尼等有趣视频，想请大家帮助我达到一千订阅用户，在此特别感谢您的观看及订阅！祝您每日开心！");
+            snippet.setTitle("[抖音 搞笑]那些播放量超过千万的视频合集.Ep." + Integer.parseInt(s));
+            snippet.setDescription("订阅频道：\r\nhttps://bit.ly/2s0lapZ\r\n"
+                + "\r\n福利视频合集：https://www.youtube.com/playlist?list=PLbiI3c6JzTtTvfs_nO5IEntXSOTXdpucw\r\n"
+                + "\r\n此频道每日更新抖音热门、搞笑、小姐姐跳舞等播放量超过千万的视频合集，想请大家帮助我达到一千订阅用户，在此特别感谢您的观看及订阅！祝您每日开心！");
             MediaFileUtils.clearInfoForFile(videoUploadBean.getOauthName() + "b.txt");
             int i = Integer.parseInt(s) + 1;
             MediaFileUtils.writeFile(videoUploadBean.getOauthName() + "b.txt",i + "");
@@ -297,44 +309,18 @@ public class UploadVideo {
     }
 
     public static List<String> getEngTags(List<String> tags){
-        tags.add("tik tok");
-        tags.add("tik tok girl dance video");
-        tags.add("抖音");
-        tags.add("best tik tok videos funny 2019");
-        tags.add("抖音福利視頻");
-        tags.add("抖音街拍");
-        tags.add("Tik Tok Collection");
-        tags.add("TIK TOK Long legs");
-        tags.add("Tik Tok Bikini");
+        tags.add("tik tok collection");
+        tags.add("tik tok long legs");
+        tags.add("tik tok bikini");
+        tags.add("mejores tik tok");
+        tags.add("pandemik");
         tags.add("street fashion china tik tok");
-        tags.add("mejores street fashion tiktok douyin china");
-        tags.add("Long legs");
-        tags.add("Bikini");
-        tags.add("Street Fashion");
-        tags.add("douyin");
-        tags.add("tik tok dance");
-        tags.add("mejores tik tok asiaticos");
-        tags.add("douyin china");
-        tags.add("douyin tik tok dance");
-        tags.add("tik tok dance tutorial 2019");
-        tags.add("tik tok douyin china fashion");
         return tags;
     }
 
     public static List<String> getChineseTags(List<String> tags){
-        tags.add("tik tok");
         tags.add("抖音福利視頻");
-        tags.add("抖音");
-        tags.add("抖音搞笑視頻");
-        tags.add("抖音2019最火");
-        tags.add("抖音福利視頻");
-        tags.add("抖音跳舞視頻");
-        tags.add("比基尼");
-        tags.add("大長腿");
         tags.add("抖音街拍");
-        tags.add("douyin");
-        tags.add("各種大長腿、比基尼、小姐姐跳舞合集");
-        tags.add("抖音那些大長腿、比基尼、小姐姐跳舞合集");
         return tags;
     }
 

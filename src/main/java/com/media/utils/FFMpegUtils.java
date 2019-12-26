@@ -72,8 +72,6 @@ public class FFMpegUtils {
         String[] fileName = file1.list();
         System.out.println(fileName[0]);
         sb.append(tsPath + "搞笑\\" + fileName[0] + "|");*/
-        File file1 = new File("E:\\topic\\喜欢成品\\封面\\");
-        File[] files1 = file1.listFiles();
         int b = 0;
         for (int a = 0; a < files.length; a++) {
             String name = files[a].getName();
@@ -92,7 +90,7 @@ public class FFMpegUtils {
                     String[] split = sbs.split("\\|");
                     list.clear();
                     //System.out.println(sbs);
-                    String commands = MediaUtils.ffmpegPath + " -i \"concat:"
+                    String commands = "D:/ffmpeg-4.1.1-win64-static/bin/ffmpeg.exe" + " -i \"concat:"
                         + sbs
                         + "\" -acodec copy -vcodec copy -absf aac_adtstoasc "
                         + videoOutputPath + "s"+b + ".mp4";
@@ -132,14 +130,14 @@ public class FFMpegUtils {
         File file = new File(tsPath);
         File[] files = file.listFiles();
 
-        File file1 = new File("E:\\topic\\500bb\\");
+        File file1 = new File("E:\\topic\\feng\\");
         File[] files1 = file1.listFiles();
 
-        File file2 = new File("E:\\topic\\个人\\");
+        File file2 = new File("E:\\topic\\feng1\\");
         File[] files2 = file2.listFiles();
 
-        /*File file3 = new File("E:\\topic\\喜欢2\\");
-        File[] files3 = file3.listFiles();*/
+        File file3 = new File("E:\\topic\\feng2\\");
+        File[] files3 = file3.listFiles();
 
         List<String> list = new ArrayList<>();
         /*File file1 = new File(tsPath + "搞笑");
@@ -155,8 +153,14 @@ public class FFMpegUtils {
                 //String name2 = file2.getPath() + "\\" + files2[a].getName();
                 //String name3 = file3.getPath() + "\\" + files3[a].getName();
                 list.add(name);
-                if (list.size() == 2) {
-                    list.add(name1);
+                if (list.size() == 4) {
+                    list.add(file1.getPath() + "\\" + files1[b].getName());
+                }
+                if (list.size() == 8) {
+                    list.add(file2.getPath() + "\\" + files2[b].getName());
+                }
+                if (list.size() == 12) {
+                    list.add(file3.getPath() + "\\" + files3[b].getName());
                 }
                 //list.add(name2);
                 //list.add(name3);
@@ -179,6 +183,7 @@ public class FFMpegUtils {
                         + "\" -acodec copy -vcodec copy -absf aac_adtstoasc "
                         + videoOutputPath + files1[b-1].getName().replace(".ts",".mp4");
                     System.out.println(commands);
+
                     MediaFileUtils.writeFile("E:\\bb.bat",commands);
                     /*File f = new File("E:\\topic\\likefinish\\cover1\\"+files[a].getName().replace(".ts",".png"));
                     f.renameTo(new File("E:\\topic\\likefinish\\cover1\\"+namm+".png"));
@@ -213,7 +218,7 @@ public class FFMpegUtils {
 
     public static void renameFile() {
         try {
-            File file = new File("E:\\topic\\likefinish\\finish2\\");
+            File file = new File("D:\\douyin\\video\\");
             File[] files = file.listFiles();
             int b = 1;
            /* Arrays.sort(files, new Comparator<File>() {
@@ -239,11 +244,11 @@ public class FFMpegUtils {
                 String name = files[i].getName();
                 String substring = name.substring(name.indexOf("."), name.length());
                 String newName = "Street Style Funny Tik Tok Douyin China" + substring;
-                if (name.contains(".png")) {
-                    File file1 = new File("E:\\topic\\likefinish\\finish2\\" + newName);
+                if (name.contains(".mp4")) {
+                    File file1 = new File("D:\\douyin\\video\\" + i);
                     File file2 = files[i];
-                    if(file2.exists()) {
-                        file2.renameTo(file1);
+                    if(files[i].exists()) {
+                        files[i].renameTo(file1);
                     }
                     b = ++b;
 
@@ -266,27 +271,32 @@ public class FFMpegUtils {
 
     public static void main(String[] args) {
         try {
-            String path = "E:\\topic\\500ts\\";
-            String outPath = "E:\\topic\\500finish\\";
-            //convertor(path, outPath);
-            //tsMarge(path, outPath, 20);
-            //lastMarge(path,outPath,5);
+            String path = "E:\\topic\\test1\\";
+            String outPath = "E:\\topic\\test\\";
+            convertor(path, outPath);
+            tsMarge(path, outPath, 20);
+            //lastMarge(path,outPath,14);
             //renameFile();
-            int b=1;
-            File file = new File("D:\\youtube\\street22\\like47\\");
+            /*int b=1;
+            File file = new File("E:\\topic\\下载封面\\");
             File[] files1 = file.listFiles();
+            List<String> list = new ArrayList<>();
             for(File f :files1){
-                if (f.getName().contains(".mp4")){
+                //if (f.getName().contains(".mp4")){
                     b++;
                     System.out.println(f.getName());
                     System.out.println(f.getPath());
-                    String a = f.getName();
+                    //String a = f.getName();
                     //Long legs|Bikini|Street Fashion|Dance Collection Tik Tok China.
-                    f.renameTo(new File("D:\\youtube\\street22\\like47\\"+b+".mp4"));
+                    f.renameTo(new File("E:\\topic\\下载封面\\"+b+".png"));
                     //String aaa = "D:/ffmpeg-4.1.1-win64-static/bin/ffmpeg.exe -i E:\\topic\\likefinish\\finish4\\"+a+" -vf scale=1080:1920 D:\\youtube\\finish4\\"+a+" -hide_banner";
+
+                    //MediaFileUtils.writeFile(outPath+b+".txt","file '"+f.getPath()+"'");
+                    //String cc = "ffmpeg -f concat -i filelist.txt -c copy " + videoOutputPath + "ss" + b +".mp4";
+                    //String aaa = "D:/ffmpeg-4.1.1-win64-static/bin/ffmpeg.exe -i "+"E:\\topic\\test\\"+f.getName()+" -qscale 4 "+"E:\\topic\\test\\"+b+".mpg";
                     //MediaFileUtils.writeFile("E:\\bb.bat",aaa);
-                }
-            }
+                //}
+            }*/
             //copy(path,outPath);
 
         } catch (Exception e) {
