@@ -32,7 +32,7 @@ public class ScheduledService {
     public void mafengge1() {
         try {
             Random random = new Random();
-            Thread.sleep(random.nextInt(1000000));
+            //Thread.sleep(random.nextInt(1000000));
             System.out.println("scheduled1开始执行自动上传任务");
             //将视频上传youtube
             uploadYoutube("mafengge1", "mafengge1", 1, "mafengge1.json",
@@ -59,7 +59,7 @@ public class ScheduledService {
             "/root/mafengge11/"
             //"E:\\"
             , 8085,
-            "/root/youtube/street22/"
+            "/root/youtube/street/"
             //"E:\\topic\\test\\"
         );
         log.info("=====>>>>>使用cron  {}" + System.currentTimeMillis());
@@ -75,7 +75,7 @@ public class ScheduledService {
             "/root/mafengge11/"
             //"E:\\"
             , 8087,
-            "/root/youtube/street22/"
+            "/root/youtube/street/"
             //"E:\\topic\\test\\"
         );
         log.info("=====>>>>>使用cron  {}" + System.currentTimeMillis());
@@ -106,14 +106,17 @@ public class ScheduledService {
     public void mafengge1A() {
         mafengge1();
     }
+
     @Scheduled(cron = "0 30 08 * * ?")
     public void mafengge1B() {
         mafengge1();
     }
+
     @Scheduled(cron = "0 30 15 * * ?")
     public void mafengge1C() {
         mafengge1();
     }
+
     @Scheduled(cron = "0 30 21 * * ?")
     public void mafengge1D() {
         mafengge1();
@@ -161,8 +164,8 @@ public class ScheduledService {
 
 
     public static void main(String[] args) {
-        for (int a=0;a<50;a++) {
-            int temp = (int) ( 50 * Math.random() + 1);
+        for (int a = 0; a < 50; a++) {
+            int temp = (int) (50 * Math.random() + 1);
             System.out.println(temp);
         }
     }
@@ -182,16 +185,15 @@ public class ScheduledService {
             videoUploadBean.setOauthName(oauthName);
             videoUploadBean.setPort(port);
             videoUploadBean.setVideoPath(videoPath + title + ".mp4");
-            if (proName.equals("mafengge2") || proName.equals("mafengge3")) {
-                int temp = (int) ( 50 * Math.random() + 1);
+            videoUploadBean.setPngPath(videoPath + title + ".png");
+            /*if (proName.equals("mafengge2") || proName.equals("mafengge3")) {
+                int temp = (int) (50 * Math.random() + 1);
                 videoUploadBean.setPngPath("/root/youtube/fire/" + temp + ".png");
             } else {
                 videoUploadBean.setPngPath(videoPath + title + ".png");
-            }
+            }*/
 
             UploadVideo.videoUpload(videoUploadBean);
         }
-
-
     }
 }

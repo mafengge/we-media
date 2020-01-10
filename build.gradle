@@ -31,7 +31,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
 // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core
 // https://mvnrepository.com/artifact/cn.hutool/hutool-all
-    compile group: 'cn.hutool', name: 'hutool-all', version: '4.3.1'
+    //compile group: 'cn.hutool', name: 'hutool-all', version: '4.3.1'
     // https://mvnrepository.com/artifact/com.baidu.aip/java-sdk
     compile group: 'com.baidu.aip', name: 'java-sdk', version: '4.11.0'
     // https://mvnrepository.com/artifact/com.alibaba/fastjson

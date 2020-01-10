@@ -96,6 +96,9 @@ public class FFMpegUtils {
                         + videoOutputPath + "s"+b + ".mp4";
                     System.out.println(b);
                     System.out.println(commands);
+
+
+
                     MediaFileUtils.writeFile("E:\\dd.bat",commands);
                     /*Thread.sleep(2000);
                     new Thread(new Runnable() {

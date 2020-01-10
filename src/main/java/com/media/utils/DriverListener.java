@@ -24,56 +24,55 @@ public class DriverListener implements WebDriverEventListener {
 
     @Override
     public void beforeNavigateTo(String url, WebDriver driver) {
-        log.info("转向前URL: '" + url + "'");
+        System.out.println("转向前URL: '" + url + "'");
     }
 
     @Override
     public void afterNavigateTo(String url, WebDriver driver) {
-        log.info("转向后URL:'" + url + "'");
+        System.out.println("转向后URL:'" + url + "'");
     }
 
     public void beforeChangeValueOf(WebElement element, WebDriver driver) {
         //before any changes made
-        log.info("值: " + element.toString()
+        System.out.println("值: " + element.toString()
             + " 在任何更改之前");
     }
 
     public void afterChangeValueOf(WebElement element, WebDriver driver) {
-        log.info("元素值更改为: " + element.toString());
+        System.out.println("元素值更改为: " + element.toString());
     }
 
     @Override
     public void beforeClickOn(WebElement element, WebDriver driver) {
-        log.info("试图单击对象: " + element.toString());
+        System.out.println("试图单击对象: " + element.toString());
     }
-
     @Override
     public void afterClickOn(WebElement element, WebDriver driver) {
-        log.info("单击对象: " + element.toString());
+        System.out.println("单击对象: " + element.toString());
     }
 
     @Override
     public void beforeNavigateBack(WebDriver driver) {
         //Navigating back to previous page
-        log.info("返回到前一页");
+        System.out.println("返回到前一页");
     }
 
     @Override
     public void afterNavigateBack(WebDriver driver) {
         //Navigated back to previous page
-        log.info("返回到后一页");
+        System.out.println("返回到后一页");
     }
 
     @Override
     public void beforeNavigateForward(WebDriver driver) {
         //Navigating forward to next page
-        log.info("导航到前一页");
+        System.out.println("导航到前一页");
     }
 
     @Override
     public void afterNavigateForward(WebDriver driver) {
         //Navigated forward to next page
-        log.info("导航到下一页");
+        System.out.println("导航到下一页");
     }
 
     @Override
@@ -81,9 +80,9 @@ public class DriverListener implements WebDriverEventListener {
         //Exception occured
         try {
             if (error instanceof NoSuchElementException) {
-                log.info("异常类中NoSuch用户名密码：" + userName + "  " + passWord);
+                System.out.println("异常类中NoSuch用户名密码：" + userName + "  " + passWord);
             } else {
-                driver.quit();
+                //driver.quit();
                 //driver.close();
                 /*err ++;
                 if (err == 10) {
@@ -91,8 +90,8 @@ public class DriverListener implements WebDriverEventListener {
                 } else {
                     AipOcrUtil.getPoints(userName, passWord,err);
                 }*/
-                AipOcrUtil.getPoints(userName, passWord);
-                log.info("异常类中用户名密码：" + userName + "  " + passWord);
+                //AipOcrUtil.getPoints(userName, passWord);
+                System.out.println("异常类中用户名密码：" + userName + "  " + passWord);
             }
         } catch (Exception e) {
             log.error("异常监听中发生异常");
@@ -102,12 +101,12 @@ public class DriverListener implements WebDriverEventListener {
 
     @Override
     public void beforeFindBy(By by, WebElement element, WebDriver driver) {
-        log.info("试图寻找对象 : " + by.toString());
+        System.out.println("试图寻找对象 : " + by.toString());
     }
 
     @Override
     public void afterFindBy(By by, WebElement element, WebDriver driver) {
-        log.info("找到对象 : " + by.toString());
+        System.out.println("找到对象 : " + by.toString());
     }
 
     /*
@@ -115,35 +114,35 @@ public class DriverListener implements WebDriverEventListener {
      */
     @Override
     public void beforeScript(String script, WebDriver driver) {
-        log.info("执行脚本前");
+        System.out.println("执行脚本前");
     }
 
     @Override
     public void afterScript(String script, WebDriver driver) {
-        log.info("执行脚本后");
+        System.out.println("执行脚本后");
     }
 
     @Override
     public void afterChangeValueOf(WebElement arg0, WebDriver arg1, CharSequence[] arg2) {
         // TODO Auto-generated method stub
-        log.info(arg0 + "变值后： " + arg2);
+        System.out.println(arg0 + "变值后： " + arg2);
     }
 
     @Override
     public void afterNavigateRefresh(WebDriver arg0) {
         // TODO Auto-generated method stub
-        log.info("导航后刷新");
+        System.out.println("导航后刷新");
     }
 
     @Override
     public void beforeChangeValueOf(WebElement arg0, WebDriver arg1, CharSequence[] arg2) {
         // TODO Auto-generated method stub
-        log.info("在更改值之前：" + arg0 + " 更改值之后: " + arg2);
+        System.out.println("在更改值之前：" + arg0 + " 更改值之后: " + arg2);
     }
 
     @Override
     public void beforeNavigateRefresh(WebDriver arg0) {
         // TODO Auto-generated method stub
-        log.info("导航刷新前：");
+        System.out.println("导航刷新前：");
     }
 }

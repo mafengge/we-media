@@ -14,11 +14,10 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.apache.commons.lang.StringUtils;
+import org.hibernate.validator.internal.util.logging.LoggerFactory;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * 抖音分享链接信息爬取
@@ -27,7 +26,6 @@ import org.slf4j.LoggerFactory;
  */
 public class DouYinShareUtil {
 
-    private Logger logger = LoggerFactory.getLogger(DouYinShareUtil.class);
 
     private DouYinShareUtil(){}
 
@@ -122,7 +120,7 @@ public class DouYinShareUtil {
             }
             data.put("works", worksStr);
         } catch (Exception e) {
-            logger.error("analyse douyin user info has error.",e);
+            System.out.println("analyse douyin user info has error."+e);
         }
         return data;
     }
@@ -177,9 +175,9 @@ public class DouYinShareUtil {
 
             return str.toString();
         } catch (MalformedURLException e) {
-            logger.error("getHTMLSource has MalformedURLException.",e);
+            //logger.error("getHTMLSource has MalformedURLException.",e);
         } catch (IOException e) {
-            logger.error("getHTMLSource has IOException.",e);
+            //logger.error("getHTMLSource has IOException.",e);
         } finally{
             try {
                 if(openStream!=null){
@@ -189,7 +187,7 @@ public class DouYinShareUtil {
                     buf.close();
                 }
             } catch (IOException e) {
-                logger.error("getHTMLSource close stream IOException.",e);
+                //logger.error("getHTMLSource close stream IOException.",e);
             }
         }
 

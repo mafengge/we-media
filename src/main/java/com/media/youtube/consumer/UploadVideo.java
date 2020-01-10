@@ -58,6 +58,10 @@ public class UploadVideo {
         //proxySwitch("true");
 
         try {
+            //System.setProperty("socks.protocols", "TLSv1,TLSv1.1,TLSv1.2,SSLv3");
+            System.setProperty("socksProxyHost", "127.0.0.1");
+            System.setProperty("socksProxyPort", "1080");
+            System.setProperty("socksProxySet", "true");
             Credential credential = Auth
                 .authorize(uploadvideoBean.getCredentialDatastore(), uploadvideoBean.getUserId(),uploadvideoBean.getAuthName(),uploadvideoBean.getOauthName(),uploadvideoBean.getPort());
 
@@ -248,8 +252,9 @@ public class UploadVideo {
         if (videoUploadBean.getUserId().equals("mafengge")) {
             snippet.setTags(getEngTags(tags));
             String s = MediaFileUtils.readFile(videoUploadBean.getOauthName() + "d.txt");
-            snippet.setTitle("Long legs Bikini Street Fashion Tik Tok Douyin China Ep." + Integer.parseInt(s));
+            snippet.setTitle("bikini|street fashion|tik tok girls|douyin china Ep." + Integer.parseInt(s));
             snippet.setDescription("SUSCRIBETE:\r\nhttps://bit.ly/3944T3G\r\n"
+                + "#bikini\r\n"
                 + "PlayList\r\n"
                 + "https://www.youtube.com/playlist?list=PLMzfv89ukTgQJgUb25J_Rp4RFbFMCdfFD \r\n" +
                 "Updated daily Tik Tok/Douyin Street Fashion, girls dancing, big boobs,beach bikini video！Thanks for subscribing to this channel！");
@@ -261,8 +266,9 @@ public class UploadVideo {
         if (videoUploadBean.getUserId().equals("mafengge1")) {
             snippet.setTags(getEngTags(tags));
             String s = MediaFileUtils.readFile(videoUploadBean.getOauthName() + "c.txt");
-            snippet.setTitle("[Tik Tok Asia]Long legs|Bikini|Sexy Girl Dance Ep." + Integer.parseInt(s));
+            snippet.setTitle("[bikini]long legs|sexy girl dance|tik tok asia|Ep." + Integer.parseInt(s));
             snippet.setDescription("SUSCRIBETE:\r\nhttps://bit.ly/2Sfcbf7\r\n"
+                + "#bikini\r\n"
                 + "PlayList\r\n"
                 + "https://www.youtube.com/playlist?list=PLP9xVl04ayFp4iOnbG3wxfi_SyrcMoy18\r\n"
                 + "Updated daily Tik Tok/Douyin Street Fashion, girls dancing, big boobs,beach bikini video！Thanks for subscribing to this channel！");
@@ -274,10 +280,11 @@ public class UploadVideo {
         if (videoUploadBean.getUserId().equals("mafengge2")) {
             snippet.setTags(getChineseTags(tags));
             String s = MediaFileUtils.readFile(videoUploadBean.getOauthName() + "a.txt");
-            snippet.setTitle("[抖音 搞笑]那些點贊超百萬的精品視頻合集.Ep." + Integer.parseInt(s));
+            snippet.setTitle("[抖音比基尼]美女跳舞、热门街拍、福利视频合集|亚洲TV.Ep." + Integer.parseInt(s));
             snippet.setDescription("订阅频道:\r\nhttps://bit.ly/2ENf52B\r\n"
+                + "#亚洲TV #抖音"
                 + "\r\n抖音大长腿系列合集：\r\nhttps://www.youtube.com/playlist?list=PL422WLn7JxuQHr4faEqCPaqzhs7DdEzGd\r\n"
-                + "\r\n此頻道每日更新抖音熱門街拍、搞笑等點贊超百萬的視頻合集，特別感謝您的觀看及訂閱！祝您每日開心！");
+                + "\r\n此頻道每日更新抖音比基尼、熱門街拍、搞笑等點贊超百萬的視頻合集，特別感謝您的觀看及訂閱！祝您每日開心！");
             MediaFileUtils.clearInfoForFile(videoUploadBean.getOauthName() + "a.txt");
             int i = Integer.parseInt(s) + 1;
             MediaFileUtils.writeFile(videoUploadBean.getOauthName() + "a.txt",i + "");
@@ -286,10 +293,10 @@ public class UploadVideo {
         if (videoUploadBean.getUserId().equals("mafengge3")) {
             snippet.setTags(getChineseTags(tags));
             String s = MediaFileUtils.readFile(videoUploadBean.getOauthName() + "b.txt");
-            snippet.setTitle("[抖音 搞笑]那些播放量超过千万的视频合集.Ep." + Integer.parseInt(s));
+            snippet.setTitle("比基尼、热门街拍、福利视频合集，大马视频.第" + Integer.parseInt(s)+"期");
             snippet.setDescription("订阅频道：\r\nhttps://bit.ly/2s0lapZ\r\n"
                 + "\r\n福利视频合集：https://www.youtube.com/playlist?list=PLbiI3c6JzTtTvfs_nO5IEntXSOTXdpucw\r\n"
-                + "\r\n此频道每日更新抖音热门、搞笑、小姐姐跳舞等播放量超过千万的视频合集，想请大家帮助我达到一千订阅用户，在此特别感谢您的观看及订阅！祝您每日开心！");
+                + "\r\n此频道每日更新抖音热门、比基尼、搞笑、小姐姐跳舞等播放量超过千万的视频合集，想请大家帮助我达到一千订阅用户，在此特别感谢您的观看及订阅！祝您每日开心！");
             MediaFileUtils.clearInfoForFile(videoUploadBean.getOauthName() + "b.txt");
             int i = Integer.parseInt(s) + 1;
             MediaFileUtils.writeFile(videoUploadBean.getOauthName() + "b.txt",i + "");
@@ -309,9 +316,27 @@ public class UploadVideo {
     }
 
     public static List<String> getEngTags(List<String> tags){
+        tags.add("bikini");
+        tags.add("bikini dance");
+        tags.add("bikini china");
+        tags.add("beach bikini");
+        tags.add("beach bikini china");
+        tags.add("tik tok bikini");
+        tags.add("beach bikini japan");
+        tags.add("bikini asia");
+        tags.add("micro bikini");
+        tags.add("bikini bottom");
+        tags.add("bikini girls");
+        tags.add("sexy bikini");
+        tags.add("street dance");
+        tags.add("tiktok girls");
         tags.add("tik tok collection");
         tags.add("tik tok long legs");
-        tags.add("tik tok bikini");
+        tags.add("tik tok trung quốc");
+        tags.add("japanese street fashion");
+        tags.add("tik tok china couple");
+        tags.add("Cute Couple Fashion In China");
+        tags.add("tik tok dance");
         tags.add("mejores tik tok");
         tags.add("pandemik");
         tags.add("street fashion china tik tok");
@@ -319,6 +344,12 @@ public class UploadVideo {
     }
 
     public static List<String> getChineseTags(List<String> tags){
+        tags.add("比基尼");
+        tags.add("tik tok");
+        tags.add("pomhub");
+        tags.add("抖音比基尼");
+        tags.add("比基尼跳舞");
+        tags.add("bikini");
         tags.add("抖音福利視頻");
         tags.add("抖音街拍");
         return tags;
@@ -327,18 +358,18 @@ public class UploadVideo {
     public static void proxySwitch(String flag) {
         //if (System.getProperty("os.name").toLowerCase().startsWith("win") ) {
         String proxyHost = "127.0.0.1";
-        String proxyHttpPort = "1080";
         String proxySocksPort = "1080";
-        System.setProperty("http.proxyHost", proxyHost);
+        String proxyHttpPort = "8118";
+        //System.setProperty("https.protocols", "TLSv1,TLSv1.1,TLSv1.2,SSLv3");
+        /*System.setProperty("http.proxyHost", proxyHost);
         System.setProperty("http.proxyPort", proxyHttpPort);
+        System.setProperty("http.proxySet", flag);
         System.setProperty("https.proxyHost", proxyHost);
         System.setProperty("https.proxyPort", proxyHttpPort);
+        System.setProperty("https.proxySet", flag);*/
 
-        System.setProperty("socksProxyHost", proxyHost);
-        System.setProperty("socksProxyPort", proxySocksPort);
-
-        System.setProperty("http.proxySet", flag);
-        System.setProperty("https.proxySet", flag);
-        System.setProperty("socksProxySet", flag);
+        System.setProperty("socksProxyHost", "127.0.0.1");
+        System.setProperty("socksProxyPort", "1080");
+        System.setProperty("socksProxySet", "true");
     }
 }

@@ -38,7 +38,7 @@ public class Itest {
         Map<String, String> map = excuteJs(link);
         uriAPI = uriAPI + videoId + "?r=" + map.get("r") + "&s=" + map.get("s");
         HttpGet httpGet = new HttpGet(uriAPI);
-        log.info(uriAPI);
+        //log.info(uriAPI);
         HttpResponse httpResponse = HttpClients.createDefault().execute(httpGet);
         String result = "";
         if (httpResponse.getStatusLine().getStatusCode() == 200) {
