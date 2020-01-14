@@ -18,13 +18,13 @@ import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.googleapis.media.MediaHttpUploader;
 import com.google.api.client.googleapis.media.MediaHttpUploaderProgressListener;
+import com.google.api.client.http.HttpContent;
+import com.google.api.client.http.HttpRequest;
+import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.client.http.InputStreamContent;
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.YouTube.Thumbnails.Set;
-import com.google.api.services.youtube.model.ThumbnailSetResponse;
-import com.google.api.services.youtube.model.Video;
-import com.google.api.services.youtube.model.VideoSnippet;
-import com.google.api.services.youtube.model.VideoStatus;
+import com.google.api.services.youtube.model.*;
 import com.media.bean.VideoUploadBean;
 import com.media.start.MediaApplication;
 import com.media.utils.MediaFileUtils;
@@ -58,15 +58,19 @@ public class UploadVideo {
         //proxySwitch("true");
 
         try {
-            //System.setProperty("socks.protocols", "TLSv1,TLSv1.1,TLSv1.2,SSLv3");
             System.setProperty("socksProxyHost", "127.0.0.1");
             System.setProperty("socksProxyPort", "1080");
-            System.setProperty("socksProxySet", "true");
             Credential credential = Auth
                 .authorize(uploadvideoBean.getCredentialDatastore(), uploadvideoBean.getUserId(),uploadvideoBean.getAuthName(),uploadvideoBean.getOauthName(),uploadvideoBean.getPort());
 
             youtube = new YouTube.Builder(Auth.HTTP_TRANSPORT, Auth.JSON_FACTORY, credential).setApplicationName(
-                "youtube-uploadvideo-feng").build();
+                "youtube-uploadvideo-feng").setHttpRequestInitializer(new HttpRequestInitializer() {
+                @Override
+                public void initialize(HttpRequest httpRequest) throws IOException {
+                    httpRequest.setConnectTimeout(10 * 60000);  // 3 minutes connect timeout
+                    httpRequest.setReadTimeout(10 * 60000);  // 3 minutes read timeout
+                }
+            }).build();
 
             log.info("Uploading: " + uploadvideoBean.getVideoPath());
             System.out.println("Uploading: " + uploadvideoBean.getVideoPath());
@@ -81,11 +85,13 @@ public class UploadVideo {
             InputStream stream = new FileInputStream(file);
             InputStreamContent mediaContent = new InputStreamContent(VIDEO_FILE_FORMAT, stream);
             mediaContent.setLength(file.length());
+
             YouTube.Videos.Insert videoInsert = youtube.videos()
                 .insert("snippet,statistics,status", videoObjectDefiningMetadata, mediaContent);
             MediaHttpUploader uploader = videoInsert.getMediaHttpUploader();
 
             uploader.setDirectUploadEnabled(false);
+
             MediaHttpUploaderProgressListener progressListener = new MediaHttpUploaderProgressListener() {
                 @Override
                 public void progressChanged(MediaHttpUploader uploader) throws IOException {
@@ -307,12 +313,6 @@ public class UploadVideo {
         //设置视频分类
         //snippet.setCategoryId();
         return snippet;
-    }
-    public static void main(String[] args){
-        String s = MediaFileUtils.readFile("E:\\a.txt");
-        System.out.println(s);
-        MediaFileUtils.clearInfoForFile("E:\\a.txt");
-        MediaFileUtils.writeFile("E:\\a.txt","11");
     }
 
     public static List<String> getEngTags(List<String> tags){
