@@ -17,7 +17,7 @@ public class ScheduledService {
     //Tik Tok Girls
     public void mafengge() throws InterruptedException {
         Random random = new Random();
-        Thread.sleep(random.nextInt(1000000));
+//        Thread.sleep(random.nextInt(1000000));
         System.out.println("scheduled开始执行自动上传任务");
         //将视频上传youtube
         uploadYoutube("mafengge", "mafengge", 1, "mafengge.json",
@@ -32,7 +32,7 @@ public class ScheduledService {
     public void mafengge1() {
         try {
             Random random = new Random();
-            //Thread.sleep(random.nextInt(1000000));
+            Thread.sleep(random.nextInt(1000000));
             System.out.println("scheduled1开始执行自动上传任务");
             //将视频上传youtube
             uploadYoutube("mafengge1", "mafengge1", 1, "mafengge1.json",

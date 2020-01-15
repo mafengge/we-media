@@ -63,14 +63,8 @@ public class UploadVideo {
             Credential credential = Auth
                 .authorize(uploadvideoBean.getCredentialDatastore(), uploadvideoBean.getUserId(),uploadvideoBean.getAuthName(),uploadvideoBean.getOauthName(),uploadvideoBean.getPort());
 
-            youtube = new YouTube.Builder(Auth.HTTP_TRANSPORT, Auth.JSON_FACTORY, credential).setApplicationName(
-                "youtube-uploadvideo-feng").setHttpRequestInitializer(new HttpRequestInitializer() {
-                @Override
-                public void initialize(HttpRequest httpRequest) throws IOException {
-                    httpRequest.setConnectTimeout(10 * 60000);  // 3 minutes connect timeout
-                    httpRequest.setReadTimeout(10 * 60000);  // 3 minutes read timeout
-                }
-            }).build();
+            youtube = new YouTube.Builder(Auth.HTTP_TRANSPORT, Auth.JSON_FACTORY, setHttpTimeout(credential)).setApplicationName(
+                "youtube-uploadvideo-feng").build();
 
             log.info("Uploading: " + uploadvideoBean.getVideoPath());
             System.out.println("Uploading: " + uploadvideoBean.getVideoPath());
@@ -250,6 +244,17 @@ public class UploadVideo {
             log.info("Throwable: " + t.getMessage());
             t.printStackTrace();
         }
+    }
+
+    public static HttpRequestInitializer setHttpTimeout(final HttpRequestInitializer requestInitializer) {
+        return new HttpRequestInitializer() {
+            @Override
+            public void initialize(HttpRequest httpRequest) throws IOException {
+                requestInitializer.initialize(httpRequest);
+                httpRequest.setConnectTimeout(10 * 60000);
+                httpRequest.setReadTimeout(10 * 60000);
+            }
+        };
     }
 
     public static VideoSnippet setSnippet(VideoUploadBean videoUploadBean) {

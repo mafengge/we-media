@@ -25,7 +25,7 @@ public class MediaApplication {
         //ss();
         //AipOcrUtil.getPoints("mafengge", "maniqiu5");
         ScheduledService scheduledService = new ScheduledService();
-        scheduledService.mafengge1();
+        scheduledService.mafengge();
         /*
         scheduledService.scheduled5();
         scheduledService.scheduled6();

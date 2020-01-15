@@ -13,10 +13,8 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.store.DataStore;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.common.collect.Lists;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
+
+import java.io.*;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 
@@ -54,7 +52,7 @@ public class Auth {
 
         List<String> scopes = Lists.newArrayList("https://www.googleapis.com/auth/youtube.upload");
         // Load client secrets.
-        Reader clientSecretReader = new InputStreamReader(Auth.class.getResourceAsStream("/"+authName));
+        Reader clientSecretReader = new InputStreamReader(new FileInputStream(oauthName + authName));
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, clientSecretReader);
 
         // Checks that the defaults have been replaced (Default = "Enter X here").
@@ -80,6 +78,7 @@ public class Auth {
         // Build the local server and bind it to port 8080
         LocalServerReceiver localReceiver = new LocalServerReceiver.Builder().setPort(port).build();
         // Authorize.
-        return new AuthorizationCodeInstalledApp(flow, localReceiver).authorize(userId);
+        Credential authorize = new AuthorizationCodeInstalledApp(flow, localReceiver).authorize(userId);
+        return authorize;
     }
 }
