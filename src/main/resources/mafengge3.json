@@ -1,11 +1,11 @@
 {
   "installed": {
-    "client_id": "597431506291-0dbmv51j93daist0lv1grmrinos3jelc.apps.googleusercontent.com",
-    "project_id": "mafengge-258418",
+    "client_id": "380735140422-apjinqpah9572ijf3tm96d8s0tpdj9q7.apps.googleusercontent.com",
+    "project_id": "mafengge3",
     "auth_uri": "https://accounts.google.com/o/oauth2/auth",
     "token_uri": "https://oauth2.googleapis.com/token",
     "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-    "client_secret": "4BbhowcwqcsR2Dj__lFI9y7M",
+    "client_secret": "-jnYaDLg8gDVwZDrXWibv3n-",
     "redirect_uris": ["urn:ietf:wg:oauth:2.0:oob", "http://localhost"]
   }
 }

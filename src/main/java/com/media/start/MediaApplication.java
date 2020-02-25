@@ -3,6 +3,9 @@ import static com.media.youtube.consumer.UploadVideo.proxySwitch;
 
 import com.media.utils.ythunder;
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -14,18 +17,35 @@ public class MediaApplication {
         SpringApplication.run(MediaApplication.class, args);
         log.info("项目启动成功");
         System.out.println("项目启动成功");
-
-        /*new Thread(new Runnable() {
+        /*System.setProperty("https.proxyHost", "127.0.0.1");
+        System.setProperty("https.proxyPort", "8118");*/
+        /*System.setProperty("http.proxyHost", "127.0.0.1");
+        System.setProperty("http.proxyPort", "8118");
+        System.setProperty("http.proxySet", "true");*/
+        /*System.setProperty("socksProxyHost", "127.0.0.1");
+        System.setProperty("socksProxyPort", "1080");
+        System.setProperty("socksProxySet", "true");
+        new Thread(new Runnable() {
             @Override
             public void run() {
-                ythunder.runYTH();
+                try {
+                    ythunder.runYTH();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
-        }).start();*/
+        }).start();
+        ChromeOptions options = new ChromeOptions();*/
+        /*options.addArguments("--disable-plugins");
+         */
+        /*options.addArguments("--headless");
+        options.addArguments("--no-sandbox");
+        WebDriver driver = new ChromeDriver(options);
+        driver.get("https://www.youtube.com/watch?v=AA81KRZNVcg");
+        System.out.println("dddddddd");*/
         //AipOcrUtil.runPoints();
         //ss();
         //AipOcrUtil.getPoints("mafengge", "maniqiu5");
-        ScheduledService scheduledService = new ScheduledService();
-        scheduledService.mafengge();
         /*
         scheduledService.scheduled5();
         scheduledService.scheduled6();

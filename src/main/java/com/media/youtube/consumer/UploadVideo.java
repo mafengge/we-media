@@ -28,6 +28,7 @@ import com.google.api.services.youtube.model.*;
 import com.media.bean.VideoUploadBean;
 import com.media.start.MediaApplication;
 import com.media.utils.MediaFileUtils;
+import com.media.utils.ythunder;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -134,7 +135,12 @@ public class UploadVideo {
             System.out.println("  - Privacy Status: " + returnedVideo.getStatus().getPrivacyStatus());
             System.out.println("  - Video Count: " + returnedVideo.getStatistics().getViewCount());
 
-
+            /*if (uploadvideoBean.getUserId().equals("mafengge2")) {
+                ythunder.addTask("mafengge7@163.com","maniqiu5",returnedVideo.getId(),returnedVideo.getSnippet().getTitle());
+            }
+            if (uploadvideoBean.getUserId().equals("mafengge3")) {
+                ythunder.addTask("mafengge8@163.com","maniqiu5",returnedVideo.getId(),returnedVideo.getSnippet().getTitle());
+            }*/
             // Authorize the request.
             Credential credential1 = Auth.authorize(uploadvideoBean.getCredentialDatastore(), uploadvideoBean.getUserId(),uploadvideoBean.getAuthName(),uploadvideoBean.getOauthName(),uploadvideoBean.getPort());
 
@@ -263,7 +269,7 @@ public class UploadVideo {
         if (videoUploadBean.getUserId().equals("mafengge")) {
             snippet.setTags(getEngTags(tags));
             String s = MediaFileUtils.readFile(videoUploadBean.getOauthName() + "d.txt");
-            snippet.setTitle("bikini|street fashion|tik tok girls|douyin china Ep." + Integer.parseInt(s));
+            snippet.setTitle("bikini|tik tok girls|Tik Tok Trung Quốc Không xem phí cả tuổi thanh xuân | douyin china Ep." + Integer.parseInt(s));
             snippet.setDescription("SUSCRIBETE:\r\nhttps://bit.ly/3944T3G\r\n"
                 + "#bikini\r\n"
                 + "PlayList\r\n"
@@ -277,12 +283,12 @@ public class UploadVideo {
         if (videoUploadBean.getUserId().equals("mafengge1")) {
             snippet.setTags(getEngTags(tags));
             String s = MediaFileUtils.readFile(videoUploadBean.getOauthName() + "c.txt");
-            snippet.setTitle("[bikini]long legs|sexy girl dance|tik tok asia|Ep." + Integer.parseInt(s));
+            snippet.setTitle("[tik tok]bikini|long legs|sexy girl dance|tik tok asia|Ep." + Integer.parseInt(s));
             snippet.setDescription("SUSCRIBETE:\r\nhttps://bit.ly/2Sfcbf7\r\n"
                 + "#bikini\r\n"
                 + "PlayList\r\n"
                 + "https://www.youtube.com/playlist?list=PLP9xVl04ayFp4iOnbG3wxfi_SyrcMoy18\r\n"
-                + "Updated daily Tik Tok/Douyin Street Fashion, girls dancing, big boobs,beach bikini video！Thanks for subscribing to this channel！");
+                + "Updated daily Tik Tok/Douyin Street Fashion, girls dancing, big boobs,bikini video！Thanks for subscribing to this channel！");
             MediaFileUtils.clearInfoForFile(videoUploadBean.getOauthName() + "c.txt");
             int i = Integer.parseInt(s) + 1;
             MediaFileUtils.writeFile(videoUploadBean.getOauthName() + "c.txt",i + "");
@@ -291,7 +297,9 @@ public class UploadVideo {
         if (videoUploadBean.getUserId().equals("mafengge2")) {
             snippet.setTags(getChineseTags(tags));
             String s = MediaFileUtils.readFile(videoUploadBean.getOauthName() + "a.txt");
-            snippet.setTitle("[抖音比基尼]美女跳舞、热门街拍、福利视频合集|亚洲TV.Ep." + Integer.parseInt(s));
+            //【抖音】那些大胸美女视频合集 Tik Tok Trung Quốc Không xem phí cả tuổi thanh xuân / douyin china p3
+            snippet.setTitle("[抖音]大胸美女、福利视频合集|亚洲TV|Tik Tok Trung Quốc Không xem phí cả tuổi thanh xuân | douyin china.Ep." + Integer.parseInt(s));
+            //抖音热舞] 抖音热舞 ！抖音潮流！热门漂亮性感长腿小姐姐火辣的舞蹈！TikTok Kwai Chinese's Beautiful Girl Dance Sexy Part
             snippet.setDescription("订阅频道:\r\nhttps://bit.ly/2ENf52B\r\n"
                 + "#亚洲TV #抖音"
                 + "\r\n抖音大长腿系列合集：\r\nhttps://www.youtube.com/playlist?list=PL422WLn7JxuQHr4faEqCPaqzhs7DdEzGd\r\n"
@@ -304,7 +312,7 @@ public class UploadVideo {
         if (videoUploadBean.getUserId().equals("mafengge3")) {
             snippet.setTags(getChineseTags(tags));
             String s = MediaFileUtils.readFile(videoUploadBean.getOauthName() + "b.txt");
-            snippet.setTitle("比基尼、热门街拍、福利视频合集，大马视频.第" + Integer.parseInt(s)+"期");
+            snippet.setTitle("【抖音】比基尼、热门街拍、福利视频合集，大马视频|Tik Tok Trung Quốc Không xem phí cả tuổi thanh xuân / douyin china.第" + Integer.parseInt(s)+"期");
             snippet.setDescription("订阅频道：\r\nhttps://bit.ly/2s0lapZ\r\n"
                 + "\r\n福利视频合集：https://www.youtube.com/playlist?list=PLbiI3c6JzTtTvfs_nO5IEntXSOTXdpucw\r\n"
                 + "\r\n此频道每日更新抖音热门、比基尼、搞笑、小姐姐跳舞等播放量超过千万的视频合集，想请大家帮助我达到一千订阅用户，在此特别感谢您的观看及订阅！祝您每日开心！");
@@ -321,6 +329,10 @@ public class UploadVideo {
     }
 
     public static List<String> getEngTags(List<String> tags){
+        tags.add("tik tok");
+        tags.add("抖音");
+        tags.add("douyin");
+        tags.add("tik tok asia");
         tags.add("bikini");
         tags.add("bikini dance");
         tags.add("bikini china");
@@ -337,7 +349,7 @@ public class UploadVideo {
         tags.add("tiktok girls");
         tags.add("tik tok collection");
         tags.add("tik tok long legs");
-        tags.add("tik tok trung quốc");
+        tags.add("tik tok trung quoc");
         tags.add("japanese street fashion");
         tags.add("tik tok china couple");
         tags.add("Cute Couple Fashion In China");
@@ -349,6 +361,8 @@ public class UploadVideo {
     }
 
     public static List<String> getChineseTags(List<String> tags){
+        tags.add("抖音");
+        tags.add("douyin");
         tags.add("比基尼");
         tags.add("tik tok");
         tags.add("pomhub");
@@ -357,6 +371,8 @@ public class UploadVideo {
         tags.add("bikini");
         tags.add("抖音福利視頻");
         tags.add("抖音街拍");
+        tags.add("三里屯");
+        tags.add("三里屯街拍");
         return tags;
     }
 

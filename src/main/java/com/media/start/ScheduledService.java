@@ -4,6 +4,9 @@ import com.media.bean.VideoUploadBean;
 import com.media.utils.MediaFileUtils;
 import com.media.youtube.consumer.UploadVideo;
 import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import lombok.extern.slf4j.Slf4j;
@@ -16,8 +19,6 @@ public class ScheduledService {
 
     //Tik Tok Girls
     public void mafengge() throws InterruptedException {
-        Random random = new Random();
-//        Thread.sleep(random.nextInt(1000000));
         System.out.println("scheduled开始执行自动上传任务");
         //将视频上传youtube
         uploadYoutube("mafengge", "mafengge", 1, "mafengge.json",
@@ -31,8 +32,6 @@ public class ScheduledService {
     //Asia Video
     public void mafengge1() {
         try {
-            Random random = new Random();
-            Thread.sleep(random.nextInt(1000000));
             System.out.println("scheduled1开始执行自动上传任务");
             //将视频上传youtube
             uploadYoutube("mafengge1", "mafengge1", 1, "mafengge1.json",
@@ -40,7 +39,7 @@ public class ScheduledService {
                 //System.getProperty("user.home")
                 , 8083,
                 "/root/youtube/street/"
-                //"E:\\topic\\likefinish\\test\\"
+                //"D:\\aa\\"
             );
         } catch (Exception e) {
             System.out.println(e);
@@ -50,9 +49,7 @@ public class ScheduledService {
     }
 
     //亚洲TV
-    public void mafengge2() throws InterruptedException {
-        Random random = new Random();
-        Thread.sleep(random.nextInt(1000000));
+    public void mafengge2(){
         System.out.println("scheduled4开始执行自动上传任务");
         //将视频上传youtube
         uploadYoutube("mafengge2", "mafengge2", 1, "mafengge2.json",
@@ -67,8 +64,6 @@ public class ScheduledService {
 
     //大马视频
     public void mafengge3() throws InterruptedException {
-        Random random = new Random();
-        Thread.sleep(random.nextInt(1000000));
         System.out.println("scheduled6开始执行自动上传任务");
         //将视频上传youtube
         uploadYoutube("mafengge3", "mafengge3", 1, "mafengge3.json",
@@ -82,92 +77,94 @@ public class ScheduledService {
     }
 
     //英文
-    @Scheduled(cron = "0 28 04 * * ?")
+    @Scheduled(cron = "0 0 1 * * ?")
     public void mafenggeA() throws InterruptedException {
         mafengge();
     }
 
-    @Scheduled(cron = "0 28 10 * * ?")
+    /*@Scheduled(cron = "0 0 19 * * ?")
     public void mafenggeB() throws InterruptedException {
         mafengge();
     }
 
-    @Scheduled(cron = "0 28 16 * * ?")
+    @Scheduled(cron = "0 0 3 * * ?")
     public void mafenggeC() throws InterruptedException {
         mafengge();
-    }
+    }*/
 
-    @Scheduled(cron = "0 25 22 * * ?")
+    /*@Scheduled(cron = "0 0 13 * * ?")
     public void mafenggeD() throws InterruptedException {
         mafengge();
-    }
+    }*/
 
-    @Scheduled(cron = "0 30 02 * * ?")
+    /*@Scheduled(cron = "0 0 1 * * ?")
     public void mafengge1A() {
         mafengge1();
-    }
+    }*/
 
-    @Scheduled(cron = "0 30 08 * * ?")
+   /* @Scheduled(cron = "0 0 19 * * ?")
     public void mafengge1B() {
         mafengge1();
     }
-
-    @Scheduled(cron = "0 30 15 * * ?")
+*/
+    @Scheduled(cron = "0 0 3 * * ?")
     public void mafengge1C() {
         mafengge1();
     }
 
-    @Scheduled(cron = "0 30 21 * * ?")
+    /*@Scheduled(cron = "0 0 13 * * ?")
     public void mafengge1D() {
         mafengge1();
-    }
+    }*/
 
-    @Scheduled(cron = "0 20 21 * * ?")
+    /*@Scheduled(cron = "0 0 1 * * ?")
     public void mafengge2A() throws InterruptedException {
         mafengge2();
-    }
+    }*/
 
-    @Scheduled(cron = "0 20 4 * * ?")
+    @Scheduled(cron = "0 0 19 * * ?")
     public void mafengge2B() throws InterruptedException {
         mafengge2();
     }
 
-    @Scheduled(cron = "0 20 10 * * ?")
+    /*@Scheduled(cron = "0 0 3 * * ?")
     public void mafengge2C() throws InterruptedException {
         mafengge2();
-    }
+    }*/
 
-    @Scheduled(cron = "0 20 16 * * ?")
+    /*@Scheduled(cron = "0 0 13 * * ?")
     public void mafengge2D() throws InterruptedException {
         mafengge2();
-    }
+    }*/
 
-    @Scheduled(cron = "0 20 08 * * ?")
+    /*@Scheduled(cron = "0 0 1 * * ?")
     public void mafengge3A() throws InterruptedException {
         mafengge3();
-    }
+    }*/
 
-    @Scheduled(cron = "0 20 14 * * ?")
+    /*@Scheduled(cron = "0 0 19 * * ?")
     public void mafengge3B() throws InterruptedException {
         mafengge3();
-    }
+    }*/
 
-    @Scheduled(cron = "0 20 22 * * ?")
+    /*@Scheduled(cron = "0 0 3 * * ?")
     public void mafengge3C() throws InterruptedException {
         mafengge3();
-    }
+    }*/
 
-    @Scheduled(cron = "0 20 03 * * ?")
+    @Scheduled(cron = "0 0 13 * * ?")
     public void mafengge3D() throws InterruptedException {
         mafengge3();
     }
 
 
     public static void main(String[] args) {
-        for (int a = 0; a < 50; a++) {
-            int temp = (int) (50 * Math.random() + 1);
-            System.out.println(temp);
+        while (true){
+            DateFormat format = new SimpleDateFormat("yyyyMMddHHmSSS");
+            String settleDateStr = format.format(new Date());
+            System.out.println(settleDateStr);
         }
+
     }
 
     public static void uploadYoutube(String proName, String userId, int uploadCount, String authName, String oauthName,
@@ -185,7 +182,7 @@ public class ScheduledService {
             videoUploadBean.setOauthName(oauthName);
             videoUploadBean.setPort(port);
             videoUploadBean.setVideoPath(videoPath + title + ".mp4");
-            videoUploadBean.setPngPath(videoPath + title + ".png");
+            videoUploadBean.setPngPath(videoPath + title + ".jpg");
             /*if (proName.equals("mafengge2") || proName.equals("mafengge3")) {
                 int temp = (int) (50 * Math.random() + 1);
                 videoUploadBean.setPngPath("/root/youtube/fire/" + temp + ".png");

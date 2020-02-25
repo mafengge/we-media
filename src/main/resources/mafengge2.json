@@ -1,0 +1,14 @@
+{
+  "installed":{
+    "client_id":"909014367167-jtjjmg7q35h8epbnjqu8a3a7bh6e62m6.apps.googleusercontent.com",
+    "project_id":"mafengge2",
+    "auth_uri":"https://accounts.google.com/o/oauth2/auth",
+    "token_uri":"https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs",
+    "client_secret":"8QKTrp3uH0UjDiSB4T3V5Aln",
+    "redirect_uris":[
+      "urn:ietf:wg:oauth:2.0:oob",
+      "http://localhost"
+    ]
+  }
+}

@@ -151,7 +151,7 @@ public class VideoUtils {
     }
 
     public static void main(String[] args) throws Exception {
-        List<String> allFile = MediaFileUtils.getAllFile("D:\\youtube\\中文搞笑\\", true);
+        List<String> allFile = MediaFileUtils.getAllFile("D:\\youtube\\test\\", true);
         //视频批量截图，三张
         /*for (int p = 0; p < allFile.size(); p++) {
             //shearVideo(allFile.get(p));
@@ -159,26 +159,22 @@ public class VideoUtils {
             if (path.contains(".mp4")) {
                 log.info(allFile.get(p));
                 processImg(allFile.get(p), "D:\\ffmpeg-4.1.1-win64-static\\bin\\ffmpeg.exe", "1", "aa.png");
-                processImg(allFile.get(p), "D:\\ffmpeg-4.1.1-win64-static\\bin\\ffmpeg.exe", "8", "bb.png");
-                processImg(allFile.get(p), "D:\\ffmpeg-4.1.1-win64-static\\bin\\ffmpeg.exe", "15", "cc.png");
-                processImg(allFile.get(p), "D:\\ffmpeg-4.1.1-win64-static\\bin\\ffmpeg.exe", "18", "dd.png");
-                processImg(allFile.get(p), "D:\\ffmpeg-4.1.1-win64-static\\bin\\ffmpeg.exe", "40", "ee.png");
-                processImg(allFile.get(p), "D:\\ffmpeg-4.1.1-win64-static\\bin\\ffmpeg.exe", "60", "ff.png");
-                processImg(allFile.get(p), "D:\\ffmpeg-4.1.1-win64-static\\bin\\ffmpeg.exe", "80", "gg.png");
-                processImg(allFile.get(p), "D:\\ffmpeg-4.1.1-win64-static\\bin\\ffmpeg.exe", "90", "hh.png");
-                Thread.sleep(20000);
-                processImg(allFile.get(p), "D:\\ffmpeg-4.1.1-win64-static\\bin\\ffmpeg.exe", "120", "yy.png");
-                processImg(allFile.get(p), "D:\\ffmpeg-4.1.1-win64-static\\bin\\ffmpeg.exe", "135", "jj.png");
-                processImg(allFile.get(p), "D:\\ffmpeg-4.1.1-win64-static\\bin\\ffmpeg.exe", "140", "kk.png");
-                processImg(allFile.get(p), "D:\\ffmpeg-4.1.1-win64-static\\bin\\ffmpeg.exe", "160", "ll.png");
-                processImg(allFile.get(p), "D:\\ffmpeg-4.1.1-win64-static\\bin\\ffmpeg.exe", "210", "mm.png");
-                processImg(allFile.get(p), "D:\\ffmpeg-4.1.1-win64-static\\bin\\ffmpeg.exe", "230", "nn.png");
+                processImg(allFile.get(p), "D:\\ffmpeg-4.1.1-win64-static\\bin\\ffmpeg.exe", "2", "bb.png");
+                processImg(allFile.get(p), "D:\\ffmpeg-4.1.1-win64-static\\bin\\ffmpeg.exe", "3", "cc.png");
+                processImg(allFile.get(p), "D:\\ffmpeg-4.1.1-win64-static\\bin\\ffmpeg.exe", "4", "dd.png");
+                processImg(allFile.get(p), "D:\\ffmpeg-4.1.1-win64-static\\bin\\ffmpeg.exe", "5", "ee.png");
+                processImg(allFile.get(p), "D:\\ffmpeg-4.1.1-win64-static\\bin\\ffmpeg.exe", "6", "ff.png");
+                processImg(allFile.get(p), "D:\\ffmpeg-4.1.1-win64-static\\bin\\ffmpeg.exe", "7", "gg.png");
+                processImg(allFile.get(p), "D:\\ffmpeg-4.1.1-win64-static\\bin\\ffmpeg.exe", "8", "hh.png");
+                processImg(allFile.get(p), "D:\\ffmpeg-4.1.1-win64-static\\bin\\ffmpeg.exe", "9", "hh.png");
+                processImg(allFile.get(p), "D:\\ffmpeg-4.1.1-win64-static\\bin\\ffmpeg.exe", "10", "hh.png");
+                processImg(allFile.get(p), "D:\\ffmpeg-4.1.1-win64-static\\bin\\ffmpeg.exe", "11", "hh.png");
                 //listDir(new File("E:\\topic\\测试\\喜欢2\\v0200f6a0000blqtnicps0sghfamg6g011.png"),1);
             }
 
         }*/
         //将批量截图的三张图片拼接为一张
-        /*for (int l = 0; l < allFile.size(); l++) {
+        for (int l = 0; l < allFile.size(); l++) {
             String path = allFile.get(l);
             if (path.contains(".mp4")) {
                 List<File> files = new ArrayList<>();
@@ -242,9 +238,9 @@ public class VideoUtils {
                 }
                 jointPic(files, newFileName);
             }
-        }*/
+        }
 
-       for (int a = 0 ;a<allFile.size();a++) {
+       /*for (int a = 0 ;a<allFile.size();a++) {
             if (allFile.get(a).contains("aa.png")) {
                 MediaFileUtils.delFile(allFile.get(a));
             }
@@ -287,7 +283,7 @@ public class VideoUtils {
            if (allFile.get(a).contains("nn.png")) {
                MediaFileUtils.delFile(allFile.get(a));
            }
-        }
+        }*/
     }
 
     /**

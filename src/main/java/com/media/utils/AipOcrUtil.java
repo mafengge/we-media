@@ -37,10 +37,25 @@ public class AipOcrUtil {
     public static final String APP_ID = "16237345";
     public static final String API_KEY = "gbNsTDiYQxTQGNtRg4WPcLTt";
     public static final String SECRET_KEY = "4DnQFRVmtEHhFtUk0cRDDsPxPldNKKoV";
+    /*LTAI4Fvn9zzMHaDwxBBE3kwM
+
+        WiPbPmFwTmbSf0pxfngiT0d1SgSfnl
+
+    ou9egVzwRDhIcpZS*/
+
+    //dMEairSpypS72hOI
+    //LTAI4FotEWZAseGYxYrpATPa
+    /*百度翻译
+    APP ID：20200221000386882
+    密钥：YUkn2hsbl8kyDFOvkJV7*/
+
+    public static void main(String[] args){
+     runPoints();
+    }
     public static void runPoints() {
         startThread("mafengge6","maniqiu5");
-        startThread("mafengge1", "maniqiu5");
-        startThread("mafengge", "maniqiu5");
+        /*startThread("mafengge1", "maniqiu5");
+        startThread("mafengge", "maniqiu5");*/
         /*startThread("505877502", "lp123456");
         startThread("guodongbin", "guodongbin1987");
 
@@ -159,7 +174,7 @@ public class AipOcrUtil {
         options.addArguments("--disable-gpu");
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-infobars");
-        options.addArguments("--headless");
+        //options.addArguments("--headless");
         //System.setProperty("webdriver.chrome.driver", "/root/chromedriver");
         //System.setProperty("webdriver.chrome.driver", "C:\\ChromedDriver\\chromedriver.exe");
             /*WebDriver driver = new EventFiringWebDriver(new ChromeDriver(options))

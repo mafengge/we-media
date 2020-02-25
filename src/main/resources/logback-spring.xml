@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration  scan="true" scanPeriod="10 seconds">
+  <contextName>logback</contextName>
+  <!-- 格式化输出：%date表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度 %msg：日志消息，%n是换行符-->
+  <property name="LOG_PATTERN" value="%date{yyyy-MM-dd-HH:mm:ss} [%thread]-[%F:%L] %-5level %logger{36} - %msg%n" />
+  <!-- 定义日志存储的路径，不要配置相对路径 -->
+  <property name="FILE_PATH" value="E:/1.log" />
+  <!-- 控制台输出日志 -->
+  <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+    <!-- 日志级别过滤INFO以下 -->
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <level>info</level>
+    </filter>
+    <encoder>
+      <!-- 按照上面配置的LOG_PATTERN来打印日志 -->
+      <pattern>${LOG_PATTERN}</pattern>
+    </encoder>
+  </appender>
+
+
+  <appender name="fileAppender" class="ch.qos.logback.core.FileAppender">
+    <file>${FILE_PATH}</file>
+    <append>true</append>
+
+    <encoder>
+      <pattern>${LOG_PATTERN}</pattern>
+    </encoder>
+  </appender>
+
+
+  <!--<appender name="rollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+      <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+
+          <fileNamePattern>${FILE_PATH}</fileNamePattern>
+
+          &lt;!&ndash; keep 15 days' worth of history &ndash;&gt;
+          <maxHistory>30</maxHistory>
+
+          <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+              &lt;!&ndash; 日志文件的最大大小 &ndash;&gt;
+              <maxFileSize>2MB</maxFileSize>
+          </timeBasedFileNamingAndTriggeringPolicy>
+
+          &lt;!&ndash; 超出删除老文件 &ndash;&gt;
+          <totalSizeCap>1GB</totalSizeCap>
+      </rollingPolicy>
+
+      <encoder>
+          <pattern>${LOG_PATTERN}</pattern>
+      </encoder>
+  </appender>-->
+
+  <!-- project default level -->
+  <logger name="net.sh.rgface.serive" level="ERROR" />
+
+  <!--myibatis log configure-->
+  <logger name="com.apache.ibatis" level="TRACE"/>
+  <logger name="java.sql.Connection" level="DEBUG"/>
+  <logger name="java.sql.Statement" level="DEBUG"/>
+  <logger name="java.sql.PreparedStatement" level="DEBUG"/>
+
+  <!-- 日志输出级别 -->
+  <root level="info">
+    <appender-ref ref="console" />
+    <appender-ref ref="fileAppender" />
+  </root>
+</configuration>
